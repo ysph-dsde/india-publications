@@ -39,27 +39,3 @@ export interface FlattenedPublication {
   institution_ror: string;
   institution_state: string;
 }
-
-// interface OpenAlexInstitution {
-//   id: string;
-//   display_name: string;
-//   ror: string;
-//   state?: string;
-// }
-
-// interface OpenAlexAuthorship {
-//   author_position: string;
-//   author: string;
-//   institutions: OpenAlexInstitution[];
-// }
-
-// data from OpenAlex API Query
-// export interface OpenAlexPublications {
-//   id: string;
-//   publication_year: number;
-//   title: string;
-//   doi: string;
-//   authorships: OpenAlexAuthorship[];
-//   cited_by_count: number;
-//   grants: [];
-// }
