@@ -41,20 +41,11 @@ export const Sidebar = () => {
 
   type DisplayType = "Total Publications" | "Per 1,000,000 People";
 
-  const [displayMetric, setDisplayMetric] =
-    useState<DisplayType>("Total Publications");
-
   // for visual change BEFORE API call
   const [localCustomKeyword, setLocalCustomKeyword] = useState<string>("");
   const [localYearRange, setLocalYearRange] = useState<[number, number]>(
     serverFilters.yearRange,
   );
-
-  const handleDisplayMetricChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setDisplayMetric(event.target.value as DisplayType);
-  };
 
   const handlePopulationGroups =
     (group: PopulationGroup) => (event: ChangeEvent<HTMLInputElement>) => {
@@ -315,29 +306,6 @@ export const Sidebar = () => {
               />
             )}
           />
-        </ListItem>
-        <SelectionTitle
-          title="Display metric on map"
-          toolTipText="Choose whether to show total publications or publications per 1,000,000 people."
-        />
-        <ListItem>
-          <RadioGroup
-            aria-labelledby="display-type"
-            defaultValue="Total Publications"
-            onChange={handleDisplayMetricChange}
-            name="display-type"
-          >
-            <FormControlLabel
-              value="Total Publications"
-              control={<Radio />}
-              label="Total Publications"
-            />
-            <FormControlLabel
-              value="Per 1,000,000 People"
-              control={<Radio />}
-              label="Per 1,000,000 People"
-            />
-          </RadioGroup>
         </ListItem>
       </List>
     </Box>
