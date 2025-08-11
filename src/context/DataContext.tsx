@@ -11,6 +11,8 @@ import {
   type DataState,
   type ServerFilters,
   type ClientFilters,
+  type YearlyPublication,
+  type StateYearlyPublication,
 } from "./types";
 import { fetchOpenAlexData } from "../services/OpenAlexService";
 import { States } from "../constants/States";
@@ -24,6 +26,64 @@ interface DataContextType {
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
+
+const prepareChartData = (
+  publications: FlattenedPublication[],
+): {
+  yearlyData: YearlyPublication[];
+  yearlyDataByState: StateYearlyPublication[];
+} => {
+  const yearCounts: { [year: number]: number } = {};
+  const yearStateCounts: { [year: number]: { [state: string]: number } } = {};
+
+  publications.forEach((pub) => {
+    const { publication_year, institution_state } = pub;
+
+    // Count publications per year
+    yearCounts[publication_year] = (yearCounts[publication_year] || 0) + 1;
+
+    // Count publications per year by state
+    const state = institution_state || "State Unknown";
+    if (!yearStateCounts[publication_year]) {
+      yearStateCounts[publication_year] = {};
+    }
+    yearStateCounts[publication_year][state] =
+      (yearStateCounts[publication_year][state] || 0) + 1;
+  });
+
+  // Get all unique states across all years
+  const allStates = [
+    ...new Set(
+      Object.values(yearStateCounts).flatMap((stateCounts) =>
+        Object.keys(stateCounts),
+      ),
+    ),
+  ];
+
+  // Convert year counts to sorted array
+  const yearlyData: YearlyPublication[] = Object.entries(yearCounts)
+    .map(([year, count]) => ({
+      year: parseInt(year),
+      count,
+    }))
+    .sort((a, b) => a.year - b.year);
+
+  // Convert year-state counts to sorted yearlyDataByState
+  const yearlyDataByState: StateYearlyPublication[] = Object.keys(
+    yearStateCounts,
+  )
+    .map((year) => {
+      const yearNum = parseInt(year);
+      // Create states object with 0 for missing states
+      const states = Object.fromEntries(
+        allStates.map((state) => [state, yearStateCounts[yearNum][state] || 0]),
+      );
+      return { year: yearNum, states };
+    })
+    .sort((a, b) => a.year - b.year);
+
+  return { yearlyData, yearlyDataByState };
+};
 
 export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   // default filters: ensure the visual in Sidebar matches
@@ -42,6 +102,8 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const [sourceData, setSourceData] = useState<FlattenedPublication[]>([]);
   const [data, setData] = useState<DataState>({
     publications: [],
+    yearlyData: [],
+    stateYearlyData: [],
     loading: true,
     error: null,
   });
@@ -78,13 +140,19 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     });
   }, [serverFilters, clientFilters, sourceData]);
 
+  const { yearlyData, yearlyDataByState } = useMemo(() => {
+    return prepareChartData(filteredPublications);
+  }, [filteredPublications]);
+
   // update publications in table when source data OR filters change
   useEffect(() => {
     setData((prev) => ({
       ...prev,
       publications: filteredPublications,
+      yearlyData: yearlyData,
+      stateYearlyData: yearlyDataByState,
     }));
-  }, [filteredPublications, sourceData]);
+  }, [filteredPublications, yearlyData, yearlyData]);
 
   const isFetchingRef = useRef<Symbol | null>(null);
 
@@ -119,6 +187,8 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
         setSourceData([]);
         setData({
           publications: [],
+          yearlyData: [],
+          stateYearlyData: [],
           loading: false,
           error: error instanceof Error ? error.message : "Failed to load data",
         });

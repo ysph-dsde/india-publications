@@ -2,24 +2,18 @@ import { Box, Typography } from "@mui/material";
 import { CustomTabs } from "./shared/CustomTabs";
 
 import { DataTable } from "./DataTable";
+import { GeoPlot } from "./Plots/GeoPlot";
+import { TemporalDistributionPlot } from "./Plots/TemporalDistributionPlot";
 
 export const MainContent = () => {
   const tabs = [
     {
       label: "Geographic Distribution of Publications",
-      content: (
-        <Typography>
-          Geographic Distribution of Publications Chart Coming Soon
-        </Typography>
-      ),
+      content: <GeoPlot />,
     },
     {
       label: "Temportal Distribution of Publications",
-      content: (
-        <Typography>
-          Temportal Distribution of Publications Chart Coming Soon
-        </Typography>
-      ),
+      content: <TemporalDistributionPlot />,
     },
     {
       label: "Publication vs Population",

@@ -18,8 +18,22 @@ export interface ServerFilters {
   yearRange: [number, number];
 }
 
+export interface YearlyPublication {
+  year: number;
+  count: number;
+  [key: string]: number;
+}
+
+export interface StateYearlyPublication {
+  year: number;
+  states: { [state: string]: number };
+}
+[];
+
 export interface DataState {
   publications: FlattenedPublication[];
+  yearlyData: YearlyPublication[];
+  stateYearlyData: StateYearlyPublication[];
   loading: boolean;
   error: string | null;
 }
