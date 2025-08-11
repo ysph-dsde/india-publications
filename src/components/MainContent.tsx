@@ -12,7 +12,7 @@ export const MainContent = () => {
       content: <GeoPlot />,
     },
     {
-      label: "Temportal Distribution of Publications",
+      label: "Temporal Distribution of Publications",
       content: <TemporalDistributionPlot />,
     },
     {
