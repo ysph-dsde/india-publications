@@ -7,8 +7,6 @@ import {
   FormControlLabel,
   List,
   ListItem,
-  Radio,
-  RadioGroup,
   Slider,
   TextField,
   Toolbar,
@@ -38,8 +36,6 @@ export const Sidebar = () => {
     updateServerFilters,
     updateClientFilters,
   } = useData();
-
-  type DisplayType = "Total Publications" | "Per 1,000,000 People";
 
   // for visual change BEFORE API call
   const [localCustomKeyword, setLocalCustomKeyword] = useState<string>("");
