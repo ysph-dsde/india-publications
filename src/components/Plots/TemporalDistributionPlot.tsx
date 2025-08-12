@@ -8,9 +8,10 @@ import { useData } from "../../context/DataContext";
 import { LineChart, type LineSeries } from "@mui/x-charts";
 import { theme } from "../../Theme";
 import { useState } from "react";
+import { stateColorMapping } from "../../constants/States";
 
 export const TemporalDistributionPlot = () => {
-  const { data } = useData();
+  const { data, serverFilters } = useData();
   const { yearlyData, stateYearlyData } = data;
   const [view, setView] = useState<"national" | "byState">("national");
 
@@ -22,11 +23,12 @@ export const TemporalDistributionPlot = () => {
             color: `${theme.palette.primary.main}`,
             showMark: true, // Show data points
             curve: "linear", // Linear interpolation for the line
+            label: "Selected states",
           },
         ]
       : Object.keys(stateYearlyData[0].states).map((state) => ({
           dataKey: state,
-          //   color: theme.palette[state] || getColorForState(state),
+          color: stateColorMapping[state] || theme.palette.grey[500],
           showMark: true,
           curve: "linear",
           label: state,
@@ -47,27 +49,36 @@ export const TemporalDistributionPlot = () => {
       alignItems="center"
     >
       <Typography variant="h6">
-        Total Number of Publications Over Time
+        {view === "national"
+          ? "Total Number of Publications Over Time"
+          : "Publications Over Time by State"}
       </Typography>
-      <LineChart
-        dataset={dataset}
-        xAxis={[
-          {
-            dataKey: "year",
-            label: "Year",
-            valueFormatter: (value: number) => value.toFixed(0),
-            scaleType: "point",
-          },
-        ]}
-        yAxis={[
-          {
-            label: "Number of Publications",
-          },
-        ]}
-        series={series}
-        height={400}
-        sx={{ width: "100%" }}
-      />
+      <Box sx={{ width: "100%" }}>
+        <LineChart
+          dataset={dataset}
+          xAxis={[
+            {
+              dataKey: "year",
+              label: "Year",
+              valueFormatter: (value: number) => value.toFixed(0),
+              scaleType: "point",
+            },
+          ]}
+          yAxis={[
+            {
+              label: "Number of Publications",
+            },
+          ]}
+          series={series}
+          height={500}
+        />
+        <Typography variant="caption">
+          This line chart displays the trend in total publications under{" "}
+          {serverFilters.topic} across selected states from{" "}
+          {serverFilters.yearRange[0]} to {serverFilters.yearRange[1]}.
+        </Typography>
+      </Box>
+
       <ToggleButtonGroup
         value={view}
         exclusive
