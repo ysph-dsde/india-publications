@@ -4,6 +4,8 @@ import { CustomTabs } from "./shared/CustomTabs";
 import { DataTable } from "./DataTable";
 import { GeoPlot } from "./Plots/GeoPlot";
 import { TemporalDistributionPlot } from "./Plots/TemporalDistributionPlot";
+import { ConnectedDotPlot } from "./Plots/ConnectedDotPlot";
+import { StackedBarPlot } from "./Plots/StackedBarPlot";
 
 export const MainContent = () => {
   const tabs = [
@@ -17,13 +19,11 @@ export const MainContent = () => {
     },
     {
       label: "Publication vs Population",
-      content: (
-        <Typography>Publication vs Population Chart Coming Soon</Typography>
-      ),
+      content: <ConnectedDotPlot />,
     },
     {
       label: "Stacked Bar Plot",
-      content: <Typography>Stacked Bar Plot Chart Coming Soon</Typography>,
+      content: <StackedBarPlot />,
     },
     {
       label: "HDI vs Publications",
