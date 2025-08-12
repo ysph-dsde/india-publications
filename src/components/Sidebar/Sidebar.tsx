@@ -106,7 +106,7 @@ export const Sidebar = () => {
       <Divider />
       <List>
         <SelectionTitle
-          title="Select a Topic"
+          title="Topic"
           toolTipText="Choose a predefined topic or use 'Custom Keyword Search' to input your own terms."
         />
         <ListItem>
@@ -156,7 +156,7 @@ export const Sidebar = () => {
           </ListItem>
         )}
         <SelectionTitle
-          title="Select author position"
+          title="Author position"
           toolTipText="Filter whether the author is first, first and last, or appears anywhere."
         />
         <ListItem>
@@ -210,7 +210,7 @@ export const Sidebar = () => {
           />
         </ListItem>
         <SelectionTitle
-          title="Select year range"
+          title="Year range"
           toolTipText="Select the publication year range."
         />
         <ListItem sx={{ display: "flex", justifyContent: "center" }}>
@@ -243,7 +243,7 @@ export const Sidebar = () => {
           </Box>
         </ListItem>
         <SelectionTitle
-          title="Select state(s)"
+          title="State(s)"
           toolTipText="Choose one or more states to filter publications."
         />
         <StatesSelector />
