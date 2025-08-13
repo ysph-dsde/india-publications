@@ -26,21 +26,25 @@ export const TemporalDistributionPlot = () => {
             label: "Selected states",
           },
         ]
-      : Object.keys(stateYearlyData[0].states).map((state) => ({
+      : stateYearlyData.length >= 1
+      ? Object.keys(stateYearlyData[0].states).map((state) => ({
           dataKey: state,
           color: stateColorMapping[state] || theme.palette.grey[500],
           showMark: true,
           curve: "linear",
           label: state,
-        }));
+        }))
+      : [];
 
   const dataset =
     view === "national"
       ? yearlyData
-      : stateYearlyData.map((item) => ({
+      : stateYearlyData.length >= 1
+      ? stateYearlyData.map((item) => ({
           year: item.year,
           ...item.states, // Spread state counts as individual keys
-        }));
+        }))
+      : [];
 
   return (
     <Box
