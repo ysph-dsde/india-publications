@@ -8,4 +8,13 @@ export const theme = createTheme({
       main: yaleBlue,
     },
   },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        ".js-plotly-plot .plotly [class*='cursor-']": {
+          cursor: "default !important",
+        },
+      },
+    },
+  },
 });
