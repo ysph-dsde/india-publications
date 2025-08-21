@@ -1,4 +1,4 @@
-import { Paper } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 import Plot from "react-plotly.js";
 import { useData } from "../../context/DataContext";
 import { usePopulationData } from "../../context/PopulationContext";
@@ -15,6 +15,7 @@ export const ConnectedDotPlot = () => {
   const {
     data: { publications: publicationData },
     clientFilters: { states: selectedStates },
+    serverFilters: { yearRange, topic },
   } = useData();
   const { populationData } = usePopulationData();
 
@@ -156,6 +157,10 @@ export const ConnectedDotPlot = () => {
     },
     xaxis: {
       automargin: true,
+      title: {
+        text: "State",
+        standoff: 0,
+      },
     },
     hovermode: "closest",
     hoverlabel: {
@@ -195,6 +200,19 @@ export const ConnectedDotPlot = () => {
           useResizeHandler
         />
       )}
+      <Box
+        px={2}
+        pb={1}
+      >
+        <Typography variant="caption">
+          This plot compares the publication share versus the population share
+          across selected Indian states for {topic} between the years of{" "}
+          {yearRange[0]} and {yearRange[1]}. Lines connect each state's
+          publication share (circle) with its population share (square),
+          highlighting over-representation (green) or under-representation
+          (blue).
+        </Typography>
+      </Box>
     </Paper>
   );
 };
