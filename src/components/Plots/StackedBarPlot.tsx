@@ -94,7 +94,7 @@ export const StackedBarPlot = () => {
   };
   return (
     <Paper elevation={1}>
-      {selectedStates.length > 0 && (
+      {selectedStates.length > 0 && stateYearlyData.length > 0 && (
         <>
           <Plot
             data={traces}
