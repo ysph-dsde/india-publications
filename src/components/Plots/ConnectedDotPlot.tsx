@@ -18,12 +18,7 @@ export const ConnectedDotPlot = () => {
     serverFilters: { yearRange, topic },
   } = useData();
   const { populationData } = usePopulationData();
-
-  // const state = ["Alabama", "Alaska", "Arizona"];
-
-  // const publicationData = [0.1, 0.2, 0.15];
-
-  // const populationData = [0.12, 0.22, 0.12];
+  const totalPublications = publicationData.length;
 
   const aggregatedData = useMemo(() => {
     if (!populationData || !publicationData || !selectedStates) return [];
@@ -33,7 +28,6 @@ export const ConnectedDotPlot = () => {
       selectedStates.includes(pop.state),
     );
 
-    const totalPublications = publicationData.length;
     if (totalPublications === 0) {
       return filteredPublications.map((pop) => ({
         state: pop.state,
@@ -161,6 +155,11 @@ export const ConnectedDotPlot = () => {
         text: "State",
         standoff: 0,
       },
+      type: "category",
+      range: [0.5, traces.length / 3 - 1 + 0.5],
+    },
+    margin: {
+      r: 30,
     },
     hovermode: "closest",
     hoverlabel: {
@@ -207,10 +206,10 @@ export const ConnectedDotPlot = () => {
         <Typography variant="caption">
           This plot compares the publication share versus the population share
           across selected Indian states for {topic} between the years of{" "}
-          {yearRange[0]} and {yearRange[1]}. Lines connect each state's
-          publication share (circle) with its population share (square),
-          highlighting over-representation (green) or under-representation
-          (blue).
+          {yearRange[0]} and {yearRange[1]}. A total of {totalPublications}{" "}
+          publications were retrieved. Lines connect each state's publication
+          share (circle) with its population share (square), highlighting
+          over-representation (green) or under-representation (blue).
         </Typography>
       </Box>
     </Paper>
