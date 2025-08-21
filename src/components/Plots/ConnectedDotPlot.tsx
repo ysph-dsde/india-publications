@@ -75,7 +75,7 @@ export const ConnectedDotPlot = () => {
     }
 
     const data: Plotly.Data[] = [];
-    aggregatedData.forEach((c, i) => {
+    aggregatedData.forEach((state, i) => {
       const datum = aggregatedData[i];
       const pub = datum.publicationPercentage;
       const pop = datum.populationPercentage;
@@ -90,7 +90,7 @@ export const ConnectedDotPlot = () => {
         y: [pub],
         x: [datum.state],
         mode: "markers",
-        name: `${c} (Voting Pop)`,
+        name: `${state} (Publication)`,
         marker: {
           color: isGreen ? "#4CAF50" : "#2196F3",
           symbol: "circle",
@@ -107,7 +107,7 @@ export const ConnectedDotPlot = () => {
         y: [pop],
         x: [datum.state],
         mode: "markers",
-        name: `${c} (Reg Voters)`,
+        name: `${state} (Population)`,
         marker: {
           color: isGreen ? "#4CAF50" : "#2196F3",
           symbol: "square",
@@ -124,7 +124,7 @@ export const ConnectedDotPlot = () => {
         y: [pub, pop], // Two points to connect
         x: [datum.state, datum.state],
         mode: "lines",
-        name: `${c} (Line)`,
+        name: `${state} (Line)`,
         line: {
           color: isGreen ? "#4CAF50" : "#2196F3",
           width: 2,
@@ -186,32 +186,36 @@ export const ConnectedDotPlot = () => {
 
   return (
     <Paper elevation={1}>
-      {selectedStates.length > 0 && (
-        <Plot
-          data={traces}
-          layout={layout}
-          config={config}
-          style={{
-            width: "100%",
-            minHeight: 450,
-            borderRadius: 4,
-          }}
-          useResizeHandler
-        />
+      {selectedStates.length > 0 && publicationData.length > 0 && (
+        <>
+          <Plot
+            data={traces}
+            layout={layout}
+            config={config}
+            style={{
+              width: "100%",
+              minHeight: 450,
+              borderRadius: 4,
+            }}
+            useResizeHandler
+          />
+
+          <Box
+            px={2}
+            pb={1}
+          >
+            <Typography variant="caption">
+              This plot compares the publication share versus the population
+              share across selected Indian states for {topic} between the years
+              of {yearRange[0]} and {yearRange[1]}. A total of{" "}
+              {totalPublications} publications were retrieved. Lines connect
+              each state's publication share (circle) with its population share
+              (square), highlighting over-representation (green) or
+              under-representation (blue).
+            </Typography>
+          </Box>
+        </>
       )}
-      <Box
-        px={2}
-        pb={1}
-      >
-        <Typography variant="caption">
-          This plot compares the publication share versus the population share
-          across selected Indian states for {topic} between the years of{" "}
-          {yearRange[0]} and {yearRange[1]}. A total of {totalPublications}{" "}
-          publications were retrieved. Lines connect each state's publication
-          share (circle) with its population share (square), highlighting
-          over-representation (green) or under-representation (blue).
-        </Typography>
-      </Box>
     </Paper>
   );
 };
