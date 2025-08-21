@@ -14,6 +14,7 @@ interface AggregatedData {
 export const ConnectedDotPlot = () => {
   const {
     data: { publications: publicationData },
+    clientFilters: { states: selectedStates },
   } = useData();
   const { populationData } = usePopulationData();
 
@@ -24,11 +25,16 @@ export const ConnectedDotPlot = () => {
   // const populationData = [0.12, 0.22, 0.12];
 
   const aggregatedData = useMemo(() => {
-    if (!populationData || !publicationData) return [];
+    if (!populationData || !publicationData || !selectedStates) return [];
+
+    // filter populations to only include selected states
+    const filteredPublications = populationData.filter((pop) =>
+      selectedStates.includes(pop.state),
+    );
 
     const totalPublications = publicationData.length;
     if (totalPublications === 0) {
-      return populationData.map((pop) => ({
+      return filteredPublications.map((pop) => ({
         state: pop.state,
         publicationPercentage: 0,
         populationPercentage: pop.proportion,
@@ -40,7 +46,7 @@ export const ConnectedDotPlot = () => {
     const pubCounts = publicationData.reduce(
       (map: Map<string, number>, pub) => {
         const state = pub.institution_state?.trim();
-        if (state) {
+        if (state && selectedStates.includes(state)) {
           map.set(state, (map.get(state) || 0) + 1);
         }
         return map;
@@ -49,7 +55,7 @@ export const ConnectedDotPlot = () => {
     );
 
     // Aggregate data
-    const data: AggregatedData[] = populationData.map((pop) => {
+    const data: AggregatedData[] = filteredPublications.map((pop) => {
       const pubCount = pubCounts.get(pop.state) || 0;
       const pubPerc = pubCount / totalPublications;
       const popPerc = pop.proportion;
@@ -65,7 +71,7 @@ export const ConnectedDotPlot = () => {
     data.sort((a, b) => b.difference - a.difference);
 
     return data;
-  }, [publicationData, populationData]);
+  }, [publicationData, populationData, selectedStates]);
 
   // Prepare Plotly traces
   const traces = useMemo(() => {
@@ -93,7 +99,7 @@ export const ConnectedDotPlot = () => {
         marker: {
           color: isGreen ? "#4CAF50" : "#2196F3",
           symbol: "circle",
-          size: 16,
+          size: 12,
         },
         showlegend: false,
         text: [hoverText],
@@ -110,7 +116,7 @@ export const ConnectedDotPlot = () => {
         marker: {
           color: isGreen ? "#4CAF50" : "#2196F3",
           symbol: "square",
-          size: 16,
+          size: 12,
         },
         showlegend: false,
         text: [hoverText],
@@ -141,7 +147,6 @@ export const ConnectedDotPlot = () => {
     },
     yaxis: {
       showgrid: false,
-      // showline: true,
       tickmode: "linear",
       dtick: 0.05,
       tickformat: ".0%",
@@ -149,11 +154,8 @@ export const ConnectedDotPlot = () => {
         text: "Percentage",
       },
     },
-    margin: {
-      l: 140,
-      r: 40,
-      b: 70,
-      t: 80,
+    xaxis: {
+      automargin: true,
     },
     hovermode: "closest",
     hoverlabel: {
@@ -180,17 +182,19 @@ export const ConnectedDotPlot = () => {
 
   return (
     <Paper elevation={1}>
-      <Plot
-        data={traces}
-        layout={layout}
-        config={config}
-        style={{
-          width: "100%",
-          height: "100%",
-          borderRadius: 4,
-        }}
-        useResizeHandler
-      />
+      {selectedStates.length > 0 && (
+        <Plot
+          data={traces}
+          layout={layout}
+          config={config}
+          style={{
+            width: "100%",
+            minHeight: 450,
+            borderRadius: 4,
+          }}
+          useResizeHandler
+        />
+      )}
     </Paper>
   );
 };
