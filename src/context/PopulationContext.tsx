@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import {
   loadPopulationData,
   type PopulationData,
-} from "../services/loadPopulationData";
+} from "../services/PopulationDataService";
 
 interface PopulationContextType {
   populationData: PopulationData[];
