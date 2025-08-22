@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import { useData } from "../../context/DataContext";
+import { useData } from "../../context/PopulationDataContext";
 import {
   population_states_high,
   population_states_low,

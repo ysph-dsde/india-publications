@@ -4,7 +4,7 @@ import {
   ToggleButtonGroup,
   Typography,
 } from "@mui/material";
-import { useData } from "../../context/DataContext";
+import { useData } from "../../context/PopulationDataContext";
 import { LineChart, type LineSeries } from "@mui/x-charts";
 import { theme } from "../../Theme";
 import { useState } from "react";

@@ -14,7 +14,7 @@ import { theme } from "./Theme";
 import { useState } from "react";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import { MainContent } from "./components/MainContent";
-import { DataProvider } from "./context/DataContext";
+import { DataProvider } from "./context/PopulationDataContext";
 import { PopulationProvider } from "./context/PopulationContext";
 
 function App() {

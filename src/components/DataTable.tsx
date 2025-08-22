@@ -15,7 +15,7 @@ import {
 } from "@mui/x-data-grid";
 // import FileDownloadIcon from "@mui/icons-material/FileDownload";
 
-import { useData } from "../context/DataContext";
+import { useData } from "../context/PopulationDataContext";
 
 // function CustomToolbar() {
 //   return (
