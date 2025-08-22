@@ -1,6 +1,6 @@
 import { Box, Paper, Typography } from "@mui/material";
 import Plot from "react-plotly.js";
-import { useData } from "../../context/PopulationDataContext";
+import { useData } from "../../context/PublicationDataContext";
 import { usePopulationData } from "../../context/PopulationContext";
 import { useMemo } from "react";
 

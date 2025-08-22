@@ -26,7 +26,7 @@ import {
 } from "../../constants/FIlterTypes";
 
 import { StatesSelector } from "./StatesSelector";
-import { useData } from "../../context/PopulationDataContext";
+import { useData } from "../../context/PublicationDataContext";
 import ysphLogo from "../../assets/images/ysphLogo.jpeg";
 
 export const Sidebar = () => {
