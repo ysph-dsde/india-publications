@@ -6,6 +6,8 @@ import { GeoPlot } from "./Plots/GeoPlot";
 import { TemporalDistributionPlot } from "./Plots/TemporalDistributionPlot";
 import { ConnectedDotPlot } from "./Plots/ConnectedDotPlot";
 import { StackedBarPlot } from "./Plots/StackedBarPlot";
+import { BubblePlot } from "./Plots/BubblePlot";
+import { HdiProvider } from "../context/HdiContext";
 
 export const MainContent = () => {
   const tabs = [
@@ -27,7 +29,7 @@ export const MainContent = () => {
     },
     {
       label: "HDI vs Publications",
-      content: <Typography>HDI vs Publications Chart Coming Soon</Typography>,
+      content: <BubblePlot />,
     },
   ];
 
