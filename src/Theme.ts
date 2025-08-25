@@ -14,6 +14,9 @@ export const theme = createTheme({
         ".js-plotly-plot .plotly [class*='cursor-']": {
           cursor: "default !important",
         },
+        ".js-plotly-plot .plotly .legendtoggle": {
+          cursor: "default !important",
+        },
       },
     },
   },
