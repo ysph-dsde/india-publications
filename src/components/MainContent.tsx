@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { CustomTabs } from "./shared/CustomTabs";
 
 import { DataTable } from "./DataTable";
@@ -7,9 +7,11 @@ import { TemporalDistributionPlot } from "./Plots/TemporalDistributionPlot";
 import { ConnectedDotPlot } from "./Plots/ConnectedDotPlot";
 import { StackedBarPlot } from "./Plots/StackedBarPlot";
 import { BubblePlot } from "./Plots/BubblePlot";
-import { HdiProvider } from "../context/HdiContext";
+import { useState } from "react";
 
 export const MainContent = () => {
+  const [view, setView] = useState<"national" | "byState">("national");
+
   const tabs = [
     {
       label: "Geographic Distribution of Publications",
@@ -17,7 +19,12 @@ export const MainContent = () => {
     },
     {
       label: "Temporal Distribution of Publications",
-      content: <TemporalDistributionPlot />,
+      content: (
+        <TemporalDistributionPlot
+          view={view}
+          setView={setView}
+        />
+      ),
     },
     {
       label: "Publication vs Population",
