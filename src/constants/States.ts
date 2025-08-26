@@ -65,6 +65,7 @@ export const stateColorMapping: { [key: string]: string } = {
   Bihar: "#C7F464",
   Chandigarh: "#6C5B7B",
   Chhattisgarh: "#FFB88C",
+  "Dadra and Nagar Haveli and Daman and Diu": "#A8E6CF",
   Delhi: "#ACD8AA",
   Goa: "#FFA07A",
   Gujarat: "#00A8C6",
