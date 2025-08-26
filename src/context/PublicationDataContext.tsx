@@ -13,6 +13,7 @@ import {
   type ClientFilters,
   type YearlyPublication,
   type StateYearlyPublication,
+  type totalPublicationsByState,
 } from "./types";
 import { fetchOpenAlexData } from "../services/OpenAlexService";
 import { States } from "../constants/States";
@@ -32,9 +33,11 @@ const prepareChartData = (
 ): {
   yearlyData: YearlyPublication[];
   yearlyDataByState: StateYearlyPublication[];
+  totalPublicationsByState: totalPublicationsByState[];
 } => {
   const yearCounts: { [year: number]: number } = {};
   const yearStateCounts: { [year: number]: { [state: string]: number } } = {};
+  const stateTotals: { [state: string]: number } = {};
 
   publications.forEach((pub) => {
     const { publication_year, institution_state } = pub;
@@ -49,6 +52,9 @@ const prepareChartData = (
     }
     yearStateCounts[publication_year][state] =
       (yearStateCounts[publication_year][state] || 0) + 1;
+
+    // Count total publications per state
+    stateTotals[state] = (stateTotals[state] || 0) + 1;
   });
 
   // Get all unique states across all years
@@ -82,7 +88,12 @@ const prepareChartData = (
     })
     .sort((a, b) => a.year - b.year);
 
-  return { yearlyData, yearlyDataByState };
+  // Convert state totals to array
+  const totalPublicationsByState = Object.entries(stateTotals).map(
+    ([state, count]) => ({ state, count }),
+  );
+
+  return { yearlyData, yearlyDataByState, totalPublicationsByState };
 };
 
 export const DataProvider = ({ children }: { children: React.ReactNode }) => {
@@ -104,6 +115,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     publications: [],
     yearlyData: [],
     stateYearlyData: [],
+    totalPublicationsByState: [],
     loading: true,
     error: null,
   });
@@ -140,9 +152,10 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     });
   }, [serverFilters, clientFilters, sourceData]);
 
-  const { yearlyData, yearlyDataByState } = useMemo(() => {
-    return prepareChartData(filteredPublications);
-  }, [filteredPublications]);
+  const { yearlyData, yearlyDataByState, totalPublicationsByState } =
+    useMemo(() => {
+      return prepareChartData(filteredPublications);
+    }, [filteredPublications]);
 
   // update publications in table when source data OR filters change
   useEffect(() => {
@@ -151,8 +164,14 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
       publications: filteredPublications,
       yearlyData: yearlyData,
       stateYearlyData: yearlyDataByState,
+      totalPublicationsByState: totalPublicationsByState,
     }));
-  }, [filteredPublications, yearlyData, yearlyData]);
+  }, [
+    filteredPublications,
+    yearlyData,
+    yearlyDataByState,
+    totalPublicationsByState,
+  ]);
 
   const isFetchingRef = useRef<Symbol | null>(null);
 
@@ -189,6 +208,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
           publications: [],
           yearlyData: [],
           stateYearlyData: [],
+          totalPublicationsByState: [],
           loading: false,
           error: error instanceof Error ? error.message : "Failed to load data",
         });

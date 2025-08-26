@@ -30,10 +30,17 @@ export interface StateYearlyPublication {
 }
 [];
 
+export interface totalPublicationsByState {
+  state: string;
+  count: number;
+}
+[];
+
 export interface DataState {
   publications: FlattenedPublication[];
   yearlyData: YearlyPublication[];
   stateYearlyData: StateYearlyPublication[];
+  totalPublicationsByState: totalPublicationsByState[];
   loading: boolean;
   error: string | null;
 }
