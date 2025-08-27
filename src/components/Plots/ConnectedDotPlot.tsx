@@ -13,7 +13,7 @@ interface AggregatedData {
 
 export const ConnectedDotPlot = () => {
   const {
-    data: { publications: publicationData },
+    data: { publications: publicationData, loading },
     clientFilters: { states: selectedStates },
     serverFilters: { yearRange, topic },
   } = useData();
@@ -186,7 +186,7 @@ export const ConnectedDotPlot = () => {
 
   return (
     <Paper elevation={1}>
-      {selectedStates.length > 0 && publicationData.length > 0 && (
+      {selectedStates.length > 0 && !loading && (
         <>
           <Plot
             data={traces}

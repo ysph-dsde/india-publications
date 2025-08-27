@@ -6,7 +6,7 @@ import { stateColorMapping } from "../../constants/States";
 
 export const BubblePlot = () => {
   const {
-    data: { publications: publicationData, stateYearlyData },
+    data: { publications: publicationData, stateYearlyData, loading },
     clientFilters: { states: selectedStates },
     serverFilters: { yearRange, topic },
   } = useData();
@@ -133,7 +133,7 @@ export const BubblePlot = () => {
 
   return (
     <Paper elevation={1}>
-      {selectedStates.length > 0 && stateYearlyData.length > 0 && (
+      {selectedStates.length > 0 && !loading && (
         <>
           <Plot
             data={traces}

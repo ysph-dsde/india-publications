@@ -8,7 +8,7 @@ import geojson from "../../assets/states_geo.json";
 
 export const GeoPlot = () => {
   const {
-    data: { publications: publicationData, totalPublicationsByState },
+    data: { publications: publicationData, totalPublicationsByState, loading },
     clientFilters: { states: selectedStates },
     serverFilters: { yearRange, topic },
   } = useData();
@@ -114,7 +114,7 @@ export const GeoPlot = () => {
 
   return (
     <Paper elevation={1}>
-      {totalPublicationsByState.length > 0 && (
+      {!loading && (
         <>
           <Plot
             data={plotData}
