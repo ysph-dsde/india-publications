@@ -1,4 +1,5 @@
 import Papa from "papaparse";
+import hdi_data from "../assets/data_hdi.csv";
 
 interface HdiDataRawData {
   State: string;
@@ -60,7 +61,7 @@ export const loadHdiData = async () => {
     return cachedData; // Return cached data if already loaded
   }
   try {
-    const rawData = await parseHdiData("/data_hdi.csv");
+    const rawData = await parseHdiData(hdi_data);
     cachedData = groupHdiData(rawData);
     return cachedData;
   } catch (error) {
