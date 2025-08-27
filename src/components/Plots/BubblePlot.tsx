@@ -8,7 +8,7 @@ export const BubblePlot = () => {
   const {
     data: { publications: publicationData, stateYearlyData, loading },
     clientFilters: { states: selectedStates },
-    serverFilters: { yearRange, topic },
+    serverFilters: { yearRange, topic, customKeyword },
   } = useData();
   const { hdiData } = useHdiData();
   const totalPublications = publicationData.length;
@@ -153,8 +153,8 @@ export const BubblePlot = () => {
             <Typography variant="caption">
               This bubble plot displays the relationship between Human
               Development Index (HDI) and the number of publications under{" "}
-              {topic} between {yearRange[0]} and {yearRange[1]}. Bubble size
-              represents the number of publications. A total of{" "}
+              {customKeyword || topic} between {yearRange[0]} and {yearRange[1]}
+              . Bubble size represents the number of publications. A total of{" "}
               {totalPublications} publications were retrieved.
             </Typography>
           </Box>

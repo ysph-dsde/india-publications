@@ -22,7 +22,7 @@ export const TemporalDistributionPlot = ({
 }: TemportalDistributionPlotProps) => {
   const {
     data,
-    serverFilters,
+    serverFilters: { yearRange, topic, customKeyword },
     clientFilters: { states: selectedStates },
   } = useData();
   const { yearlyData, stateYearlyData } = data;
@@ -166,8 +166,8 @@ export const TemporalDistributionPlot = ({
             >
               <Typography variant="caption">
                 This line chart displays the trend in total publications under{" "}
-                {serverFilters.topic} across selected states from{" "}
-                {serverFilters.yearRange[0]} to {serverFilters.yearRange[1]}.
+                {customKeyword || topic} across selected states from{" "}
+                {yearRange[0]} to {yearRange[1]}.
               </Typography>
             </Box>
             <ToggleButtonGroup

@@ -10,7 +10,7 @@ export const GeoPlot = () => {
   const {
     data: { publications: publicationData, totalPublicationsByState, loading },
     clientFilters: { states: selectedStates },
-    serverFilters: { yearRange, topic },
+    serverFilters: { yearRange, topic, customKeyword },
   } = useData();
   const totalPublications = publicationData.length;
 
@@ -132,9 +132,10 @@ export const GeoPlot = () => {
             pb={1}
           >
             <Typography variant="caption">
-              This plot shows the number of publications under {topic} between
-              the years of {yearRange[0]} and {yearRange[1]}. A total of{" "}
-              {totalPublications} publications were retrieved.
+              This plot shows the number of publications under{" "}
+              {customKeyword || topic} between the years of {yearRange[0]} and{" "}
+              {yearRange[1]}. A total of {totalPublications} publications were
+              retrieved.
             </Typography>
           </Box>
         </>

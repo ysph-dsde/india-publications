@@ -7,7 +7,7 @@ export const StackedBarPlot = () => {
   const {
     data: { publications: publicationData, stateYearlyData, loading },
     clientFilters: { states: selectedStates },
-    serverFilters: { yearRange, topic },
+    serverFilters: { yearRange, topic, customKeyword },
   } = useData();
   const totalPublications = publicationData.length;
 
@@ -114,9 +114,9 @@ export const StackedBarPlot = () => {
           >
             <Typography variant="caption">
               This stacked bar plot shows the relative contribution of each
-              state to the total number of publications under {topic} between{" "}
-              {yearRange[0]} and {yearRange[1]}. A total of {totalPublications}{" "}
-              publications were retrieved.
+              state to the total number of publications under{" "}
+              {customKeyword || topic} between {yearRange[0]} and {yearRange[1]}
+              . A total of {totalPublications} publications were retrieved.
             </Typography>
           </Box>
         </>

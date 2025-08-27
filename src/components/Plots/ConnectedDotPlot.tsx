@@ -15,7 +15,7 @@ export const ConnectedDotPlot = () => {
   const {
     data: { publications: publicationData, loading },
     clientFilters: { states: selectedStates },
-    serverFilters: { yearRange, topic },
+    serverFilters: { yearRange, topic, customKeyword },
   } = useData();
   const { populationData } = usePopulationData();
   const totalPublications = publicationData.length;
@@ -206,8 +206,8 @@ export const ConnectedDotPlot = () => {
           >
             <Typography variant="caption">
               This plot compares the publication share versus the population
-              share across selected Indian states for {topic} between the years
-              of {yearRange[0]} and {yearRange[1]}. A total of{" "}
+              share across selected Indian states for {customKeyword || topic}{" "}
+              between the years of {yearRange[0]} and {yearRange[1]}. A total of{" "}
               {totalPublications} publications were retrieved. Lines connect
               each state's publication share (circle) with its population share
               (square), highlighting over-representation (green) or
