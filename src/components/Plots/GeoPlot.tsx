@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import Plot from "react-plotly.js";
 import { useData } from "../../context/PublicationDataContext";
 import { theme } from "../../Theme";
-import { States } from "../../constants/States";
+import { States as allStates } from "../../constants/States";
 
 // interface GeoJSONData {
 //   type: string;
@@ -39,25 +39,7 @@ export const GeoPlot = () => {
         state: state,
         count: 0,
       })),
-    // update state names to match those in the geojson
     ...totalPublicationsByState.map((item) => {
-      if (item.state === "Andaman and Nicobar") {
-        return { ...item, state: "Andaman & Nicobar" };
-      } else if (item.state === "Jammu and Kashmir") {
-        return { ...item, state: "Jammu & Kashmir" };
-      }
-      return item;
-    }),
-  ];
-
-  const allStates = [
-    // update state names to match those in the geojson
-    ...States.map((item) => {
-      if (item === "Andaman and Nicobar") {
-        return "Andaman & Nicobar";
-      } else if (item === "Jammu and Kashmir") {
-        return "Jammu & Kashmir";
-      }
       return item;
     }),
   ];
@@ -66,18 +48,10 @@ export const GeoPlot = () => {
     const fetchData = async () => {
       try {
         // Fetch GeoJSON
-        const geojsonResponse = await fetch(
-          "https://gist.githubusercontent.com/jbrobst/56c13bbbf9d97d187fea01ca62ea5112/raw/e388c4cae20aa53cb5090210a42ebb9b765c0a36/india_states.geojson",
-        );
-        const geojsonData = await geojsonResponse.json();
-        console.log("Theirs", geojsonData);
-        setGeojson(geojsonData);
-
-        const geojsonResponse2 = await fetch("/India_State_Boundary4.json");
+        const geojsonResponse2 = await fetch("/in.json");
         const geojsonData2 = await geojsonResponse2.json();
         console.log("mine", geojsonData2);
-
-        // setGeojson(geojsonData2);
+        setGeojson(geojsonData2);
       } catch (err) {
         console.error(err);
       }
@@ -92,8 +66,7 @@ export const GeoPlot = () => {
         type: "choropleth",
         locationmode: "geojson-id",
         geojson: geojson,
-        // featureidkey: "properties.State_Name",
-        featureidkey: "properties.ST_NM",
+        featureidkey: "properties.name",
         locations: allStates.map((state) => state),
         z: allStates.map((_state) => 0),
         colorscale: [
@@ -109,10 +82,9 @@ export const GeoPlot = () => {
         type: "choropleth",
         locationmode: "geojson-id",
         geojson: geojson,
-        // featureidkey: "properties.State_Name",
-        featureidkey: "properties.ST_NM",
-        locations: completePublicationsByState.map((d) => d.state),
-        z: completePublicationsByState.map((d) => d["count"]),
+        featureidkey: "properties.name",
+        locations: completePublicationsByState.map((state) => state.state),
+        z: completePublicationsByState.map((state) => state["count"]),
         colorscale: "Blues",
         reversescale: true,
         colorbar: {
@@ -148,6 +120,7 @@ export const GeoPlot = () => {
       scale: 1,
     },
     hovermode: "closest",
+    hoverdistance: -1,
     hoverlabel: {
       bgcolor: "white",
     },
@@ -179,7 +152,7 @@ export const GeoPlot = () => {
         config={config}
         style={{
           width: "100%",
-          minHeight: 600,
+          minHeight: 800,
           borderRadius: 4,
         }}
         useResizeHandler
