@@ -1,23 +1,10 @@
 import { Box, Paper, Typography } from "@mui/material";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import Plot from "react-plotly.js";
 import { useData } from "../../context/PublicationDataContext";
 import { theme } from "../../Theme";
 import { States as allStates } from "../../constants/States";
-
-// interface GeoJSONData {
-//   type: string;
-//   features: Array<{
-//     type: string;
-//     geometry: {
-//       type: string;
-//       coordinates: number[][][][] | number[][][];
-//     };
-//     properties: {
-//       State_Name: string;
-//     };
-//   }>;
-// }
+import geojson from "../../assets/states_geo.json";
 
 export const GeoPlot = () => {
   const {
@@ -26,8 +13,6 @@ export const GeoPlot = () => {
     serverFilters: { yearRange, topic },
   } = useData();
   const totalPublications = publicationData.length;
-
-  const [geojson, setGeojson] = useState<any>(null);
 
   const completePublicationsByState = [
     // add states with zero publications if they are selected
@@ -43,21 +28,6 @@ export const GeoPlot = () => {
       return item;
     }),
   ];
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Fetch GeoJSON
-        const geojsonResponse2 = await fetch("/in.json");
-        const geojsonData2 = await geojsonResponse2.json();
-        console.log("mine", geojsonData2);
-        setGeojson(geojsonData2);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchData();
-  }, []);
 
   const plotData: Plotly.Data[] = useMemo(() => {
     return [
@@ -106,7 +76,7 @@ export const GeoPlot = () => {
         hovertemplate: "%{location}: %{z} publications<extra></extra>",
       },
     ];
-  }, [totalPublicationsByState, geojson]);
+  }, [totalPublicationsByState]);
 
   const layout: Partial<Plotly.Layout> = {
     geo: {
@@ -146,27 +116,31 @@ export const GeoPlot = () => {
 
   return (
     <Paper elevation={1}>
-      <Plot
-        data={plotData}
-        layout={layout}
-        config={config}
-        style={{
-          width: "100%",
-          minHeight: 800,
-          borderRadius: 4,
-        }}
-        useResizeHandler
-      />
-      <Box
-        px={2}
-        pb={1}
-      >
-        <Typography variant="caption">
-          This plot shows the number of publications under {topic} between the
-          years of {yearRange[0]} and {yearRange[1]}. A total of{" "}
-          {totalPublications} publications were retrieved.
-        </Typography>
-      </Box>
+      {totalPublicationsByState.length > 0 && (
+        <>
+          <Plot
+            data={plotData}
+            layout={layout}
+            config={config}
+            style={{
+              width: "100%",
+              minHeight: 800,
+              borderRadius: 4,
+            }}
+            useResizeHandler
+          />
+          <Box
+            px={2}
+            pb={1}
+          >
+            <Typography variant="caption">
+              This plot shows the number of publications under {topic} between
+              the years of {yearRange[0]} and {yearRange[1]}. A total of{" "}
+              {totalPublications} publications were retrieved.
+            </Typography>
+          </Box>
+        </>
+      )}
     </Paper>
   );
 };
