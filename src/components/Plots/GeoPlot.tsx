@@ -24,9 +24,7 @@ export const GeoPlot = () => {
         state: state,
         count: 0,
       })),
-    ...totalPublicationsByState.map((item) => {
-      return item;
-    }),
+    ...totalPublicationsByState,
   ];
 
   const plotData: Plotly.Data[] = useMemo(() => {
