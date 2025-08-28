@@ -3,6 +3,7 @@ import Plot from "react-plotly.js";
 import { useData } from "../../context/PublicationDataContext";
 import { usePopulationData } from "../../context/PopulationContext";
 import { useMemo } from "react";
+import { PlotWrapper } from "./PlotWrapper";
 
 interface AggregatedData {
   state: string;
@@ -185,37 +186,33 @@ export const ConnectedDotPlot = () => {
   };
 
   return (
-    <Paper elevation={1}>
-      {selectedStates.length > 0 && !loading && (
-        <>
-          <Plot
-            data={traces}
-            layout={layout}
-            config={config}
-            style={{
-              width: "100%",
-              minHeight: 450,
-              borderRadius: 4,
-            }}
-            useResizeHandler
-          />
+    <PlotWrapper show={selectedStates.length > 0 && !loading}>
+      <Plot
+        data={traces}
+        layout={layout}
+        config={config}
+        style={{
+          width: "100%",
+          minHeight: 450,
+          borderRadius: 4,
+        }}
+        useResizeHandler
+      />
 
-          <Box
-            px={2}
-            pb={1}
-          >
-            <Typography variant="caption">
-              This plot compares the publication share versus the population
-              share across selected Indian states for {customKeyword || topic}{" "}
-              between the years of {yearRange[0]} and {yearRange[1]}. A total of{" "}
-              {totalPublications} publications were retrieved. Lines connect
-              each state's publication share (circle) with its population share
-              (square), highlighting over-representation (green) or
-              under-representation (blue).
-            </Typography>
-          </Box>
-        </>
-      )}
-    </Paper>
+      <Box
+        px={2}
+        pb={1}
+      >
+        <Typography variant="caption">
+          This plot compares the publication share versus the population share
+          across selected Indian states for {customKeyword || topic} between the
+          years of {yearRange[0]} and {yearRange[1]}. A total of{" "}
+          {totalPublications} publications were retrieved. Lines connect each
+          state's publication share (circle) with its population share (square),
+          highlighting over-representation (green) or under-representation
+          (blue).
+        </Typography>
+      </Box>
+    </PlotWrapper>
   );
 };

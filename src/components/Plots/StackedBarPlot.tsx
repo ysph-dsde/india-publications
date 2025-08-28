@@ -2,6 +2,7 @@ import { Box, Paper, Typography } from "@mui/material";
 import Plot from "react-plotly.js";
 import { useData } from "../../context/PublicationDataContext";
 import { stateColorMapping } from "../../constants/States";
+import { PlotWrapper } from "./PlotWrapper";
 
 export const StackedBarPlot = () => {
   const {
@@ -93,34 +94,30 @@ export const StackedBarPlot = () => {
     ],
   };
   return (
-    <Paper elevation={1}>
-      {selectedStates.length > 0 && !loading && (
-        <>
-          <Plot
-            data={traces}
-            layout={layout}
-            config={config}
-            style={{
-              width: "100%",
-              minHeight: 450,
-              borderRadius: 4,
-            }}
-            useResizeHandler
-          />
+    <PlotWrapper show={selectedStates.length > 0 && !loading}>
+      <Plot
+        data={traces}
+        layout={layout}
+        config={config}
+        style={{
+          width: "100%",
+          minHeight: 450,
+          borderRadius: 4,
+        }}
+        useResizeHandler
+      />
 
-          <Box
-            px={2}
-            pb={1}
-          >
-            <Typography variant="caption">
-              This stacked bar plot shows the relative contribution of each
-              state to the total number of publications under{" "}
-              {customKeyword || topic} between {yearRange[0]} and {yearRange[1]}
-              . A total of {totalPublications} publications were retrieved.
-            </Typography>
-          </Box>
-        </>
-      )}
-    </Paper>
+      <Box
+        px={2}
+        pb={1}
+      >
+        <Typography variant="caption">
+          This stacked bar plot shows the relative contribution of each state to
+          the total number of publications under {customKeyword || topic}{" "}
+          between {yearRange[0]} and {yearRange[1]}. A total of{" "}
+          {totalPublications} publications were retrieved.
+        </Typography>
+      </Box>
+    </PlotWrapper>
   );
 };

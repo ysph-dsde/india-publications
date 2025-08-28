@@ -3,6 +3,7 @@ import Plot from "react-plotly.js";
 import { useHdiData } from "../../context/HdiContext";
 import { useData } from "../../context/PublicationDataContext";
 import { stateColorMapping } from "../../constants/States";
+import { PlotWrapper } from "./PlotWrapper";
 
 export const BubblePlot = () => {
   const {
@@ -132,34 +133,30 @@ export const BubblePlot = () => {
   };
 
   return (
-    <Paper elevation={1}>
-      {selectedStates.length > 0 && !loading && (
-        <>
-          <Plot
-            data={traces}
-            layout={layout}
-            config={config}
-            style={{
-              width: "100%",
-              minHeight: 450,
-              borderRadius: 4,
-            }}
-            useResizeHandler
-          />
-          <Box
-            px={2}
-            pb={1}
-          >
-            <Typography variant="caption">
-              This bubble plot displays the relationship between Human
-              Development Index (HDI) and the number of publications under{" "}
-              {customKeyword || topic} between {yearRange[0]} and {yearRange[1]}
-              . Bubble size represents the number of publications. A total of{" "}
-              {totalPublications} publications were retrieved.
-            </Typography>
-          </Box>
-        </>
-      )}
-    </Paper>
+    <PlotWrapper show={selectedStates.length > 0 && !loading}>
+      <Plot
+        data={traces}
+        layout={layout}
+        config={config}
+        style={{
+          width: "100%",
+          minHeight: 450,
+          borderRadius: 4,
+        }}
+        useResizeHandler
+      />
+      <Box
+        px={2}
+        pb={1}
+      >
+        <Typography variant="caption">
+          This bubble plot displays the relationship between Human Development
+          Index (HDI) and the number of publications under{" "}
+          {customKeyword || topic} between {yearRange[0]} and {yearRange[1]}.
+          Bubble size represents the number of publications. A total of{" "}
+          {totalPublications} publications were retrieved.
+        </Typography>
+      </Box>
+    </PlotWrapper>
   );
 };

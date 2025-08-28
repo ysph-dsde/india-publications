@@ -5,6 +5,7 @@ import { useData } from "../../context/PublicationDataContext";
 import { theme } from "../../Theme";
 import { States as allStates } from "../../constants/States";
 import geojson from "../../assets/states_geo.json";
+import { PlotWrapper } from "./PlotWrapper";
 
 export const GeoPlot = () => {
   const {
@@ -113,33 +114,29 @@ export const GeoPlot = () => {
   };
 
   return (
-    <Paper elevation={1}>
-      {!loading && (
-        <>
-          <Plot
-            data={plotData}
-            layout={layout}
-            config={config}
-            style={{
-              width: "100%",
-              minHeight: 800,
-              borderRadius: 4,
-            }}
-            useResizeHandler
-          />
-          <Box
-            px={2}
-            pb={1}
-          >
-            <Typography variant="caption">
-              This plot shows the number of publications under{" "}
-              {customKeyword || topic} between the years of {yearRange[0]} and{" "}
-              {yearRange[1]}. A total of {totalPublications} publications were
-              retrieved.
-            </Typography>
-          </Box>
-        </>
-      )}
-    </Paper>
+    <PlotWrapper show={!loading}>
+      <Plot
+        data={plotData}
+        layout={layout}
+        config={config}
+        style={{
+          width: "100%",
+          minHeight: 800,
+          borderRadius: 4,
+        }}
+        useResizeHandler
+      />
+      <Box
+        px={2}
+        pb={1}
+      >
+        <Typography variant="caption">
+          This plot shows the number of publications under{" "}
+          {customKeyword || topic} between the years of {yearRange[0]} and{" "}
+          {yearRange[1]}. A total of {totalPublications} publications were
+          retrieved.
+        </Typography>
+      </Box>
+    </PlotWrapper>
   );
 };

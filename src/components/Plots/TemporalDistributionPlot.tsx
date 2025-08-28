@@ -10,6 +10,7 @@ import { useData } from "../../context/PublicationDataContext";
 import { theme } from "../../Theme";
 import { stateColorMapping } from "../../constants/States";
 import Plot from "react-plotly.js";
+import { PlotWrapper } from "./PlotWrapper";
 
 interface TemportalDistributionPlotProps {
   view: "national" | "byState";
@@ -142,47 +143,43 @@ export const TemporalDistributionPlot = ({
   };
 
   return (
-    <Paper elevation={1}>
-      {selectedStates.length > 0 && !data.loading && (
-        <>
-          <Box
-            display="flex"
-            flexDirection="column"
-          >
-            <Plot
-              data={traces}
-              layout={layout}
-              config={config}
-              style={{
-                width: "100%",
-                minHeight: 450,
-                borderRadius: 4,
-              }}
-              useResizeHandler
-            />
-            <Box
-              px={2}
-              pb={1}
-            >
-              <Typography variant="caption">
-                This line chart displays the trend in total publications under{" "}
-                {customKeyword || topic} across selected states from{" "}
-                {yearRange[0]} to {yearRange[1]}.
-              </Typography>
-            </Box>
-            <ToggleButtonGroup
-              sx={{ alignSelf: "center", pb: 2 }}
-              value={view}
-              exclusive
-              onChange={(_e, newView) => newView && setView(newView)}
-            >
-              <ToggleButton value="national">National</ToggleButton>
-              <ToggleButton value="byState">By State</ToggleButton>
-            </ToggleButtonGroup>
-          </Box>
-        </>
-      )}
-    </Paper>
+    <PlotWrapper show={selectedStates.length > 0 && !data.loading}>
+      <Box
+        display="flex"
+        flexDirection="column"
+      >
+        <Plot
+          data={traces}
+          layout={layout}
+          config={config}
+          style={{
+            width: "100%",
+            minHeight: 450,
+            borderRadius: 4,
+          }}
+          useResizeHandler
+        />
+        <Box
+          px={2}
+          pb={1}
+        >
+          <Typography variant="caption">
+            This line chart displays the trend in total publications under{" "}
+            {customKeyword || topic} across selected states from {yearRange[0]}{" "}
+            to {yearRange[1]}.
+          </Typography>
+        </Box>
+        <ToggleButtonGroup
+          sx={{ alignSelf: "center", pb: 2 }}
+          value={view}
+          exclusive
+          onChange={(_e, newView) => newView && setView(newView)}
+        >
+          <ToggleButton value="national">National</ToggleButton>
+          <ToggleButton value="byState">By State</ToggleButton>
+        </ToggleButtonGroup>
+      </Box>
+    </PlotWrapper>
     // <Box
     //   display="flex"
     //   flexDirection="column"
