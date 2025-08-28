@@ -23,7 +23,10 @@ export const PlotWrapper = ({ children }: PlotWrapperProps) => {
     clientFilters: { states: selectedStates },
   } = useData();
   return (
-    <Paper elevation={1}>
+    <Paper
+      elevation={1}
+      sx={{ display: "flex", flexDirection: "column" }}
+    >
       {selectedStates.length === 0 ? (
         <NoStatesSelected />
       ) : (

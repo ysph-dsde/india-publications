@@ -1,4 +1,4 @@
-import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { useData } from "../../context/PublicationDataContext";
 // import { LineChart, type LineSeries } from "@mui/x-charts";
 import { theme } from "../../Theme";
@@ -114,29 +114,24 @@ export const TemporalDistributionPlot = ({
 
   return (
     <PlotWrapper>
-      <Box
-        display="flex"
-        flexDirection="column"
+      <CustomPlot
+        data={traces}
+        layout={layout}
+      />
+      <PlotCaption>
+        This line chart displays the trend in total publications under{" "}
+        {customKeyword || topic} across selected states from {yearRange[0]} to{" "}
+        {yearRange[1]}.
+      </PlotCaption>
+      <ToggleButtonGroup
+        sx={{ alignSelf: "center", pb: 2 }}
+        value={view}
+        exclusive
+        onChange={(_e, newView) => newView && setView(newView)}
       >
-        <CustomPlot
-          data={traces}
-          layout={layout}
-        />
-        <PlotCaption>
-          This line chart displays the trend in total publications under{" "}
-          {customKeyword || topic} across selected states from {yearRange[0]} to{" "}
-          {yearRange[1]}.
-        </PlotCaption>
-        <ToggleButtonGroup
-          sx={{ alignSelf: "center", pb: 2 }}
-          value={view}
-          exclusive
-          onChange={(_e, newView) => newView && setView(newView)}
-        >
-          <ToggleButton value="national">National</ToggleButton>
-          <ToggleButton value="byState">By State</ToggleButton>
-        </ToggleButtonGroup>
-      </Box>
+        <ToggleButton value="national">National</ToggleButton>
+        <ToggleButton value="byState">By State</ToggleButton>
+      </ToggleButtonGroup>
     </PlotWrapper>
     // <Box
     //   display="flex"
