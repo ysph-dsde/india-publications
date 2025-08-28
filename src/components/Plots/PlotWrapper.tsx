@@ -6,6 +6,17 @@ interface PlotWrapperProps {
   children: React.ReactNode;
 }
 
+const NoStatesSelected = () => {
+  return (
+    <Box
+      p={2}
+      textAlign="center"
+    >
+      <Typography>Please select at least 1 state</Typography>
+    </Box>
+  );
+};
+
 export const PlotWrapper = ({ children }: PlotWrapperProps) => {
   const {
     data: { loading },
@@ -14,12 +25,7 @@ export const PlotWrapper = ({ children }: PlotWrapperProps) => {
   return (
     <Paper elevation={1}>
       {selectedStates.length === 0 ? (
-        <Box
-          p={2}
-          textAlign="center"
-        >
-          <Typography>Please select at least 1 state</Typography>
-        </Box>
+        <NoStatesSelected />
       ) : (
         !loading && children
       )}
