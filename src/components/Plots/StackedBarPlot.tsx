@@ -3,6 +3,8 @@ import Plot from "react-plotly.js";
 import { useData } from "../../context/PublicationDataContext";
 import { stateColorMapping } from "../../constants/States";
 import { PlotWrapper } from "./PlotWrapper";
+import { baseConfig, createLayout } from "./plotConfig";
+import { useMemo } from "react";
 
 export const StackedBarPlot = () => {
   const {
@@ -49,56 +51,37 @@ export const StackedBarPlot = () => {
     };
   });
 
-  const layout: Partial<Plotly.Layout> = {
-    title: {
-      text: "State Publications Percentage by Year",
-    },
-    yaxis: {
-      showgrid: false,
-      tickmode: "linear",
-      dtick: 0.25,
-      tickformat: ".0%",
-      title: {
-        text: "Percentage of Publications",
-      },
-    },
-    xaxis: {
-      automargin: true,
-      title: {
-        text: "Year",
-      },
-      type: "category",
-    },
-    hovermode: "closest",
-    hoverlabel: {
-      bgcolor: "white",
-    },
-    autosize: true,
-    dragmode: false,
-    legend: { itemclick: false, itemdoubleclick: false },
-    barmode: "stack",
-  };
+  const layout = useMemo<Partial<Plotly.Layout>>(
+    () =>
+      createLayout({
+        title: {
+          text: "State Publications Percentage by Year",
+        },
+        yaxis: {
+          tickmode: "linear",
+          dtick: 0.25,
+          tickformat: ".0%",
+          title: {
+            text: "Percentage of Publications",
+          },
+        },
+        xaxis: {
+          title: {
+            text: "Year",
+          },
+          type: "category",
+        },
+        barmode: "stack",
+      }),
+    [],
+  );
 
-  const config: Partial<Plotly.Config> = {
-    responsive: true,
-    displayModeBar: false,
-    modeBarButtonsToRemove: [
-      "pan2d",
-      "zoomIn2d",
-      "zoomOut2d",
-      "lasso2d",
-      "select2d",
-      "autoScale2d",
-      "zoom2d",
-      "resetScale2d",
-    ],
-  };
   return (
     <PlotWrapper>
       <Plot
         data={traces}
         layout={layout}
-        config={config}
+        config={baseConfig}
         style={{
           width: "100%",
           minHeight: 450,

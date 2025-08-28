@@ -4,6 +4,8 @@ import { useHdiData } from "../../context/HdiContext";
 import { useData } from "../../context/PublicationDataContext";
 import { stateColorMapping } from "../../constants/States";
 import { PlotWrapper } from "./PlotWrapper";
+import { baseConfig, createLayout } from "./plotConfig";
+import { useMemo } from "react";
 
 export const BubblePlot = () => {
   const {
@@ -89,55 +91,34 @@ export const BubblePlot = () => {
     };
   });
 
-  const layout: Partial<Plotly.Layout> = {
-    title: {
-      text: "Publications vs Human Development Index (HDI) Over Time",
-    },
-    yaxis: {
-      showgrid: false,
-      title: {
-        text: "Human Development Index (HDI)",
-      },
-    },
-    xaxis: {
-      automargin: true,
-      showgrid: false,
-      title: {
-        text: "Year",
-      },
-      type: "category",
-      categoryarray: yearCategories,
-    },
-    hovermode: "closest",
-    hoverlabel: {
-      bgcolor: "white",
-    },
-    autosize: true,
-    dragmode: false,
-    legend: { itemclick: false, itemdoubleclick: false },
-  };
-
-  const config: Partial<Plotly.Config> = {
-    responsive: true,
-    displayModeBar: false,
-    modeBarButtonsToRemove: [
-      "pan2d",
-      "zoomIn2d",
-      "zoomOut2d",
-      "lasso2d",
-      "select2d",
-      "autoScale2d",
-      "zoom2d",
-      "resetScale2d",
-    ],
-  };
+  const layout = useMemo<Partial<Plotly.Layout>>(
+    () =>
+      createLayout({
+        title: {
+          text: "Publications vs Human Development Index (HDI) Over Time",
+        },
+        xaxis: {
+          title: {
+            text: "Year",
+          },
+          type: "category",
+          categoryarray: yearCategories,
+        },
+        yaxis: {
+          title: {
+            text: "Human Development Index (HDI)",
+          },
+        },
+      }),
+    [],
+  );
 
   return (
     <PlotWrapper>
       <Plot
         data={traces}
         layout={layout}
-        config={config}
+        config={baseConfig}
         style={{
           width: "100%",
           minHeight: 450,

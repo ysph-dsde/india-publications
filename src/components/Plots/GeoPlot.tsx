@@ -6,6 +6,7 @@ import { theme } from "../../Theme";
 import { States as allStates } from "../../constants/States";
 import geojson from "../../assets/states_geo.json";
 import { PlotWrapper } from "./PlotWrapper";
+import { baseConfig, createLayout } from "./plotConfig";
 
 export const GeoPlot = () => {
   const {
@@ -77,48 +78,31 @@ export const GeoPlot = () => {
     ];
   }, [totalPublicationsByState]);
 
-  const layout: Partial<Plotly.Layout> = {
-    geo: {
-      visible: false,
-      fitbounds: "locations",
-      projection: {
-        type: "conic conformal",
-        parallels: [12.472944444, 35.172805555556],
-        rotation: { lat: 24, lon: 80 },
-      },
-      scale: 1,
-    },
-    hovermode: "closest",
-    hoverdistance: -1,
-    hoverlabel: {
-      bgcolor: "white",
-    },
-    autosize: true,
-    dragmode: false,
-    margin: { r: 0, t: 0, b: 0, l: 0 },
-  };
-
-  const config: Partial<Plotly.Config> = {
-    responsive: true,
-    displayModeBar: false,
-    modeBarButtonsToRemove: [
-      "pan2d",
-      "zoomIn2d",
-      "zoomOut2d",
-      "lasso2d",
-      "select2d",
-      "autoScale2d",
-      "zoom2d",
-      "resetScale2d",
-    ],
-  };
+  const layout = useMemo<Partial<Plotly.Layout>>(
+    () =>
+      createLayout({
+        geo: {
+          visible: false,
+          fitbounds: "locations",
+          projection: {
+            type: "conic conformal",
+            parallels: [12.472944444, 35.172805555556],
+            rotation: { lat: 24, lon: 80 },
+          },
+          scale: 1,
+        },
+        hoverdistance: -1,
+        margin: { r: 0, t: 0, b: 0, l: 0 },
+      }),
+    [],
+  );
 
   return (
     <PlotWrapper>
       <Plot
         data={plotData}
         layout={layout}
-        config={config}
+        config={baseConfig}
         style={{
           width: "100%",
           minHeight: 800,

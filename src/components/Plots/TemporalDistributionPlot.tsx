@@ -10,6 +10,8 @@ import { theme } from "../../Theme";
 import { stateColorMapping } from "../../constants/States";
 import Plot from "react-plotly.js";
 import { PlotWrapper } from "./PlotWrapper";
+import { baseConfig, createLayout } from "./plotConfig";
+import { useMemo } from "react";
 
 interface TemportalDistributionPlotProps {
   view: "national" | "byState";
@@ -96,50 +98,59 @@ export const TemporalDistributionPlot = ({
   const traces: Plotly.Data[] =
     view === "national" ? nationalTrace : statesTrace;
 
-  const layout: Partial<Plotly.Layout> = {
-    title: {
-      text:
-        view === "national"
-          ? "Total Number of Publications Over Time"
-          : "Publications Over Time by State",
-    },
-    yaxis: {
-      showgrid: false,
-      title: {
-        text: "Number of Publications",
-      },
-    },
-    xaxis: {
-      automargin: true,
-      showgrid: false,
-      title: {
-        text: "Year",
-      },
-      type: "category",
-    },
-    hovermode: "closest",
-    hoverlabel: {
-      bgcolor: "white",
-    },
-    autosize: true,
-    dragmode: false,
-    legend: { itemclick: false, itemdoubleclick: false },
-  };
+  // const layout: Partial<Plotly.Layout> = {
+  //   title: {
+  //     text:
+  //       view === "national"
+  //         ? "Total Number of Publications Over Time"
+  //         : "Publications Over Time by State",
+  //   },
+  //   yaxis: {
+  //     showgrid: false,
+  //     title: {
+  //       text: "Number of Publications",
+  //     },
+  //   },
+  //   xaxis: {
+  //     automargin: true,
+  //     showgrid: false,
+  //     title: {
+  //       text: "Year",
+  //     },
+  //     type: "category",
+  //   },
+  //   hovermode: "closest",
+  //   hoverlabel: {
+  //     bgcolor: "white",
+  //   },
+  //   autosize: true,
+  //   dragmode: false,
+  //   legend: { itemclick: false, itemdoubleclick: false },
+  // };
 
-  const config: Partial<Plotly.Config> = {
-    responsive: true,
-    displayModeBar: false,
-    modeBarButtonsToRemove: [
-      "pan2d",
-      "zoomIn2d",
-      "zoomOut2d",
-      "lasso2d",
-      "select2d",
-      "autoScale2d",
-      "zoom2d",
-      "resetScale2d",
-    ],
-  };
+  const layout = useMemo<Partial<Plotly.Layout>>(
+    () =>
+      createLayout({
+        title: {
+          text:
+            view === "national"
+              ? "Total Number of Publications Over Time"
+              : "Publications Over Time by State",
+        },
+        yaxis: {
+          title: {
+            text: "Number of Publications",
+          },
+        },
+        xaxis: {
+          title: {
+            text: "Year",
+          },
+          type: "category",
+        },
+      }),
+    [view],
+  );
 
   return (
     <PlotWrapper>
@@ -150,7 +161,7 @@ export const TemporalDistributionPlot = ({
         <Plot
           data={traces}
           layout={layout}
-          config={config}
+          config={baseConfig}
           style={{
             width: "100%",
             minHeight: 450,
