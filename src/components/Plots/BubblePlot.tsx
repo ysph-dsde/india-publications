@@ -1,11 +1,9 @@
-import Plot from "react-plotly.js";
 import { useHdiData } from "../../context/HdiContext";
 import { useData } from "../../context/PublicationDataContext";
 import { stateColorMapping } from "../../constants/States";
 import { PlotWrapper } from "./PlotWrapper";
-import { baseConfig, createLayout } from "./plotConfig";
-import { useMemo } from "react";
 import { PlotCaption } from "./PlotCaption";
+import { CustomPlot } from "./CustomPlot";
 
 export const BubblePlot = () => {
   const {
@@ -91,40 +89,29 @@ export const BubblePlot = () => {
     };
   });
 
-  const layout = useMemo<Partial<Plotly.Layout>>(
-    () =>
-      createLayout({
-        title: {
-          text: "Publications vs Human Development Index (HDI) Over Time",
-        },
-        xaxis: {
-          title: {
-            text: "Year",
-          },
-          type: "category",
-          categoryarray: yearCategories,
-        },
-        yaxis: {
-          title: {
-            text: "Human Development Index (HDI)",
-          },
-        },
-      }),
-    [],
-  );
+  const layout: Partial<Plotly.Layout> = {
+    title: {
+      text: "Publications vs Human Development Index (HDI) Over Time",
+    },
+    xaxis: {
+      title: {
+        text: "Year",
+      },
+      type: "category",
+      categoryarray: yearCategories,
+    },
+    yaxis: {
+      title: {
+        text: "Human Development Index (HDI)",
+      },
+    },
+  };
 
   return (
     <PlotWrapper>
-      <Plot
+      <CustomPlot
         data={traces}
         layout={layout}
-        config={baseConfig}
-        style={{
-          width: "100%",
-          minHeight: 450,
-          borderRadius: 4,
-        }}
-        useResizeHandler
       />
       <PlotCaption>
         This bubble plot displays the relationship between Human Development

@@ -1,10 +1,9 @@
-import Plot from "react-plotly.js";
 import { useData } from "../../context/PublicationDataContext";
 import { usePopulationData } from "../../context/PopulationContext";
 import { useMemo } from "react";
 import { PlotWrapper } from "./PlotWrapper";
-import { baseConfig, createLayout } from "./plotConfig";
 import { PlotCaption } from "./PlotCaption";
+import { CustomPlot } from "./CustomPlot";
 
 interface AggregatedData {
   state: string;
@@ -138,50 +137,38 @@ export const ConnectedDotPlot = () => {
     return data;
   }, [aggregatedData]);
 
-  const layout = useMemo<Partial<Plotly.Layout>>(
-    () =>
-      createLayout({
-        title: {
-          text: "Population vs. Publication by State",
-        },
-        yaxis: {
-          tickmode: "linear",
-          dtick: 0.05,
-          tickformat: ".0%",
-          title: {
-            text: "Percentage",
-          },
-        },
-        xaxis: {
-          range: [0.5, traces.length / 3 - 1 + 0.5],
-          showgrid: true,
-          title: {
-            text: "State",
-            standoff: 0,
-          },
-          type: "category",
-        },
-        margin: {
-          r: 30,
-        },
-      }),
-    [],
-  );
+  const layout: Partial<Plotly.Layout> = {
+    title: {
+      text: "Population vs. Publication by State",
+    },
+    yaxis: {
+      tickmode: "linear",
+      dtick: 0.05,
+      tickformat: ".0%",
+      title: {
+        text: "Percentage",
+      },
+    },
+    xaxis: {
+      range: [0.5, traces.length / 3 - 1 + 0.5],
+      showgrid: true,
+      title: {
+        text: "State",
+        standoff: 0,
+      },
+      type: "category",
+    },
+    margin: {
+      r: 30,
+    },
+  };
 
   return (
     <PlotWrapper>
-      <Plot
+      <CustomPlot
         data={traces}
         layout={layout}
-        config={baseConfig}
-        style={{
-          width: "100%",
-          minHeight: 450,
-          borderRadius: 4,
-        }}
-        useResizeHandler
       />
-
       <PlotCaption>
         This plot compares the publication share versus the population share
         across selected Indian states for {customKeyword || topic} between the

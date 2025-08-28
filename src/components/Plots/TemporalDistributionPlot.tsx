@@ -3,11 +3,9 @@ import { useData } from "../../context/PublicationDataContext";
 // import { LineChart, type LineSeries } from "@mui/x-charts";
 import { theme } from "../../Theme";
 import { stateColorMapping } from "../../constants/States";
-import Plot from "react-plotly.js";
 import { PlotWrapper } from "./PlotWrapper";
-import { baseConfig, createLayout } from "./plotConfig";
-import { useMemo } from "react";
 import { PlotCaption } from "./PlotCaption";
+import { CustomPlot } from "./CustomPlot";
 
 interface TemportalDistributionPlotProps {
   view: "national" | "byState";
@@ -94,59 +92,25 @@ export const TemporalDistributionPlot = ({
   const traces: Plotly.Data[] =
     view === "national" ? nationalTrace : statesTrace;
 
-  // const layout: Partial<Plotly.Layout> = {
-  //   title: {
-  //     text:
-  //       view === "national"
-  //         ? "Total Number of Publications Over Time"
-  //         : "Publications Over Time by State",
-  //   },
-  //   yaxis: {
-  //     showgrid: false,
-  //     title: {
-  //       text: "Number of Publications",
-  //     },
-  //   },
-  //   xaxis: {
-  //     automargin: true,
-  //     showgrid: false,
-  //     title: {
-  //       text: "Year",
-  //     },
-  //     type: "category",
-  //   },
-  //   hovermode: "closest",
-  //   hoverlabel: {
-  //     bgcolor: "white",
-  //   },
-  //   autosize: true,
-  //   dragmode: false,
-  //   legend: { itemclick: false, itemdoubleclick: false },
-  // };
-
-  const layout = useMemo<Partial<Plotly.Layout>>(
-    () =>
-      createLayout({
-        title: {
-          text:
-            view === "national"
-              ? "Total Number of Publications Over Time"
-              : "Publications Over Time by State",
-        },
-        yaxis: {
-          title: {
-            text: "Number of Publications",
-          },
-        },
-        xaxis: {
-          title: {
-            text: "Year",
-          },
-          type: "category",
-        },
-      }),
-    [view],
-  );
+  const layout: Partial<Plotly.Layout> = {
+    title: {
+      text:
+        view === "national"
+          ? "Total Number of Publications Over Time"
+          : "Publications Over Time by State",
+    },
+    yaxis: {
+      title: {
+        text: "Number of Publications",
+      },
+    },
+    xaxis: {
+      title: {
+        text: "Year",
+      },
+      type: "category",
+    },
+  };
 
   return (
     <PlotWrapper>
@@ -154,16 +118,9 @@ export const TemporalDistributionPlot = ({
         display="flex"
         flexDirection="column"
       >
-        <Plot
+        <CustomPlot
           data={traces}
           layout={layout}
-          config={baseConfig}
-          style={{
-            width: "100%",
-            minHeight: 450,
-            borderRadius: 4,
-          }}
-          useResizeHandler
         />
         <PlotCaption>
           This line chart displays the trend in total publications under{" "}

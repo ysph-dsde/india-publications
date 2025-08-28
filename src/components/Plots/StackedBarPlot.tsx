@@ -1,10 +1,8 @@
-import Plot from "react-plotly.js";
 import { useData } from "../../context/PublicationDataContext";
 import { stateColorMapping } from "../../constants/States";
 import { PlotWrapper } from "./PlotWrapper";
-import { baseConfig, createLayout } from "./plotConfig";
-import { useMemo } from "react";
 import { PlotCaption } from "./PlotCaption";
+import { CustomPlot } from "./CustomPlot";
 
 export const StackedBarPlot = () => {
   const {
@@ -51,43 +49,32 @@ export const StackedBarPlot = () => {
     };
   });
 
-  const layout = useMemo<Partial<Plotly.Layout>>(
-    () =>
-      createLayout({
-        title: {
-          text: "State Publications Percentage by Year",
-        },
-        yaxis: {
-          tickmode: "linear",
-          dtick: 0.25,
-          tickformat: ".0%",
-          title: {
-            text: "Percentage of Publications",
-          },
-        },
-        xaxis: {
-          title: {
-            text: "Year",
-          },
-          type: "category",
-        },
-        barmode: "stack",
-      }),
-    [],
-  );
+  const layout: Partial<Plotly.Layout> = {
+    title: {
+      text: "State Publications Percentage by Year",
+    },
+    yaxis: {
+      tickmode: "linear",
+      dtick: 0.25,
+      tickformat: ".0%",
+      title: {
+        text: "Percentage of Publications",
+      },
+    },
+    xaxis: {
+      title: {
+        text: "Year",
+      },
+      type: "category",
+    },
+    barmode: "stack",
+  };
 
   return (
     <PlotWrapper>
-      <Plot
+      <CustomPlot
         data={traces}
         layout={layout}
-        config={baseConfig}
-        style={{
-          width: "100%",
-          minHeight: 450,
-          borderRadius: 4,
-        }}
-        useResizeHandler
       />
 
       <PlotCaption>

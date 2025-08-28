@@ -1,12 +1,11 @@
 import { useMemo } from "react";
-import Plot from "react-plotly.js";
 import { useData } from "../../context/PublicationDataContext";
 import { theme } from "../../Theme";
 import { States as allStates } from "../../constants/States";
 import geojson from "../../assets/states_geo.json";
 import { PlotWrapper } from "./PlotWrapper";
-import { baseConfig, createLayout } from "./plotConfig";
 import { PlotCaption } from "./PlotCaption";
+import { CustomPlot } from "./CustomPlot";
 
 export const GeoPlot = () => {
   const {
@@ -78,37 +77,29 @@ export const GeoPlot = () => {
     ];
   }, [totalPublicationsByState]);
 
-  const layout = useMemo<Partial<Plotly.Layout>>(
-    () =>
-      createLayout({
-        geo: {
-          visible: false,
-          fitbounds: "locations",
-          projection: {
-            type: "conic conformal",
-            parallels: [12.472944444, 35.172805555556],
-            rotation: { lat: 24, lon: 80 },
-          },
-          scale: 1,
-        },
-        hoverdistance: -1,
-        margin: { r: 0, t: 0, b: 0, l: 0 },
-      }),
-    [],
-  );
+  const layout: Partial<Plotly.Layout> = {
+    geo: {
+      visible: false,
+      fitbounds: "locations",
+      projection: {
+        type: "conic conformal",
+        parallels: [12.472944444, 35.172805555556],
+        rotation: { lat: 24, lon: 80 },
+      },
+      scale: 1,
+    },
+    hoverdistance: -1,
+    margin: { r: 0, t: 0, b: 0, l: 0 },
+  };
 
   return (
     <PlotWrapper>
-      <Plot
+      <CustomPlot
         data={plotData}
         layout={layout}
-        config={baseConfig}
         style={{
-          width: "100%",
           minHeight: 800,
-          borderRadius: 4,
         }}
-        useResizeHandler
       />
       <PlotCaption>
         This plot shows the number of publications under{" "}
