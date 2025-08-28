@@ -1,4 +1,4 @@
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useMemo } from "react";
 import Plot from "react-plotly.js";
 import { useData } from "../../context/PublicationDataContext";

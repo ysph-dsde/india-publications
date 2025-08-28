@@ -1,6 +1,5 @@
 import {
   Box,
-  Paper,
   ToggleButton,
   ToggleButtonGroup,
   Typography,
