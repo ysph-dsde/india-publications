@@ -1,10 +1,10 @@
-import { Box, Typography } from "@mui/material";
 import Plot from "react-plotly.js";
 import { useData } from "../../context/PublicationDataContext";
 import { usePopulationData } from "../../context/PopulationContext";
 import { useMemo } from "react";
 import { PlotWrapper } from "./PlotWrapper";
 import { baseConfig, createLayout } from "./plotConfig";
+import { PlotCaption } from "./PlotCaption";
 
 interface AggregatedData {
   state: string;
@@ -182,20 +182,14 @@ export const ConnectedDotPlot = () => {
         useResizeHandler
       />
 
-      <Box
-        px={2}
-        pb={1}
-      >
-        <Typography variant="caption">
-          This plot compares the publication share versus the population share
-          across selected Indian states for {customKeyword || topic} between the
-          years of {yearRange[0]} and {yearRange[1]}. A total of{" "}
-          {totalPublications} publications were retrieved. Lines connect each
-          state's publication share (circle) with its population share (square),
-          highlighting over-representation (green) or under-representation
-          (blue).
-        </Typography>
-      </Box>
+      <PlotCaption>
+        This plot compares the publication share versus the population share
+        across selected Indian states for {customKeyword || topic} between the
+        years of {yearRange[0]} and {yearRange[1]}. A total of{" "}
+        {totalPublications} publications were retrieved. Lines connect each
+        state's publication share (circle) with its population share (square),
+        highlighting over-representation (green) or under-representation (blue).
+      </PlotCaption>
     </PlotWrapper>
   );
 };

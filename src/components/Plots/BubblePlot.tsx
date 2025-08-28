@@ -1,4 +1,3 @@
-import { Box, Typography } from "@mui/material";
 import Plot from "react-plotly.js";
 import { useHdiData } from "../../context/HdiContext";
 import { useData } from "../../context/PublicationDataContext";
@@ -6,6 +5,7 @@ import { stateColorMapping } from "../../constants/States";
 import { PlotWrapper } from "./PlotWrapper";
 import { baseConfig, createLayout } from "./plotConfig";
 import { useMemo } from "react";
+import { PlotCaption } from "./PlotCaption";
 
 export const BubblePlot = () => {
   const {
@@ -126,18 +126,13 @@ export const BubblePlot = () => {
         }}
         useResizeHandler
       />
-      <Box
-        px={2}
-        pb={1}
-      >
-        <Typography variant="caption">
-          This bubble plot displays the relationship between Human Development
-          Index (HDI) and the number of publications under{" "}
-          {customKeyword || topic} between {yearRange[0]} and {yearRange[1]}.
-          Bubble size represents the number of publications. A total of{" "}
-          {totalPublications} publications were retrieved.
-        </Typography>
-      </Box>
+      <PlotCaption>
+        This bubble plot displays the relationship between Human Development
+        Index (HDI) and the number of publications under{" "}
+        {customKeyword || topic} between {yearRange[0]} and {yearRange[1]}.
+        Bubble size represents the number of publications. A total of{" "}
+        {totalPublications} publications were retrieved.
+      </PlotCaption>
     </PlotWrapper>
   );
 };

@@ -1,10 +1,10 @@
-import { Box, Typography } from "@mui/material";
 import Plot from "react-plotly.js";
 import { useData } from "../../context/PublicationDataContext";
 import { stateColorMapping } from "../../constants/States";
 import { PlotWrapper } from "./PlotWrapper";
 import { baseConfig, createLayout } from "./plotConfig";
 import { useMemo } from "react";
+import { PlotCaption } from "./PlotCaption";
 
 export const StackedBarPlot = () => {
   const {
@@ -90,17 +90,12 @@ export const StackedBarPlot = () => {
         useResizeHandler
       />
 
-      <Box
-        px={2}
-        pb={1}
-      >
-        <Typography variant="caption">
-          This stacked bar plot shows the relative contribution of each state to
-          the total number of publications under {customKeyword || topic}{" "}
-          between {yearRange[0]} and {yearRange[1]}. A total of{" "}
-          {totalPublications} publications were retrieved.
-        </Typography>
-      </Box>
+      <PlotCaption>
+        This stacked bar plot shows the relative contribution of each state to
+        the total number of publications under {customKeyword || topic} between{" "}
+        {yearRange[0]} and {yearRange[1]}. A total of {totalPublications}{" "}
+        publications were retrieved.
+      </PlotCaption>
     </PlotWrapper>
   );
 };

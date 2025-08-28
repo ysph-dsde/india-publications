@@ -1,4 +1,3 @@
-import { Box, Typography } from "@mui/material";
 import { useMemo } from "react";
 import Plot from "react-plotly.js";
 import { useData } from "../../context/PublicationDataContext";
@@ -7,6 +6,7 @@ import { States as allStates } from "../../constants/States";
 import geojson from "../../assets/states_geo.json";
 import { PlotWrapper } from "./PlotWrapper";
 import { baseConfig, createLayout } from "./plotConfig";
+import { PlotCaption } from "./PlotCaption";
 
 export const GeoPlot = () => {
   const {
@@ -110,17 +110,12 @@ export const GeoPlot = () => {
         }}
         useResizeHandler
       />
-      <Box
-        px={2}
-        pb={1}
-      >
-        <Typography variant="caption">
-          This plot shows the number of publications under{" "}
-          {customKeyword || topic} between the years of {yearRange[0]} and{" "}
-          {yearRange[1]}. A total of {totalPublications} publications were
-          retrieved.
-        </Typography>
-      </Box>
+      <PlotCaption>
+        This plot shows the number of publications under{" "}
+        {customKeyword || topic} between the years of {yearRange[0]} and{" "}
+        {yearRange[1]}. A total of {totalPublications} publications were
+        retrieved.
+      </PlotCaption>
     </PlotWrapper>
   );
 };

@@ -1,9 +1,4 @@
-import {
-  Box,
-  ToggleButton,
-  ToggleButtonGroup,
-  Typography,
-} from "@mui/material";
+import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { useData } from "../../context/PublicationDataContext";
 // import { LineChart, type LineSeries } from "@mui/x-charts";
 import { theme } from "../../Theme";
@@ -12,6 +7,7 @@ import Plot from "react-plotly.js";
 import { PlotWrapper } from "./PlotWrapper";
 import { baseConfig, createLayout } from "./plotConfig";
 import { useMemo } from "react";
+import { PlotCaption } from "./PlotCaption";
 
 interface TemportalDistributionPlotProps {
   view: "national" | "byState";
@@ -169,16 +165,11 @@ export const TemporalDistributionPlot = ({
           }}
           useResizeHandler
         />
-        <Box
-          px={2}
-          pb={1}
-        >
-          <Typography variant="caption">
-            This line chart displays the trend in total publications under{" "}
-            {customKeyword || topic} across selected states from {yearRange[0]}{" "}
-            to {yearRange[1]}.
-          </Typography>
-        </Box>
+        <PlotCaption>
+          This line chart displays the trend in total publications under{" "}
+          {customKeyword || topic} across selected states from {yearRange[0]} to{" "}
+          {yearRange[1]}.
+        </PlotCaption>
         <ToggleButtonGroup
           sx={{ alignSelf: "center", pb: 2 }}
           value={view}
