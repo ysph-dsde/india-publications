@@ -6,7 +6,7 @@ import { PlotWrapper } from "./PlotWrapper";
 
 export const StackedBarPlot = () => {
   const {
-    data: { publications: publicationData, stateYearlyData, loading },
+    data: { publications: publicationData, stateYearlyData },
     clientFilters: { states: selectedStates },
     serverFilters: { yearRange, topic, customKeyword },
   } = useData();
@@ -94,7 +94,7 @@ export const StackedBarPlot = () => {
     ],
   };
   return (
-    <PlotWrapper show={selectedStates.length > 0 && !loading}>
+    <PlotWrapper>
       <Plot
         data={traces}
         layout={layout}

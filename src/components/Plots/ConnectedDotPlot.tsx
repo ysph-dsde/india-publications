@@ -14,7 +14,7 @@ interface AggregatedData {
 
 export const ConnectedDotPlot = () => {
   const {
-    data: { publications: publicationData, loading },
+    data: { publications: publicationData },
     clientFilters: { states: selectedStates },
     serverFilters: { yearRange, topic, customKeyword },
   } = useData();
@@ -186,7 +186,7 @@ export const ConnectedDotPlot = () => {
   };
 
   return (
-    <PlotWrapper show={selectedStates.length > 0 && !loading}>
+    <PlotWrapper>
       <Plot
         data={traces}
         layout={layout}

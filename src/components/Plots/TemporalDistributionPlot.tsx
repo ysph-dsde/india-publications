@@ -142,7 +142,7 @@ export const TemporalDistributionPlot = ({
   };
 
   return (
-    <PlotWrapper show={selectedStates.length > 0 && !data.loading}>
+    <PlotWrapper>
       <Box
         display="flex"
         flexDirection="column"

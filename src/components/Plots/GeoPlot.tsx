@@ -9,7 +9,7 @@ import { PlotWrapper } from "./PlotWrapper";
 
 export const GeoPlot = () => {
   const {
-    data: { publications: publicationData, totalPublicationsByState, loading },
+    data: { publications: publicationData, totalPublicationsByState },
     clientFilters: { states: selectedStates },
     serverFilters: { yearRange, topic, customKeyword },
   } = useData();
@@ -114,7 +114,7 @@ export const GeoPlot = () => {
   };
 
   return (
-    <PlotWrapper show={!loading}>
+    <PlotWrapper>
       <Plot
         data={plotData}
         layout={layout}
