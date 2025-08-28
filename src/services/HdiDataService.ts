@@ -60,7 +60,7 @@ export const loadHdiData = async () => {
     return cachedData; // Return cached data if already loaded
   }
   try {
-    const rawData = await parseHdiData("/assets/data_hdi.csv");
+    const rawData = await parseHdiData("/data_hdi.csv");
     cachedData = groupHdiData(rawData);
     return cachedData;
   } catch (error) {
