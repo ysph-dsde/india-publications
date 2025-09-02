@@ -1,15 +1,18 @@
 import {
   Autocomplete,
   Box,
+  Button,
   Checkbox,
   debounce,
   Divider,
   FormControlLabel,
+  LinearProgress,
   List,
   ListItem,
   Slider,
   TextField,
   Toolbar,
+  Typography,
 } from "@mui/material";
 import React, { useRef, useState, type ChangeEvent } from "react";
 import { SelectionTitle } from "./SelectionTitle";
@@ -31,6 +34,7 @@ import ysphLogo from "../../assets/images/ysphLogo.jpeg";
 
 export const Sidebar = () => {
   const {
+    data: { loading },
     serverFilters,
     clientFilters,
     updateServerFilters,
@@ -104,206 +108,232 @@ export const Sidebar = () => {
         />
       </Toolbar>
       <Divider />
-      <List>
-        <SelectionTitle
-          title="Topic"
-          toolTipText="Choose a predefined topic or use 'Custom Keyword Search' to input your own terms."
-        />
-        <ListItem>
-          <Autocomplete
-            autoComplete
-            options={PublicationTopics}
-            fullWidth
-            value={serverFilters.topic}
-            disableClearable
-            onChange={(_event, newValue: string) => {
-              updateServerFilters({
-                topic: newValue,
-                customKeyword:
-                  newValue === "Custom Keyword Search"
-                    ? serverFilters.customKeyword
-                    : "",
-              });
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="standard"
-                placeholder="Topic"
-              />
-            )}
-          />
-        </ListItem>
-        {serverFilters.topic === "Custom Keyword Search" && (
-          <SelectionTitle
-            title='Keyword(s) separated by ","'
-            toolTip={false}
-          />
+      <Box sx={{ position: "relative" }}>
+        {loading && (
+          <>
+            <Box
+              sx={{
+                backgroundColor: "rgba(219, 219, 219, 0.86)",
+                height: "100%",
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                padding: 2,
+                zIndex: 1,
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+              }}
+            >
+              <Typography>Loading data...</Typography>
+              <LinearProgress />
+              <Button variant="contained">Cancel Search</Button>
+            </Box>
+          </>
         )}
-        {serverFilters.topic === "Custom Keyword Search" && (
+        <List sx={{ position: "relative", zIndex: 0 }}>
+          <SelectionTitle
+            title="Topic"
+            toolTipText="Choose a predefined topic or use 'Custom Keyword Search' to input your own terms."
+          />
+          <ListItem>
+            <Autocomplete
+              autoComplete
+              options={PublicationTopics}
+              fullWidth
+              value={serverFilters.topic}
+              disableClearable
+              onChange={(_event, newValue: string) => {
+                updateServerFilters({
+                  topic: newValue,
+                  customKeyword:
+                    newValue === "Custom Keyword Search"
+                      ? serverFilters.customKeyword
+                      : "",
+                });
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="standard"
+                  placeholder="Topic"
+                />
+              )}
+            />
+          </ListItem>
+          {serverFilters.topic === "Custom Keyword Search" && (
+            <SelectionTitle
+              title='Keyword(s) separated by ","'
+              toolTip={false}
+            />
+          )}
+          {serverFilters.topic === "Custom Keyword Search" && (
+            <ListItem>
+              <TextField
+                fullWidth
+                variant="standard"
+                value={localCustomKeyword}
+                onChange={(e) => {
+                  const newValue = e.target.value;
+                  setLocalCustomKeyword(newValue); // Update local state immediately
+                  debouncedUpdateCustomKeyword(newValue); // Update serverFilters after delay
+                }}
+                placeholder="Enter keywords"
+              />
+            </ListItem>
+          )}
+          <SelectionTitle
+            title="Author position"
+            toolTipText="Filter whether the author is first, first and last, or appears anywhere."
+          />
+          <ListItem>
+            <Autocomplete
+              autoComplete
+              options={AuthorPositionsList}
+              fullWidth
+              value={clientFilters.authorPosition}
+              disableClearable
+              onChange={(_event, newValue: AuthorPositions) => {
+                updateClientFilters({ authorPosition: newValue });
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="standard"
+                  placeholder="Author position"
+                />
+              )}
+            />
+          </ListItem>
+          <SelectionTitle
+            title="Minimum Citations"
+            toolTipText="Only include publications with citations greater than or equal to this number"
+          />
           <ListItem>
             <TextField
               fullWidth
               variant="standard"
-              value={localCustomKeyword}
-              onChange={(e) => {
-                const newValue = e.target.value;
-                setLocalCustomKeyword(newValue); // Update local state immediately
-                debouncedUpdateCustomKeyword(newValue); // Update serverFilters after delay
+              type="number"
+              value={clientFilters.minimumCitations}
+              onChange={(event) => {
+                const newValue = parseInt(event.target.value);
+                updateClientFilters({ minimumCitations: newValue });
               }}
-              placeholder="Enter keywords"
+              onBlur={() => {
+                if (
+                  clientFilters.minimumCitations < 0 ||
+                  clientFilters.minimumCitations == null ||
+                  isNaN(clientFilters.minimumCitations)
+                )
+                  updateClientFilters({ minimumCitations: 0 });
+              }}
+              onKeyDown={handleMinCitationsChange}
+              slotProps={{
+                htmlInput: {
+                  min: 0,
+                  step: 1,
+                },
+              }}
             />
           </ListItem>
-        )}
-        <SelectionTitle
-          title="Author position"
-          toolTipText="Filter whether the author is first, first and last, or appears anywhere."
-        />
-        <ListItem>
-          <Autocomplete
-            autoComplete
-            options={AuthorPositionsList}
-            fullWidth
-            value={clientFilters.authorPosition}
-            disableClearable
-            onChange={(_event, newValue: AuthorPositions) => {
-              updateClientFilters({ authorPosition: newValue });
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="standard"
-                placeholder="Author position"
-              />
-            )}
+          <SelectionTitle
+            title="Year range"
+            toolTipText="Select the publication year range."
           />
-        </ListItem>
-        <SelectionTitle
-          title="Minimum Citations"
-          toolTipText="Only include publications with citations greater than or equal to this number"
-        />
-        <ListItem>
-          <TextField
-            fullWidth
-            variant="standard"
-            type="number"
-            value={clientFilters.minimumCitations}
-            onChange={(event) => {
-              const newValue = parseInt(event.target.value);
-              updateClientFilters({ minimumCitations: newValue });
-            }}
-            onBlur={() => {
-              if (
-                clientFilters.minimumCitations < 0 ||
-                clientFilters.minimumCitations == null ||
-                isNaN(clientFilters.minimumCitations)
-              )
-                updateClientFilters({ minimumCitations: 0 });
-            }}
-            onKeyDown={handleMinCitationsChange}
-            slotProps={{
-              htmlInput: {
-                min: 0,
-                step: 1,
-              },
-            }}
-          />
-        </ListItem>
-        <SelectionTitle
-          title="Year range"
-          toolTipText="Select the publication year range."
-        />
-        <ListItem sx={{ display: "flex", justifyContent: "center" }}>
-          <Box
-            sx={{
-              width: "85%",
-            }}
-          >
-            <Slider
-              getAriaLabel={() => "Years range"}
-              // value={serverFilters.yearRange}
-              value={localYearRange}
-              onChange={(_event: Event, newValue: number[]) => {
-                setLocalYearRange(newValue as [number, number]);
-                debouncedUpdateYearRange(newValue as [number, number]);
-
-                // updateServerFilters({
-                //   yearRange: newValue as [number, number],
-                // });
+          <ListItem sx={{ display: "flex", justifyContent: "center" }}>
+            <Box
+              sx={{
+                width: "85%",
               }}
-              valueLabelDisplay="auto"
-              disableSwap
-              min={2014}
-              max={2024}
-              marks={[
-                { value: 2014, label: "2014" },
-                { value: 2024, label: "2024" },
-              ]}
+            >
+              <Slider
+                getAriaLabel={() => "Years range"}
+                // value={serverFilters.yearRange}
+                value={localYearRange}
+                onChange={(_event: Event, newValue: number[]) => {
+                  setLocalYearRange(newValue as [number, number]);
+                  debouncedUpdateYearRange(newValue as [number, number]);
+
+                  // updateServerFilters({
+                  //   yearRange: newValue as [number, number],
+                  // });
+                }}
+                valueLabelDisplay="auto"
+                disableSwap
+                min={2014}
+                max={2024}
+                marks={[
+                  { value: 2014, label: "2014" },
+                  { value: 2024, label: "2024" },
+                ]}
+              />
+            </Box>
+          </ListItem>
+          <SelectionTitle
+            title="State(s)"
+            toolTipText="Choose one or more states to filter publications."
+          />
+          <StatesSelector />
+          <SelectionTitle
+            title="Filter States By Share of National Population"
+            toolTipText="Filter states by population group. High (>5% of national population), Medium (1-5%), Low (<1%)."
+          />
+          <ListItem sx={{ display: "flex", flexWrap: "wrap" }}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={clientFilters.populationGroups.includes("high")}
+                  onChange={handlePopulationGroups("high")}
+                />
+              }
+              label="High"
             />
-          </Box>
-        </ListItem>
-        <SelectionTitle
-          title="State(s)"
-          toolTipText="Choose one or more states to filter publications."
-        />
-        <StatesSelector />
-        <SelectionTitle
-          title="Filter States By Share of National Population"
-          toolTipText="Filter states by population group. High (>5% of national population), Medium (1-5%), Low (<1%)."
-        />
-        <ListItem sx={{ display: "flex", flexWrap: "wrap" }}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={clientFilters.populationGroups.includes("high")}
-                onChange={handlePopulationGroups("high")}
-              />
-            }
-            label="High"
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={clientFilters.populationGroups.includes("medium")}
+                  onChange={handlePopulationGroups("medium")}
+                />
+              }
+              label="Medium"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={clientFilters.populationGroups.includes("low")}
+                  onChange={handlePopulationGroups("low")}
+                />
+              }
+              label="Low"
+            />
+          </ListItem>
+          <SelectionTitle
+            title="Grant information accessible?"
+            toolTipText="Filter publication by whether grant information is available."
           />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={clientFilters.populationGroups.includes("medium")}
-                onChange={handlePopulationGroups("medium")}
-              />
-            }
-            label="Medium"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={clientFilters.populationGroups.includes("low")}
-                onChange={handlePopulationGroups("low")}
-              />
-            }
-            label="Low"
-          />
-        </ListItem>
-        <SelectionTitle
-          title="Grant information accessible?"
-          toolTipText="Filter publication by whether grant information is available."
-        />
-        <ListItem>
-          <Autocomplete
-            autoComplete
-            options={GrantTypesList}
-            fullWidth
-            value={clientFilters.grantInformation}
-            disableClearable
-            onChange={(_event, newValue: GrantTypes) => {
-              updateClientFilters({ grantInformation: newValue });
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="standard"
-                placeholder="Grant information"
-              />
-            )}
-          />
-        </ListItem>
-      </List>
+          <ListItem>
+            <Autocomplete
+              autoComplete
+              options={GrantTypesList}
+              fullWidth
+              value={clientFilters.grantInformation}
+              disableClearable
+              onChange={(_event, newValue: GrantTypes) => {
+                updateClientFilters({ grantInformation: newValue });
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="standard"
+                  placeholder="Grant information"
+                />
+              )}
+            />
+          </ListItem>
+        </List>
+      </Box>
     </Box>
   );
 };
