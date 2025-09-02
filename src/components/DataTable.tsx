@@ -132,9 +132,9 @@ export const DataTable = () => {
           pageSizeOptions={[10, 25, 50, 100]}
           initialState={{
             pagination: { paginationModel: { pageSize: 10 } },
-            sorting: {
-              sortModel: [{ field: "publication_year", sort: "desc" }],
-            },
+            // sorting: {
+            //   sortModel: [{ field: "publication_year", sort: "desc" }],
+            // },
           }}
           showToolbar
           slots={{
