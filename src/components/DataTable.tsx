@@ -1,7 +1,6 @@
 import {
   Box,
   // IconButton,
-  LinearProgress,
   Link,
   // Tooltip,
   Typography,
@@ -104,14 +103,8 @@ export const DataTable = () => {
 
   return (
     <Box>
-      {data.loading && (
-        <>
-          <Typography>Loading data...</Typography>
-          <LinearProgress />
-        </>
-      )}
       {data.error && <Typography color="error">{data.error}</Typography>}
-      {!data.loading && !data.error && (
+      {!data.error && (
         <DataGrid
           sx={{
             "& .MuiDataGrid-columnHeaderTitle": {

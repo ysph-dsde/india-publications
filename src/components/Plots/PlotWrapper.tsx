@@ -19,7 +19,6 @@ const NoStatesSelected = () => {
 
 export const PlotWrapper = ({ children }: PlotWrapperProps) => {
   const {
-    data: { loading },
     clientFilters: { states: selectedStates },
   } = useData();
   return (
@@ -27,11 +26,7 @@ export const PlotWrapper = ({ children }: PlotWrapperProps) => {
       elevation={1}
       sx={{ display: "flex", flexDirection: "column" }}
     >
-      {selectedStates.length === 0 ? (
-        <NoStatesSelected />
-      ) : (
-        !loading && children
-      )}
+      {selectedStates.length === 0 ? <NoStatesSelected /> : children}
     </Paper>
   );
 };

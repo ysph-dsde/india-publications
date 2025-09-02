@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, LinearProgress, Typography } from "@mui/material";
 import { CustomTabs } from "./shared/CustomTabs";
 
 import { DataTable } from "./DataTable";
@@ -8,8 +8,10 @@ import { ConnectedDotPlot } from "./Plots/ConnectedDotPlot";
 import { StackedBarPlot } from "./Plots/StackedBarPlot";
 import { BubblePlot } from "./Plots/BubblePlot";
 import { useState } from "react";
+import { useData } from "../context/PublicationDataContext";
 
 export const MainContent = () => {
+  const { data } = useData();
   const [view, setView] = useState<"national" | "byState">("national");
 
   const tabs = [
@@ -42,8 +44,17 @@ export const MainContent = () => {
 
   return (
     <Box>
-      <CustomTabs tabs={tabs}></CustomTabs>
-      <DataTable />
+      {data.loading ? (
+        <>
+          <Typography>Loading data...</Typography>
+          <LinearProgress />
+        </>
+      ) : (
+        <>
+          <CustomTabs tabs={tabs}></CustomTabs>
+          <DataTable />
+        </>
+      )}
     </Box>
   );
 };
