@@ -6,6 +6,7 @@ import { stateColorMapping } from "../../constants/States";
 import { PlotWrapper } from "./PlotWrapper";
 import { PlotCaption } from "./PlotCaption";
 import { CustomPlot } from "./CustomPlot";
+import { useMemo } from "react";
 
 interface TemportalDistributionPlotProps {
   view: "national" | "byState";
@@ -56,38 +57,42 @@ export const TemporalDistributionPlot = ({
 
   const sortedStates = [...selectedStates].sort((a, b) => a.localeCompare(b));
 
-  const nationalTrace: Plotly.Data[] = [
-    {
-      x: yearlyData.map((item) => item.year),
-      y: yearlyData.map((item) => item.count),
+  const nationalTrace: Plotly.Data[] = useMemo(() => {
+    return [
+      {
+        x: yearlyData.map((item) => item.year),
+        y: yearlyData.map((item) => item.count),
+        mode: "lines+markers",
+        marker: {
+          color: `${theme.palette.primary.main}`,
+          size: 10,
+        },
+        line: {
+          color: `${theme.palette.primary.main}`,
+          width: 3,
+        },
+        hovertemplate: `Selected states <br>Year: %{x}<br>Publications: %{y}<extra></extra>`,
+      },
+    ];
+  }, [yearlyData]);
+
+  const statesTrace: Plotly.Data[] = useMemo(() => {
+    return sortedStates.map((state) => ({
+      x: stateYearlyData.map((item) => item.year),
+      y: stateYearlyData.map((item) => item.states[state] || 0),
       mode: "lines+markers",
+      name: state,
       marker: {
-        color: `${theme.palette.primary.main}`,
+        color: stateColorMapping[state] || theme.palette.grey[500],
         size: 10,
       },
       line: {
-        color: `${theme.palette.primary.main}`,
+        color: stateColorMapping[state] || theme.palette.grey[500],
         width: 3,
       },
-      hovertemplate: `Selected states <br>Year: %{x}<br>Publications: %{y}<extra></extra>`,
-    },
-  ];
-
-  const statesTrace: Plotly.Data[] = sortedStates.map((state) => ({
-    x: stateYearlyData.map((item) => item.year),
-    y: stateYearlyData.map((item) => item.states[state] || 0),
-    mode: "lines+markers",
-    name: state,
-    marker: {
-      color: stateColorMapping[state] || theme.palette.grey[500],
-      size: 10,
-    },
-    line: {
-      color: stateColorMapping[state] || theme.palette.grey[500],
-      width: 3,
-    },
-    hovertemplate: `State: ${state}<br>Year: %{x}<br>Publications: %{y}<extra></extra>`,
-  }));
+      hovertemplate: `State: ${state}<br>Year: %{x}<br>Publications: %{y}<extra></extra>`,
+    }));
+  }, [stateYearlyData, sortedStates]);
 
   const traces: Plotly.Data[] =
     view === "national" ? nationalTrace : statesTrace;

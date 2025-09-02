@@ -15,18 +15,21 @@ export const GeoPlot = () => {
   } = useData();
   const totalPublications = publicationData.length;
 
-  const completePublicationsByState = [
-    // add states with zero publications if they are selected
-    ...selectedStates
-      .filter(
-        (state) => !totalPublicationsByState.some((pub) => pub.state === state),
-      )
-      .map((state) => ({
-        state: state,
-        count: 0,
-      })),
-    ...totalPublicationsByState,
-  ];
+  // add states with zero publications if they are selected
+  const completePublicationsByState = useMemo(() => {
+    return [
+      ...selectedStates
+        .filter(
+          (state) =>
+            !totalPublicationsByState.some((pub) => pub.state === state),
+        )
+        .map((state) => ({
+          state: state,
+          count: 0,
+        })),
+      ...totalPublicationsByState,
+    ];
+  }, [selectedStates, totalPublicationsByState]);
 
   const plotData: Plotly.Data[] = useMemo(() => {
     return [

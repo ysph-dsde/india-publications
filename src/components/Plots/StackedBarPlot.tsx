@@ -3,6 +3,7 @@ import { stateColorMapping } from "../../constants/States";
 import { PlotWrapper } from "./PlotWrapper";
 import { PlotCaption } from "./PlotCaption";
 import { CustomPlot } from "./CustomPlot";
+import { useMemo } from "react";
 
 export const StackedBarPlot = () => {
   const {
@@ -16,38 +17,42 @@ export const StackedBarPlot = () => {
   const years = stateYearlyData.map((item) => item.year);
 
   // calculate yearly totals
-  const yearlyTotals = stateYearlyData.map((item) => {
-    return selectedStates.reduce((sum, state) => {
-      return sum + (item.states[state] || 0);
-    }, 0);
-  });
+  const yearlyTotals = useMemo(() => {
+    return stateYearlyData.map((item) => {
+      return selectedStates.reduce((sum, state) => {
+        return sum + (item.states[state] || 0);
+      }, 0);
+    });
+  }, [stateYearlyData, selectedStates]);
 
   // sort states alphabetically
   const sortedStates = [...selectedStates].sort((a, b) => b.localeCompare(a));
 
   // build traces (one per state)
-  const traces: Plotly.Data[] = sortedStates.map((state) => {
-    // calculate percentages for the state
-    const percentages = stateYearlyData.map((item, index) => {
-      const rawValue = item.states[state] || 0;
-      const total = yearlyTotals[index];
-      return total > 0 ? rawValue / total : 0;
-    });
+  const traces: Plotly.Data[] = useMemo(() => {
+    return sortedStates.map((state) => {
+      // calculate percentages for the state
+      const percentages = stateYearlyData.map((item, index) => {
+        const rawValue = item.states[state] || 0;
+        const total = yearlyTotals[index];
+        return total > 0 ? rawValue / total : 0;
+      });
 
-    return {
-      type: "bar" as const,
-      name: state,
-      x: years,
-      y: percentages,
-      marker: {
-        color: stateColorMapping[state] || "#333333", // Fallback to black if state not in mapping
-      },
-      text: percentages.map((p) => (p * 100).toFixed(1)),
-      textposition: "none",
-      hovertemplate:
-        "State: %{data.name}<br>Year: %{x}<br>Percentage: %{text}%<extra></extra>",
-    };
-  });
+      return {
+        type: "bar" as const,
+        name: state,
+        x: years,
+        y: percentages,
+        marker: {
+          color: stateColorMapping[state] || "#333333", // Fallback to black if state not in mapping
+        },
+        text: percentages.map((p) => (p * 100).toFixed(1)),
+        textposition: "none",
+        hovertemplate:
+          "State: %{data.name}<br>Year: %{x}<br>Percentage: %{text}%<extra></extra>",
+      };
+    });
+  }, [stateYearlyData, sortedStates, years, yearlyTotals]);
 
   const layout: Partial<Plotly.Layout> = {
     title: {
