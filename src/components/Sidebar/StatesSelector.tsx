@@ -15,7 +15,6 @@ import {
   population_states_high,
   population_states_low,
   population_states_medium,
-  States,
 } from "../../constants/States";
 
 const uncheckedIcon = <CheckBoxOutlineBlankIcon fontSize="small" />;
@@ -41,7 +40,7 @@ export const StatesSelector = () => {
       selected.push(...population_states_medium);
     if (clientFilters.populationGroups.includes("low"))
       selected.push(...population_states_low);
-    return States.filter((state) => selected.includes(state));
+    return selected.sort((a, b) => a.localeCompare(b));
   };
 
   // Custom Paper component to include the select/deselect all button
@@ -75,7 +74,7 @@ export const StatesSelector = () => {
         size="small"
         disableClearable
         limitTags={2}
-        value={clientFilters.states}
+        value={clientFilters.states.sort((a, b) => a.localeCompare(b))}
         onChange={(_event, newValue: string[]) => {
           updateClientFilters({ states: newValue });
         }}
