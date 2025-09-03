@@ -2,6 +2,7 @@ import {
   Autocomplete,
   Button,
   Checkbox,
+  Chip,
   Divider,
   ListItem,
   Paper,
@@ -16,12 +17,14 @@ import {
   population_states_low,
   population_states_medium,
 } from "../../constants/States";
+import { useState } from "react";
 
 const uncheckedIcon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 export const StatesSelector = () => {
   const { clientFilters, updateClientFilters } = useData();
+  const [isFocused, setIsFocused] = useState(false);
 
   const handleToggleAll = (event: any) => {
     event.preventDefault(); // Prevent any default behavior
@@ -101,8 +104,30 @@ export const StatesSelector = () => {
             {...params}
             variant="standard"
             placeholder="States"
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
           />
         )}
+        renderValue={(value: readonly string[], getItemProps) => {
+          if (!isFocused) {
+            const numTags = value.length;
+            const limitTags = 2;
+            return (
+              <>
+                {value.slice(0, limitTags).map((option, index) => (
+                  <Chip
+                    size="small"
+                    {...getItemProps({ index })}
+                    key={index}
+                    label={option}
+                    onDelete={undefined}
+                  />
+                ))}
+                {numTags > limitTags && `+${numTags - limitTags} `}
+              </>
+            );
+          }
+        }}
       />
     </ListItem>
   );
