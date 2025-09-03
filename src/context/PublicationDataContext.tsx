@@ -24,6 +24,8 @@ interface DataContextType {
   serverFilters: ServerFilters;
   updateServerFilters: (newFilters: Partial<ServerFilters>) => void;
   updateClientFilters: (newFilters: Partial<ClientFilters>) => void;
+  cancelSearch: () => void;
+  clearError: () => void;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -97,7 +99,7 @@ const prepareChartData = (
 };
 
 export const DataProvider = ({ children }: { children: React.ReactNode }) => {
-  // default filters: ensure the visual in Sidebar matches
+  // default filters
   const [serverFilters, setServerFilters] = useState<ServerFilters>({
     topic: "Digital Health",
     customKeyword: "",
@@ -173,18 +175,20 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     totalPublicationsByState,
   ]);
 
+  const previousServerFiltersRef = useRef<ServerFilters>(serverFilters);
+  const controllerRef = useRef<AbortController | null>(null);
   const isFetchingRef = useRef<Symbol | null>(null);
 
   useEffect(() => {
     const controller = new AbortController();
+    controllerRef.current = controller;
     const signal = controller.signal;
 
     const fetchId = Symbol();
     isFetchingRef.current = fetchId;
 
-    // Clear data explicitly before fetching
+    // Set loading true, but DO NOT clear sourceData here -- keep previous data during fetch
     setData((prev) => ({ ...prev, loading: true, error: null }));
-    setSourceData([]);
 
     const loadData = async () => {
       try {
@@ -192,28 +196,39 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
         for await (const page of fetchOpenAlexData(serverFilters, signal)) {
           allPublications.push(...page);
         }
-        setSourceData(allPublications);
 
+        // Only update sourceData if not aborted (preserves previous on abort)
+        if (!signal.aborted) {
+          setSourceData(allPublications);
+          previousServerFiltersRef.current = serverFilters;
+        }
+
+        // Always set loading false on completion (success or not)
         setData((prev) => ({
           ...prev,
           loading: false,
         }));
       } catch (error) {
+        // Fetch aborted due to user cancellation.
         if (signal.aborted) {
-          console.info("Fetch aborted due to filter change.");
+          setData((prev) => ({
+            ...prev,
+            loading: false,
+            error: "Search cancelled",
+          }));
           return;
         }
-        setSourceData([]);
-        setData({
-          publications: [],
-          yearlyData: [],
-          stateYearlyData: [],
-          totalPublicationsByState: [],
+        // On non-abort error, set error but keep previous sourceData
+        setData((prev) => ({
+          ...prev,
           loading: false,
           error: error instanceof Error ? error.message : "Failed to load data",
-        });
+        }));
       } finally {
-        if (isFetchingRef.current === fetchId) isFetchingRef.current = null;
+        if (isFetchingRef.current === fetchId) {
+          isFetchingRef.current = null;
+          controllerRef.current = null;
+        }
       }
     };
     loadData();
@@ -224,13 +239,23 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   }, [serverFilters]);
 
   const updateServerFilters = (newFilters: Partial<ServerFilters>) => {
-    // console.log("Updating serverFilters:", newFilters);
     setServerFilters((prev) => ({ ...prev, ...newFilters }));
   };
 
   const updateClientFilters = (newFilters: Partial<ClientFilters>) => {
-    // console.log("Updating clientFilters:", newFilters);
     setClientFilters((prev) => ({ ...prev, ...newFilters }));
+  };
+
+  const cancelSearch = () => {
+    if (controllerRef.current) {
+      setServerFilters(previousServerFiltersRef.current);
+      controllerRef.current.abort();
+      controllerRef.current = null;
+    }
+  };
+
+  const clearError = () => {
+    setData((prev) => ({ ...prev, error: null }));
   };
 
   return (
@@ -241,6 +266,8 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
         clientFilters,
         updateServerFilters,
         updateClientFilters,
+        cancelSearch,
+        clearError,
       }}
     >
       {children}

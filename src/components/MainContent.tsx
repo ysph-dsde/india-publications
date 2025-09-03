@@ -1,4 +1,10 @@
-import { Box, LinearProgress, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  LinearProgress,
+  Snackbar,
+  Typography,
+} from "@mui/material";
 import { CustomTabs } from "./shared/CustomTabs";
 
 import { DataTable } from "./DataTable";
@@ -7,12 +13,24 @@ import { TemporalDistributionPlot } from "./Plots/TemporalDistributionPlot";
 import { ConnectedDotPlot } from "./Plots/ConnectedDotPlot";
 import { StackedBarPlot } from "./Plots/StackedBarPlot";
 import { BubblePlot } from "./Plots/BubblePlot";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useData } from "../context/PublicationDataContext";
 
 export const MainContent = () => {
-  const { data } = useData();
+  const { data, clearError } = useData();
   const [view, setView] = useState<"national" | "byState">("national");
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (data.error && data.error !== "Search cancelled") {
+      setOpen(true);
+    }
+  }, [data.error]);
+
+  const handleClose = () => {
+    setOpen(false);
+    clearError(); // Clear error when Snackbar closes
+  };
 
   const tabs = [
     {
@@ -55,6 +73,19 @@ export const MainContent = () => {
           <DataTable />
         </>
       )}
+      <Snackbar
+        open={open}
+        onClose={handleClose}
+        autoHideDuration={6000}
+      >
+        <Alert
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          An error occurred while loading data.
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

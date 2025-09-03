@@ -14,7 +14,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import React, { useRef, useState, type ChangeEvent } from "react";
+import React, { useEffect, useRef, useState, type ChangeEvent } from "react";
 import { SelectionTitle } from "./SelectionTitle";
 import {
   type PopulationGroup,
@@ -39,6 +39,7 @@ export const Sidebar = () => {
     clientFilters,
     updateServerFilters,
     updateClientFilters,
+    cancelSearch,
   } = useData();
 
   // for visual change BEFORE API call
@@ -46,6 +47,14 @@ export const Sidebar = () => {
   const [localYearRange, setLocalYearRange] = useState<[number, number]>(
     serverFilters.yearRange,
   );
+
+  useEffect(() => {
+    setLocalYearRange(serverFilters.yearRange);
+  }, [serverFilters.yearRange]);
+
+  useEffect(() => {
+    setLocalCustomKeyword(serverFilters.customKeyword);
+  }, [serverFilters.customKeyword]);
 
   const handlePopulationGroups =
     (group: PopulationGroup) => (event: ChangeEvent<HTMLInputElement>) => {
@@ -129,7 +138,12 @@ export const Sidebar = () => {
             >
               <Typography>Loading data...</Typography>
               <LinearProgress />
-              <Button variant="contained">Cancel Search</Button>
+              <Button
+                variant="contained"
+                onClick={cancelSearch}
+              >
+                Cancel Search
+              </Button>
             </Box>
           </>
         )}

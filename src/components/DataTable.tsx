@@ -3,7 +3,6 @@ import {
   // IconButton,
   Link,
   // Tooltip,
-  Typography,
 } from "@mui/material";
 import {
   DataGrid,
@@ -103,59 +102,56 @@ export const DataTable = () => {
 
   return (
     <Box>
-      {data.error && <Typography color="error">{data.error}</Typography>}
-      {!data.error && (
-        <DataGrid
-          sx={{
-            "& .MuiDataGrid-columnHeaderTitle": {
-              whiteSpace: "normal",
-              lineHeight: "normal",
-            },
-            "& .MuiDataGrid-columnHeader": {
-              // Forced to use important since overriding inline styles
-              height: "unset !important",
-            },
-            ".MuiDataGrid-cell": {
-              padding: 1,
-            },
-          }}
-          rows={data.publications}
-          getRowId={(row) => row.rowId}
-          columns={columns}
-          pageSizeOptions={[10, 25, 50, 100]}
-          initialState={{
-            pagination: { paginationModel: { pageSize: 10 } },
-            // sorting: {
-            //   sortModel: [{ field: "publication_year", sort: "desc" }],
-            // },
-          }}
-          showToolbar
-          slots={{
-            noRowsOverlay: () => (
-              <Box
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                height="100%"
-              >
-                No publications match selected filters.
-              </Box>
-            ),
-            // toolbar: CustomToolbar,
-          }}
-          slotProps={{
-            toolbar: {
-              printOptions: { disableToolbarButton: true },
-              csvOptions: { allColumns: true, fileName: "publications_data" },
-            },
-          }}
-          getRowHeight={() => "auto"}
-          disableColumnFilter
-          disableColumnSelector
-          disableRowSelectionOnClick
-          disableColumnResize
-        />
-      )}
+      <DataGrid
+        sx={{
+          "& .MuiDataGrid-columnHeaderTitle": {
+            whiteSpace: "normal",
+            lineHeight: "normal",
+          },
+          "& .MuiDataGrid-columnHeader": {
+            // Forced to use important since overriding inline styles
+            height: "unset !important",
+          },
+          ".MuiDataGrid-cell": {
+            padding: 1,
+          },
+        }}
+        rows={data.publications}
+        getRowId={(row) => row.rowId}
+        columns={columns}
+        pageSizeOptions={[10, 25, 50, 100]}
+        initialState={{
+          pagination: { paginationModel: { pageSize: 10 } },
+          // sorting: {
+          //   sortModel: [{ field: "publication_year", sort: "desc" }],
+          // },
+        }}
+        showToolbar
+        slots={{
+          noRowsOverlay: () => (
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              height="100%"
+            >
+              No publications match selected filters.
+            </Box>
+          ),
+          // toolbar: CustomToolbar,
+        }}
+        slotProps={{
+          toolbar: {
+            printOptions: { disableToolbarButton: true },
+            csvOptions: { allColumns: true, fileName: "publications_data" },
+          },
+        }}
+        getRowHeight={() => "auto"}
+        disableColumnFilter
+        disableColumnSelector
+        disableRowSelectionOnClick
+        disableColumnResize
+      />
     </Box>
   );
 };
