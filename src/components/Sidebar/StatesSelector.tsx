@@ -25,6 +25,7 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 export const StatesSelector = () => {
   const { clientFilters, updateClientFilters } = useData();
   const [isFocused, setIsFocused] = useState(false);
+  const [inputValue, setInputValue] = useState("");
 
   const handleToggleAll = (event: any) => {
     event.preventDefault(); // Prevent any default behavior
@@ -76,6 +77,11 @@ export const StatesSelector = () => {
         fullWidth
         size="small"
         disableClearable
+        clearOnBlur={false}
+        inputValue={inputValue}
+        onInputChange={(_event, newInputValue, reason) => {
+          if (reason === "input") setInputValue(newInputValue);
+        }}
         limitTags={2}
         value={clientFilters.states.sort((a, b) => a.localeCompare(b))}
         onChange={(_event, newValue: string[]) => {
@@ -105,7 +111,10 @@ export const StatesSelector = () => {
             variant="standard"
             placeholder="States"
             onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
+            onBlur={() => {
+              setIsFocused(false);
+              setInputValue("");
+            }}
           />
         )}
         renderValue={(value: readonly string[], getItemProps) => {
