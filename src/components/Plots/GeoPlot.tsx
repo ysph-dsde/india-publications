@@ -45,8 +45,6 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
     });
   }, [selectedStates, totalPublicationsByState]);
 
-  console.log(completePublicationsByState);
-
   const plotData: Plotly.Data[] = useMemo(() => {
     return [
       // trace for unselected states
