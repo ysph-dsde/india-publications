@@ -172,10 +172,11 @@ export const ConnectedDotPlot = () => {
       <PlotCaption>
         This plot compares the publication share versus the population share
         across selected Indian states for {customKeyword || topic} between the
-        years of {yearRange[0]} and {yearRange[1]}. A total of{" "}
-        {totalPublications} publications were retrieved. Lines connect each
-        state's publication share (circle) with its population share (square),
-        highlighting over-representation (green) or under-representation (blue).
+        years of {yearRange[0]} and {yearRange[1]}. The population percentage is
+        based on 2025 population data. A total of {totalPublications}{" "}
+        publications were retrieved. Lines connect each state's publication
+        share (circle) with its population share (square), highlighting
+        over-representation (green) or under-representation (blue).
       </PlotCaption>
     </PlotWrapper>
   );
