@@ -6,13 +6,21 @@ import geojson from "../../assets/states_geo.json";
 import { PlotWrapper } from "./PlotWrapper";
 import { PlotCaption } from "./PlotCaption";
 import { CustomPlot } from "./CustomPlot";
+import { usePopulationData } from "../../context/PopulationContext";
+import { ToggleViewButtons } from "./ToggleViewButtons";
 
-export const GeoPlot = () => {
+interface GeoPlotProps {
+  view: string;
+  setView: Function;
+}
+
+export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
   const {
     data: { publications: publicationData, totalPublicationsByState },
     clientFilters: { states: selectedStates },
     serverFilters: { yearRange, topic, customKeyword },
   } = useData();
+  const { populationData } = usePopulationData();
   const totalPublications = publicationData.length;
 
   // add states with zero publications if they are selected
@@ -28,8 +36,16 @@ export const GeoPlot = () => {
           count: 0,
         })),
       ...totalPublicationsByState,
-    ];
+    ].map((pub) => {
+      const popData = populationData.find((pop) => pop.state === pub.state);
+      const perMillion = popData
+        ? (pub.count / popData.population) * 1000000
+        : 0;
+      return { ...pub, perMillion };
+    });
   }, [selectedStates, totalPublicationsByState]);
+
+  console.log(completePublicationsByState);
 
   const plotData: Plotly.Data[] = useMemo(() => {
     return [
@@ -56,7 +72,10 @@ export const GeoPlot = () => {
         geojson: geojson,
         featureidkey: "properties.name",
         locations: completePublicationsByState.map((state) => state.state),
-        z: completePublicationsByState.map((state) => state["count"]),
+        z:
+          view === "totalPublications"
+            ? completePublicationsByState.map((state) => state["count"])
+            : completePublicationsByState.map((state) => state["perMillion"]),
         colorscale: "Blues",
         reversescale: true,
         colorbar: {
@@ -75,10 +94,13 @@ export const GeoPlot = () => {
           borderradius: 4,
         },
         marker: { line: { color: "black" } }, // state borders
-        hovertemplate: "%{location}: %{z} publications<extra></extra>",
+        hovertemplate:
+          view === "totalPublications"
+            ? "%{location}: %{z} publications<extra></extra>"
+            : "%{location}: %{z} publications per 1,000,000 people<extra></extra>",
       },
     ];
-  }, [totalPublicationsByState]);
+  }, [totalPublicationsByState, view]);
 
   const layout: Partial<Plotly.Layout> = {
     geo: {
@@ -110,6 +132,14 @@ export const GeoPlot = () => {
         {yearRange[1]}. A total of {totalPublications} publications were
         retrieved.
       </PlotCaption>
+      <ToggleViewButtons
+        view={view}
+        setView={setView}
+        view1value="totalPublications"
+        view2value="perMillion"
+        view1text="Total publications"
+        view2text="Per million people"
+      />
     </PlotWrapper>
   );
 };

@@ -18,7 +18,12 @@ import { useData } from "../context/PublicationDataContext";
 
 export const MainContent = () => {
   const { data, clearError } = useData();
-  const [view, setView] = useState<"national" | "byState">("national");
+  const [temporalDistributionView, setTemporalDistributionView] = useState<
+    "national" | "byState"
+  >("national");
+  const [geoView, setGeoView] = useState<"totalPublications" | "perMillion">(
+    "totalPublications",
+  );
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -35,14 +40,19 @@ export const MainContent = () => {
   const tabs = [
     {
       label: "Geographic Distribution of Publications",
-      content: <GeoPlot />,
+      content: (
+        <GeoPlot
+          view={geoView}
+          setView={setGeoView}
+        />
+      ),
     },
     {
       label: "Temporal Distribution of Publications",
       content: (
         <TemporalDistributionPlot
-          view={view}
-          setView={setView}
+          view={temporalDistributionView}
+          setView={setTemporalDistributionView}
         />
       ),
     },
