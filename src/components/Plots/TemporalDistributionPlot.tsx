@@ -1,4 +1,3 @@
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { useData } from "../../context/PublicationDataContext";
 // import { LineChart, type LineSeries } from "@mui/x-charts";
 import { theme } from "../../Theme";
@@ -7,6 +6,7 @@ import { PlotWrapper } from "./PlotWrapper";
 import { PlotCaption } from "./PlotCaption";
 import { CustomPlot } from "./CustomPlot";
 import { useMemo } from "react";
+import { ToggleViewButtons } from "./ToggleViewButtons";
 
 interface TemportalDistributionPlotProps {
   view: "national" | "byState";
@@ -128,15 +128,14 @@ export const TemporalDistributionPlot = ({
         {customKeyword || topic} across selected states from {yearRange[0]} to{" "}
         {yearRange[1]}.
       </PlotCaption>
-      <ToggleButtonGroup
-        sx={{ alignSelf: "center", pb: 2 }}
-        value={view}
-        exclusive
-        onChange={(_e, newView) => newView && setView(newView)}
-      >
-        <ToggleButton value="national">National</ToggleButton>
-        <ToggleButton value="byState">By State</ToggleButton>
-      </ToggleButtonGroup>
+      <ToggleViewButtons
+        view={view}
+        setView={setView}
+        view1value="national"
+        view2value="byState"
+        view1text="National"
+        view2text="By State"
+      />
     </PlotWrapper>
     // <Box
     //   display="flex"
