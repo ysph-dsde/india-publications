@@ -25,12 +25,12 @@ export const ConnectedDotPlot = () => {
     if (!populationData || !publicationData || !selectedStates) return [];
 
     // filter populations to only include selected states
-    const filteredPublications = populationData.filter((pop) =>
+    const filteredPopulations = populationData.filter((pop) =>
       selectedStates.includes(pop.state),
     );
 
     if (totalPublications === 0) {
-      return filteredPublications.map((pop) => ({
+      return filteredPopulations.map((pop) => ({
         state: pop.state,
         publicationPercentage: 0,
         populationPercentage: pop.proportion,
@@ -51,7 +51,7 @@ export const ConnectedDotPlot = () => {
     );
 
     // Aggregate data
-    const data: AggregatedData[] = filteredPublications.map((pop) => {
+    const data: AggregatedData[] = filteredPopulations.map((pop) => {
       const pubCount = pubCounts.get(pop.state) || 0;
       const pubPerc = pubCount / totalPublications;
       const popPerc = pop.proportion;
