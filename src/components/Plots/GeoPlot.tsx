@@ -39,7 +39,7 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
     ].map((pub) => {
       const popData = populationData.find((pop) => pop.state === pub.state);
       const perMillion = popData
-        ? (pub.count / popData.population) * 1000000
+        ? ((pub.count / popData.population) * 1000000).toFixed(2)
         : 0;
       return { ...pub, perMillion };
     });
