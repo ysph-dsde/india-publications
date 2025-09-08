@@ -24,16 +24,16 @@ export const MainContent = () => {
   const [geoView, setGeoView] = useState<"totalPublications" | "perMillion">(
     "totalPublications",
   );
-  const [open, setOpen] = useState(false);
+  const [errorOpen, setErrorOpen] = useState(false);
 
   useEffect(() => {
     if (data.error && data.error !== "Search cancelled") {
-      setOpen(true);
+      setErrorOpen(true);
     }
   }, [data.error]);
 
   const handleClose = () => {
-    setOpen(false);
+    setErrorOpen(false);
     clearError(); // Clear error when Snackbar closes
   };
 
@@ -84,7 +84,7 @@ export const MainContent = () => {
         </>
       )}
       <Snackbar
-        open={open}
+        open={errorOpen}
         onClose={handleClose}
         autoHideDuration={6000}
       >
