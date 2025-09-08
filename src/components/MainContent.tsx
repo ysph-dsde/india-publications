@@ -1,10 +1,4 @@
-import {
-  Alert,
-  Box,
-  LinearProgress,
-  Snackbar,
-  Typography,
-} from "@mui/material";
+import { Alert, Box, Snackbar } from "@mui/material";
 import { CustomTabs } from "./shared/CustomTabs";
 
 import { DataTable } from "./DataTable";
@@ -72,16 +66,9 @@ export const MainContent = () => {
 
   return (
     <Box>
-      {data.loading && (
-        <>
-          <Typography>Loading data...</Typography>
-          <LinearProgress />
-        </>
-      )}
-      <>
-        <CustomTabs tabs={tabs}></CustomTabs>
-        <DataTable />
-      </>
+      <CustomTabs tabs={tabs}></CustomTabs>
+      <DataTable />
+
       <Snackbar
         open={errorOpen}
         onClose={handleClose}

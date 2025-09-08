@@ -122,7 +122,7 @@ export const Sidebar = () => {
           <>
             <Box
               sx={{
-                backgroundColor: "rgba(219, 219, 219, 0.86)",
+                backgroundColor: "rgba(219, 219, 219, 0.92)",
                 height: "100%",
                 position: "absolute",
                 top: 0,
