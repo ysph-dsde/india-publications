@@ -80,10 +80,13 @@ export const ConnectedDotPlot = () => {
       const datum = aggregatedData[i];
       const pub = datum.publicationPercentage;
       const pop = datum.populationPercentage;
+      const dif = datum.difference;
       const isGreen = pub > pop;
       const hoverText = `<b>${datum.state}</b><br>Publication percentage: ${(
         pub * 100
-      ).toFixed(1)}%<br>Population percentage: ${(pop * 100).toFixed(1)}%`;
+      ).toFixed(1)}%<br>Population percentage: ${(pop * 100).toFixed(
+        1,
+      )}%<br>Difference: ${(dif * 100).toFixed(1).replace("-0.0", "0.0")}%`;
 
       // Trace for publication (circle markers)
       data.push({
