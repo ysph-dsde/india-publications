@@ -93,7 +93,7 @@ export const ConnectedDotPlot = () => {
         mode: "markers",
         name: `${state} (Publication)`,
         marker: {
-          color: isGreen ? "#4CAF50" : "#2196F3",
+          color: isGreen ? "#4CAF50" : "#FF9800",
           symbol: "circle",
           size: 12,
         },
@@ -110,7 +110,7 @@ export const ConnectedDotPlot = () => {
         mode: "markers",
         name: `${state} (Population)`,
         marker: {
-          color: isGreen ? "#4CAF50" : "#2196F3",
+          color: isGreen ? "#4CAF50" : "#FF9800",
           symbol: "square",
           size: 12,
         },
@@ -127,7 +127,7 @@ export const ConnectedDotPlot = () => {
         mode: "lines",
         name: `${state} (Line)`,
         line: {
-          color: isGreen ? "#4CAF50" : "#2196F3",
+          color: isGreen ? "#4CAF50" : "#FF9800",
           width: 2,
         },
         showlegend: false,
