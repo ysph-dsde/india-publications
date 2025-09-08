@@ -130,7 +130,6 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
       ...prev,
       progress: { ...prev.progress, [searchField]: value },
     }));
-    console.log(data.progress);
   }, []);
 
   // Client-side filtering (doesn't trigger API call)
