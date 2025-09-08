@@ -98,13 +98,13 @@ export const Sidebar = () => {
   const debouncedUpdateCustomKeyword = useRef(
     debounce((value: string) => {
       updateServerFilters({ customKeyword: value.trim() }); // Trim to clean input
-    }, 500),
+    }, 750),
   ).current;
 
   const debouncedUpdateYearRange = useRef(
     debounce((value: [number, number]) => {
       updateServerFilters({ yearRange: value });
-    }, 500),
+    }, 750),
   ).current;
 
   return (
@@ -179,7 +179,7 @@ export const Sidebar = () => {
           </ListItem>
           {serverFilters.topic === "Custom Keyword Search" && (
             <SelectionTitle
-              title='Keyword(s) separated by ","'
+              title="Keyword(s)"
               toolTip={false}
             />
           )}
