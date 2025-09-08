@@ -6,13 +6,15 @@ interface PlotWrapperProps {
   children: React.ReactNode;
 }
 
-const NoStatesSelected = () => {
+const NoResults = () => {
   return (
     <Box
       p={2}
       textAlign="center"
     >
-      <Typography>Please select at least 1 state</Typography>
+      <Typography variant="caption">
+        No publications match selected filters.
+      </Typography>
     </Box>
   );
 };
@@ -20,13 +22,19 @@ const NoStatesSelected = () => {
 export const PlotWrapper = ({ children }: PlotWrapperProps) => {
   const {
     clientFilters: { states: selectedStates },
+    data: { publications },
   } = useData();
+  const totalPublications = publications.length;
   return (
     <Paper
       elevation={1}
       sx={{ display: "flex", flexDirection: "column" }}
     >
-      {selectedStates.length === 0 ? <NoStatesSelected /> : children}
+      {selectedStates.length === 0 || totalPublications === 0 ? (
+        <NoResults />
+      ) : (
+        children
+      )}
     </Paper>
   );
 };
