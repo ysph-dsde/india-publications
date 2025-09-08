@@ -140,10 +140,15 @@ export const DataTable = () => {
           ),
           // toolbar: CustomToolbar,
         }}
+        loading={data.loading}
         slotProps={{
           toolbar: {
             printOptions: { disableToolbarButton: true },
             csvOptions: { allColumns: true, fileName: "publications_data" },
+          },
+          loadingOverlay: {
+            variant: "skeleton",
+            noRowsVariant: "skeleton",
           },
         }}
         getRowHeight={() => "auto"}
