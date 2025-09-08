@@ -101,6 +101,12 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
   }, [totalPublicationsByState, view]);
 
   const layout: Partial<Plotly.Layout> = {
+    title: {
+      text:
+        view === "totalPublications"
+          ? "Number of Publications by State"
+          : "Number of Publications per Million People by State",
+    },
     geo: {
       visible: false,
       fitbounds: "locations",
@@ -112,7 +118,7 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
       scale: 1,
     },
     hoverdistance: -1,
-    margin: { r: 0, t: 0, b: 0, l: 0 },
+    margin: { r: 0, t: 90, b: 0, l: 0 },
   };
 
   return (
