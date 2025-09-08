@@ -9,6 +9,7 @@ export const PublicationTopics = [
   "Public Finance",
   "Macroeconomics",
   "Game Theory",
+  "Climate Change",
   "Custom Keyword Search",
 ];
 
