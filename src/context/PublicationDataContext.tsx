@@ -1,5 +1,6 @@
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -119,8 +120,18 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     stateYearlyData: [],
     totalPublicationsByState: [],
     loading: true,
+    progress: { "title.search": 0, "abstract.search": 0 },
     error: null,
   });
+
+  // Callback to update progress for a specific searchField
+  const setProgress = useCallback((searchField: string, value: number) => {
+    setData((prev) => ({
+      ...prev,
+      progress: { ...prev.progress, [searchField]: value },
+    }));
+    console.log(data.progress);
+  }, []);
 
   // Client-side filtering (doesn't trigger API call)
   const filteredPublications = useMemo(() => {
@@ -188,7 +199,12 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     isFetchingRef.current = fetchId;
 
     // Set loading true, but DO NOT clear sourceData here -- keep previous data during fetch
-    setData((prev) => ({ ...prev, loading: true, error: null }));
+    setData((prev) => ({
+      ...prev,
+      loading: true,
+      progress: { "title.search": 0, "abstract.search": 0 },
+      error: null,
+    }));
 
     const loadData = async () => {
       try {
@@ -197,7 +213,11 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
           serverFilters.topic !== "Custom Keyword Search" ||
           serverFilters.customKeyword.length !== 0
         ) {
-          for await (const page of fetchOpenAlexData(serverFilters, signal)) {
+          for await (const page of fetchOpenAlexData(
+            serverFilters,
+            signal,
+            setProgress,
+          )) {
             allPublications.push(...page);
           }
         }

@@ -4,6 +4,7 @@ import { parseOpenAlexData } from "../utils/parseData";
 export async function* fetchOpenAlexData(
   serverFilters: ServerFilters,
   signal: AbortSignal,
+  setProgress: Function,
 ) {
   const perPage = 200;
 
@@ -55,6 +56,8 @@ export async function* fetchOpenAlexData(
       `https://api.openalex.org/works?${baseQueryParams.toString()}`,
     );
 
+    let pageIterator = 0;
+    let roundedTotal: number | null = null;
     while (hasMore) {
       const queryParams = new URLSearchParams(baseQueryParams);
       queryParams.append("cursor", cursor);
@@ -68,6 +71,18 @@ export async function* fetchOpenAlexData(
       }
 
       const rawData = await response.json();
+
+      // update progress indicators
+      if (roundedTotal === null) {
+        const count = rawData.meta.count || 0;
+        roundedTotal = Math.ceil(count / 200) * 200; // Round up to nearest 200
+      }
+      pageIterator++;
+      const progress =
+        roundedTotal > 0
+          ? Math.min(((pageIterator * 200) / roundedTotal) * 100, 100)
+          : 0;
+      setProgress(searchField, progress);
 
       // Filter out duplicates by id
       const newResults = rawData.results.filter(

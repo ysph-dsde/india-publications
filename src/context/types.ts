@@ -42,6 +42,10 @@ export interface DataState {
   stateYearlyData: StateYearlyPublication[];
   totalPublicationsByState: totalPublicationsByState[];
   loading: boolean;
+  progress: Partial<{
+    "title.search": number;
+    "abstract.search": number;
+  }>;
   error: string | null;
 }
 

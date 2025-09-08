@@ -2,9 +2,26 @@ import { Box, Button, LinearProgress, Typography } from "@mui/material";
 import { useData } from "../../context/PublicationDataContext";
 import { useEffect, useState } from "react";
 
+const ProgressWithLabel = ({ value }: any) => {
+  return (
+    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+      <Box sx={{ width: "100%" }}>
+        <LinearProgress
+          variant="determinate"
+          value={value}
+        />
+      </Box>
+      <Typography
+        variant="body2"
+        sx={{ minWidth: 40, textAlign: "right" }}
+      >{`${Math.round(value)}%`}</Typography>
+    </Box>
+  );
+};
+
 export const Loading = () => {
   const {
-    data: { loading },
+    data: { loading, progress },
     cancelSearch,
   } = useData();
 
@@ -46,7 +63,9 @@ export const Loading = () => {
       }}
     >
       <Typography>{loadingMessages[currentMessageIndex]}</Typography>
-      <LinearProgress />
+      <ProgressWithLabel value={progress["title.search"]} />
+      <ProgressWithLabel value={progress["abstract.search"]} />
+
       <Button
         variant="contained"
         onClick={cancelSearch}
