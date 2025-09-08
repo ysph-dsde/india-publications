@@ -193,8 +193,13 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     const loadData = async () => {
       try {
         const allPublications: FlattenedPublication[] = [];
-        for await (const page of fetchOpenAlexData(serverFilters, signal)) {
-          allPublications.push(...page);
+        if (
+          serverFilters.topic !== "Custom Keyword Search" ||
+          serverFilters.customKeyword.length !== 0
+        ) {
+          for await (const page of fetchOpenAlexData(serverFilters, signal)) {
+            allPublications.push(...page);
+          }
         }
 
         // Only update sourceData if not aborted (preserves previous on abort)
