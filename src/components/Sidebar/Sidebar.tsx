@@ -1,18 +1,15 @@
 import {
   Autocomplete,
   Box,
-  Button,
   Checkbox,
   debounce,
   Divider,
   FormControlLabel,
-  LinearProgress,
   List,
   ListItem,
   Slider,
   TextField,
   Toolbar,
-  Typography,
 } from "@mui/material";
 import React, { useEffect, useRef, useState, type ChangeEvent } from "react";
 import { SelectionTitle } from "./SelectionTitle";
@@ -31,6 +28,7 @@ import {
 import { StatesSelector } from "./StatesSelector";
 import { useData } from "../../context/PublicationDataContext";
 import ysphLogo from "../../assets/images/ysphLogo.jpeg";
+import { Loading } from "./Loading";
 
 export const Sidebar = () => {
   const {
@@ -39,7 +37,6 @@ export const Sidebar = () => {
     clientFilters,
     updateServerFilters,
     updateClientFilters,
-    cancelSearch,
   } = useData();
 
   // for visual change BEFORE API call
@@ -118,35 +115,7 @@ export const Sidebar = () => {
       </Toolbar>
       <Divider />
       <Box sx={{ position: "relative" }}>
-        {loading && (
-          <>
-            <Box
-              sx={{
-                backgroundColor: "rgba(219, 219, 219, 0.92)",
-                height: "100%",
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                padding: 2,
-                zIndex: 1,
-                display: "flex",
-                flexDirection: "column",
-                gap: 2,
-              }}
-            >
-              <Typography>Loading data...</Typography>
-              <LinearProgress />
-              <Button
-                variant="contained"
-                onClick={cancelSearch}
-              >
-                Cancel Search
-              </Button>
-            </Box>
-          </>
-        )}
+        {loading && <Loading />}
         <List sx={{ position: "relative", zIndex: 0 }}>
           <SelectionTitle
             title="Topic"
