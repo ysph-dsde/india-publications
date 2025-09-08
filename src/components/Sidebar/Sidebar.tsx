@@ -23,7 +23,7 @@ import {
   GrantTypesList,
   type AuthorPositions,
   type GrantTypes,
-} from "../../constants/FIlterTypes";
+} from "../../constants/FilterTypes";
 
 import { StatesSelector } from "./StatesSelector";
 import { useData } from "../../context/PublicationDataContext";

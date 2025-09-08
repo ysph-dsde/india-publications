@@ -1,6 +1,6 @@
 // src/context/types.ts
 
-import type { AuthorPositions, GrantTypes } from "../constants/FIlterTypes";
+import type { AuthorPositions, GrantTypes } from "../constants/FilterTypes";
 import type { PopulationGroup } from "../constants/States";
 
 // filters on data
