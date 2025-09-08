@@ -72,17 +72,16 @@ export const MainContent = () => {
 
   return (
     <Box>
-      {data.loading ? (
+      {data.loading && (
         <>
           <Typography>Loading data...</Typography>
           <LinearProgress />
         </>
-      ) : (
-        <>
-          <CustomTabs tabs={tabs}></CustomTabs>
-          <DataTable />
-        </>
       )}
+      <>
+        <CustomTabs tabs={tabs}></CustomTabs>
+        <DataTable />
+      </>
       <Snackbar
         open={errorOpen}
         onClose={handleClose}
