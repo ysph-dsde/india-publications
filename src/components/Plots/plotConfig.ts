@@ -39,7 +39,8 @@ export const createLayout = (
 
 export const baseConfig: Partial<Plotly.Config> = {
   responsive: true,
-  displayModeBar: false,
+  displayModeBar: true,
+  displaylogo: false,
   modeBarButtonsToRemove: [
     "pan2d",
     "zoomIn2d",
@@ -49,5 +50,9 @@ export const baseConfig: Partial<Plotly.Config> = {
     "autoScale2d",
     "zoom2d",
     "resetScale2d",
+    "zoomOutGeo",
+    "zoomInGeo",
+    "resetGeo",
+    "zoomOut2d",
   ],
 };
