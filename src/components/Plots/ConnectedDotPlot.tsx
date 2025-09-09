@@ -179,7 +179,7 @@ export const ConnectedDotPlot = () => {
         based on 2025 population data. A total of {totalPublications}{" "}
         publications were retrieved. Lines connect each state's publication
         share (circle) with its population share (square), highlighting
-        over-representation (green) or under-representation (blue).
+        over-representation (green) or under-representation (orange).
       </PlotCaption>
     </PlotWrapper>
   );
