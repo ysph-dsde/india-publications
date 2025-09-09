@@ -1,44 +1,56 @@
-import {
-  Box,
-  // IconButton,
-  Link,
-  // Tooltip,
-} from "@mui/material";
+import { Box, Button, Link, Tooltip } from "@mui/material";
 import {
   DataGrid,
-  // ExportCsv,
-  // Toolbar,
-  // ToolbarButton,
+  ExportCsv,
+  Toolbar,
+  ToolbarButton,
   type GridColDef,
 } from "@mui/x-data-grid";
-// import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 
-import { useData } from "../context/PublicationDataContext";
+import { useData } from "../../context/PublicationDataContext";
+import { ToolbarSearch } from "./ToolbarSearch";
 
-// function CustomToolbar() {
-//   return (
-//     <Toolbar>
-//       <ExportCsv
-//         options={{
-//           allColumns: true, // Export all columns
-//           fileName: "publications_data", // Custom file name
-//         }}
-//         render={
-//           <Tooltip title={"Export"}>
-//             <ToolbarButton
-//               render={
-//                 <IconButton>
-//                   <FileDownloadIcon fontSize="small" />
-//                 </IconButton>
-//               }
-//             />
-//           </Tooltip>
-//         }
-//       />
-//       {/* <QuickFilter/> */}
-//     </Toolbar>
-//   );
-// }
+const CustomToolbar = () => {
+  return (
+    <Toolbar>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-end",
+          gap: 2,
+        }}
+      >
+        <ExportCsv
+          options={{
+            allColumns: true, // Export all columns
+            fileName: "publications_data", // Custom file name
+          }}
+          render={
+            <Tooltip title={"Download all"}>
+              <ToolbarButton
+                render={
+                  <Button
+                    variant="text"
+                    sx={{
+                      color: "#707070",
+                    }}
+                    size="small"
+                    endIcon={<FileDownloadIcon fontSize="small" />}
+                  >
+                    Download all data
+                  </Button>
+                }
+              />
+            </Tooltip>
+          }
+        />
+        <ToolbarSearch />
+      </Box>
+    </Toolbar>
+  );
+};
 
 export const DataTable = () => {
   const { data } = useData();
@@ -138,14 +150,10 @@ export const DataTable = () => {
               No publications match selected filters.
             </Box>
           ),
-          // toolbar: CustomToolbar,
+          toolbar: CustomToolbar,
         }}
         loading={data.loading}
         slotProps={{
-          toolbar: {
-            printOptions: { disableToolbarButton: true },
-            csvOptions: { allColumns: true, fileName: "publications_data" },
-          },
           loadingOverlay: {
             variant: "skeleton",
             noRowsVariant: "skeleton",

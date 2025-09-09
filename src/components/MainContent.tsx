@@ -1,7 +1,7 @@
 import { Alert, Box, Snackbar } from "@mui/material";
 import { CustomTabs } from "./shared/CustomTabs";
 
-import { DataTable } from "./DataTable";
+import { DataTable } from "./DataTable/DataTable";
 import { GeoPlot } from "./Plots/GeoPlot";
 import { TemporalDistributionPlot } from "./Plots/TemporalDistributionPlot";
 import { ConnectedDotPlot } from "./Plots/ConnectedDotPlot";
