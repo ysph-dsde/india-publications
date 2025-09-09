@@ -197,17 +197,18 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     const fetchId = Symbol();
     isFetchingRef.current = fetchId;
 
-    // Set loading true, but DO NOT clear sourceData here -- keep previous data during fetch
+    // Set loading true, backup previous search, clear current data
     setData((prev) => ({
       ...prev,
       loading: true,
       progress: { "title.search": 0, "abstract.search": 0 },
       error: null,
     }));
+    const dataBackup: FlattenedPublication[] = [...sourceData];
+    setSourceData([]);
 
     const loadData = async () => {
       try {
-        const allPublications: FlattenedPublication[] = [];
         if (
           serverFilters.topic !== "Custom Keyword Search" ||
           serverFilters.customKeyword.length !== 0
@@ -217,13 +218,13 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
             signal,
             setProgress,
           )) {
-            allPublications.push(...page);
+            // progressively add data as it loads
+            setSourceData((prev) => [...prev, ...page]);
           }
         }
 
-        // Only update sourceData if not aborted (preserves previous on abort)
+        // update server filters if not cancelled
         if (!signal.aborted) {
-          setSourceData(allPublications);
           previousServerFiltersRef.current = serverFilters;
         }
 
@@ -235,6 +236,8 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
       } catch (error) {
         // Fetch aborted due to user cancellation.
         if (signal.aborted) {
+          // revert to previous data source
+          setSourceData([...dataBackup]);
           setData((prev) => ({
             ...prev,
             loading: false,

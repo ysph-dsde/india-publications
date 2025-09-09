@@ -155,8 +155,8 @@ export const DataTable = () => {
         loading={data.loading}
         slotProps={{
           loadingOverlay: {
-            variant: "skeleton",
-            noRowsVariant: "skeleton",
+            variant: "linear-progress",
+            noRowsVariant: "linear-progress",
           },
         }}
         getRowHeight={() => "auto"}
