@@ -1,4 +1,10 @@
-import { Box, Paper, Skeleton, Typography } from "@mui/material";
+import {
+  Box,
+  LinearProgress,
+  Paper,
+  Skeleton,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import { useData } from "../../context/PublicationDataContext";
 
@@ -60,6 +66,10 @@ export const PlotWrapper = ({ children }: PlotWrapperProps) => {
           >
             {<Skeleton />}
           </Typography>
+          <Box sx={{ width: "100%" }}>
+            <Typography>Loading data...</Typography>
+            <LinearProgress />
+          </Box>
         </Box>
       ) : (
         <>
