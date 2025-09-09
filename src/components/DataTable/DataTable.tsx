@@ -10,6 +10,7 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 
 import { useData } from "../../context/PublicationDataContext";
 import { ToolbarSearch } from "./ToolbarSearch";
+import { TopInstitutions } from "./TopInstitutions";
 
 const CustomToolbar = () => {
   return (
@@ -46,6 +47,7 @@ const CustomToolbar = () => {
             </Tooltip>
           }
         />
+        <TopInstitutions />
         <ToolbarSearch />
       </Box>
     </Toolbar>
