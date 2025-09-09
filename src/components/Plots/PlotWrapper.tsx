@@ -1,10 +1,4 @@
-import {
-  Box,
-  LinearProgress,
-  Paper,
-  Skeleton,
-  Typography,
-} from "@mui/material";
+import { Box, LinearProgress, Paper, Typography } from "@mui/material";
 import React from "react";
 import { useData } from "../../context/PublicationDataContext";
 
@@ -34,50 +28,33 @@ export const PlotWrapper = ({ children }: PlotWrapperProps) => {
   return (
     <Paper
       elevation={1}
-      sx={{ display: "flex", flexDirection: "column" }}
+      sx={{ display: "flex", flexDirection: "column", position: "relative" }}
     >
-      {loading ? (
+      {loading && (
         <Box
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            alignSelf: "center",
-            gap: 0.5,
-            width: "100%",
+            backgroundColor: "rgba(255, 255, 255, 0.5)",
+            height: "100%",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 1,
           }}
-          px={2}
-          pb={1}
-        >
-          <Skeleton
-            variant="text"
-            sx={{ fontSize: "2rem" }}
-            width="25vw"
-          />
-          <Skeleton
-            variant="rounded"
-            width="100%"
-            height={400}
-          />
-          <Typography
-            alignSelf="flex-start"
-            variant="caption"
-            sx={{ width: 500 }}
-          >
-            {<Skeleton />}
-          </Typography>
-          <Box sx={{ width: "100%" }}>
-            <Typography>Loading data...</Typography>
-            <LinearProgress />
-          </Box>
-        </Box>
+        />
+      )}
+      {selectedStates.length === 0 || totalPublications === 0 ? (
+        <NoResults />
       ) : (
         <>
-          {selectedStates.length === 0 || totalPublications === 0 ? (
-            <NoResults />
-          ) : (
-            children
+          {loading && (
+            <Box sx={{ width: "100%", zIndex: 2, px: 2, pt: 1 }}>
+              <Typography>Loading data...</Typography>
+              <LinearProgress />
+            </Box>
           )}
+          {children}
         </>
       )}
     </Paper>
