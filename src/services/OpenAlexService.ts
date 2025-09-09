@@ -8,13 +8,6 @@ export async function* fetchOpenAlexData(
 ) {
   const perPage = 200;
 
-  // Fetch the CSV file from the public directory
-  const csvResponse = await fetch("/data_ror.csv");
-  if (!csvResponse.ok) {
-    throw new Error("Failed to fetch data_ror.csv");
-  }
-  const csvData = await csvResponse.text();
-
   const baseFilterParams: string[] = [
     "authorships.institutions.country_code:IN",
   ];
@@ -93,10 +86,7 @@ export async function* fetchOpenAlexData(
 
       // Parse and yield the new results
       if (newResults.length > 0) {
-        const parsedData = await parseOpenAlexData(
-          { results: newResults },
-          csvData,
-        );
+        const parsedData = await parseOpenAlexData({ results: newResults });
         yield parsedData;
       }
 

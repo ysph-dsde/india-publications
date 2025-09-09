@@ -8,11 +8,16 @@ interface InstitutionCsvRow {
 
 const rorToStateMapSingleton: Map<string, string> = new Map<string, string>();
 
-const loadRorToStateMap = (
-  csvData: string | File,
-): Promise<Map<string, string>> => {
+const loadRorToStateMap = async (): Promise<Map<string, string>> => {
   if (rorToStateMapSingleton.size > 0)
     return Promise.resolve(rorToStateMapSingleton);
+
+  // Fetch the CSV file from the public directory
+  const csvResponse = await fetch("/data_ror.csv");
+  if (!csvResponse.ok) {
+    throw new Error("Failed to fetch data_ror.csv");
+  }
+  const csvData = await csvResponse.text();
 
   return new Promise((resolve, reject) => {
     Papa.parse<InstitutionCsvRow>(csvData, {
@@ -28,7 +33,7 @@ const loadRorToStateMap = (
         });
         resolve(rorToStateMapSingleton);
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error("CSV Parsing Error:", error);
         reject(error);
       },
@@ -38,9 +43,8 @@ const loadRorToStateMap = (
 
 export const parseOpenAlexData = async (
   rawData: any,
-  csvData: string | File,
 ): Promise<FlattenedPublication[]> => {
-  const rorToStateMap = await loadRorToStateMap(csvData);
+  const rorToStateMap = await loadRorToStateMap();
 
   const flattened: FlattenedPublication[] = [];
 
