@@ -13,43 +13,49 @@ import { ToolbarSearch } from "./ToolbarSearch";
 import { TopInstitutions } from "./TopInstitutions";
 
 const CustomToolbar = () => {
+  const {
+    data: { publications, loading },
+  } = useData();
+
   return (
     <Toolbar>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-end",
-          gap: 2,
-        }}
-      >
-        <ExportCsv
-          options={{
-            allColumns: true, // Export all columns
-            fileName: "publications_data", // Custom file name
+      {publications.length > 0 && !loading && (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+            gap: 2,
           }}
-          render={
-            <Tooltip title={"Download all"}>
-              <ToolbarButton
-                render={
-                  <Button
-                    variant="text"
-                    sx={{
-                      color: "#707070",
-                    }}
-                    size="small"
-                    endIcon={<FileDownloadIcon fontSize="small" />}
-                  >
-                    Download all data
-                  </Button>
-                }
-              />
-            </Tooltip>
-          }
-        />
-        <TopInstitutions />
-        <ToolbarSearch />
-      </Box>
+        >
+          <ExportCsv
+            options={{
+              allColumns: true, // Export all columns
+              fileName: "publications_data", // Custom file name
+            }}
+            render={
+              <Tooltip title={"Download all"}>
+                <ToolbarButton
+                  render={
+                    <Button
+                      variant="text"
+                      sx={{
+                        color: "#707070",
+                      }}
+                      size="small"
+                      endIcon={<FileDownloadIcon fontSize="small" />}
+                    >
+                      Download all data
+                    </Button>
+                  }
+                />
+              </Tooltip>
+            }
+          />
+          <TopInstitutions />
+          <ToolbarSearch />
+        </Box>
+      )}
     </Toolbar>
   );
 };
