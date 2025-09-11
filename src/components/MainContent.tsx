@@ -55,7 +55,7 @@ export const MainContent = () => {
       content: <ConnectedDotPlot />,
     },
     {
-      label: "Stacked Bar Plot",
+      label: "State Publication Percentage",
       content: <StackedBarPlot />,
     },
     {
