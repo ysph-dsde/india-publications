@@ -102,9 +102,9 @@ const prepareChartData = (
 export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   // default filters
   const [serverFilters, setServerFilters] = useState<ServerFilters>({
-    topic: "Digital Health",
+    topic: "Custom Keyword Search",
     customKeyword: "",
-    yearRange: [2014, 2018],
+    yearRange: [2014, 2024],
   });
   const [clientFilters, setClientFilters] = useState<ClientFilters>({
     authorPosition: "First",
