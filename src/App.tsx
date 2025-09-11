@@ -65,7 +65,7 @@ function App() {
                   noWrap
                   component="div"
                 >
-                  Visualization Tool for Research Publications in India
+                  Characterizing the Distribution of Publications in India
                 </Typography>
               </Toolbar>
             </AppBar>
