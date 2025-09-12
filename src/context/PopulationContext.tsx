@@ -42,7 +42,6 @@ export const PopulationProvider = ({
         // const data = await loadPopulationData("/india_population.csv");
         const data = await loadPopulationData();
         setPopulationData(data);
-        console.log(data);
       } catch (err) {
         setError("Failed to load population data");
       } finally {

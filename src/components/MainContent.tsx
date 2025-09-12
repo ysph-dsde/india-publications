@@ -18,6 +18,9 @@ export const MainContent = () => {
   const [geoView, setGeoView] = useState<"totalPublications" | "perMillion">(
     "totalPublications",
   );
+  const [stackedView, setStackedView] = useState<
+    "yearRangeEnd" | "allPopulations"
+  >("yearRangeEnd");
   const [errorOpen, setErrorOpen] = useState(false);
 
   useEffect(() => {
@@ -56,7 +59,12 @@ export const MainContent = () => {
     },
     {
       label: "State Publication Percentage",
-      content: <StackedBarPlot />,
+      content: (
+        <StackedBarPlot
+          view={stackedView}
+          setView={setStackedView}
+        />
+      ),
     },
     {
       label: "HDI vs Publications",
