@@ -18,14 +18,15 @@ export const ConnectedDotPlot = () => {
     clientFilters: { states: selectedStates },
     serverFilters: { yearRange, topic, customKeyword },
   } = useData();
-  const { populationData } = usePopulationData();
+  const { endYearPopulationData } = usePopulationData();
   const totalPublications = publicationData.length;
 
   const aggregatedData = useMemo(() => {
-    if (!populationData || !publicationData || !selectedStates) return [];
+    if (!endYearPopulationData || !publicationData || !selectedStates)
+      return [];
 
     // filter populations to only include selected states
-    const filteredPopulations = populationData.filter((pop) =>
+    const filteredPopulations = endYearPopulationData.filter((pop) =>
       selectedStates.includes(pop.state),
     );
 
@@ -67,7 +68,7 @@ export const ConnectedDotPlot = () => {
     data.sort((a, b) => b.difference - a.difference);
 
     return data;
-  }, [publicationData, populationData, selectedStates]);
+  }, [publicationData, endYearPopulationData, selectedStates]);
 
   // Prepare Plotly traces
   const traces = useMemo(() => {
@@ -176,7 +177,7 @@ export const ConnectedDotPlot = () => {
         This plot compares the publication share versus the population share
         across selected Indian states for {customKeyword || topic} between the
         years of {yearRange[0]} and {yearRange[1]}. The population percentage is
-        based on 2025 population data. A total of {totalPublications}{" "}
+        based on {yearRange[1]} population data. A total of {totalPublications}{" "}
         publications were retrieved. Lines connect each state's publication
         share (circle) with its population share (square), highlighting
         over-representation (green) or under-representation (orange).

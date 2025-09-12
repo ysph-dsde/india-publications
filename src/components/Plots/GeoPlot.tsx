@@ -20,7 +20,7 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
     clientFilters: { states: selectedStates },
     serverFilters: { yearRange, topic, customKeyword },
   } = useData();
-  const { populationData } = usePopulationData();
+  const { endYearPopulationData } = usePopulationData();
   const totalPublications = publicationData.length;
 
   // add states with zero publications if they are selected
@@ -37,7 +37,9 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
         })),
       ...totalPublicationsByState,
     ].map((pub) => {
-      const popData = populationData.find((pop) => pop.state === pub.state);
+      const popData = endYearPopulationData.find(
+        (pop) => pop.state === pub.state,
+      );
       const perMillion = popData
         ? ((pub.count / popData.population) * 1000000).toFixed(2)
         : 0;
@@ -134,7 +136,7 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
         This plot shows the number of publications under{" "}
         {customKeyword || topic} between the years of {yearRange[0]} and{" "}
         {yearRange[1]}. A total of {totalPublications} publications were
-        retrieved.
+        retrieved. The population data is based on 2018 estimates.
       </PlotCaption>
       <ToggleViewButtons
         view={view}

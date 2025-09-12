@@ -1,45 +1,102 @@
 import Papa from "papaparse";
 
-export interface PopulationData {
+export interface StateYearData {
   state: string;
   population: number;
   proportion: number;
 }
 
-let cachedData: PopulationData[] | null = null;
+export type PopulationData = Map<string, StateYearData[]>;
 
-export const loadPopulationData = async (
-  csvUrl: string,
-): Promise<PopulationData[]> => {
+let cachedData: PopulationData | null = null;
+
+const createEmptyMap = (): PopulationData => new Map<string, StateYearData[]>();
+
+const validateRow = (
+  row: Record<string, any>,
+  year: string,
+): StateYearData | null => {
+  const state = row.state;
+  const population = row[`${year}_population`];
+  const proportion = row[`${year}_proportion`];
+
+  if (
+    typeof state !== "string" ||
+    state.trim() === "" ||
+    population == null ||
+    proportion == null ||
+    typeof population !== "number" ||
+    typeof proportion !== "number"
+  ) {
+    if (
+      state &&
+      (population == null ||
+        proportion == null ||
+        typeof population !== "number" ||
+        typeof proportion !== "number")
+    ) {
+      console.warn(`Invalid numeric data for ${state} in ${year}`);
+    }
+    return null;
+  }
+
+  return { state, population, proportion };
+};
+
+export const loadPopulationData = async (): Promise<PopulationData> => {
   if (cachedData) {
     return cachedData;
   }
 
   try {
-    const response = await fetch(csvUrl);
+    const response = await fetch("/population_by_year.csv");
     const csvText = await response.text();
-    const results = await new Promise<PopulationData[]>((resolve, reject) => {
+    const results = await new Promise<any>((resolve, reject) => {
       Papa.parse(csvText, {
         header: true,
-        dynamicTyping: true, // Auto-convert numbers
-        complete: (result) => {
-          const data = result.data as {
-            state: string;
-            population: number;
-            proportion: number;
-          }[];
-          resolve(data);
-        },
+        dynamicTyping: true,
+        complete: resolve,
         error: (error: any) => {
           console.error("CSV Parsing Error:", error);
           reject(error);
         },
       });
     });
-    cachedData = results;
-    return results;
+
+    const parsedData = results.data as Record<string, any>[];
+    if (!parsedData.length || !results.meta?.fields) {
+      console.warn("No data or headers found in CSV");
+      return (cachedData = createEmptyMap());
+    }
+
+    const years = new Set(
+      (results.meta.fields as string[]).flatMap((header) => {
+        const match = header.match(/^(\d{4})_population$/);
+        return match ? [match[1]] : [];
+      }),
+    );
+
+    if (years.size === 0) {
+      console.warn(
+        "No valid year columns found (expected format: {year}_population)",
+      );
+      return (cachedData = createEmptyMap());
+    }
+
+    const dataMap = new Map<string, StateYearData[]>();
+    years.forEach((year) => {
+      const yearData = parsedData
+        .map((row) => validateRow(row, year))
+        .filter((item): item is StateYearData => item !== null);
+
+      if (yearData.length > 0) {
+        dataMap.set(year, yearData);
+      }
+    });
+
+    return (cachedData = dataMap);
   } catch (error) {
     console.error("Error loading population data:", error);
-    return [];
+    return (cachedData = createEmptyMap());
   }
 };

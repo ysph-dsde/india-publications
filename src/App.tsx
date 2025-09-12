@@ -39,8 +39,8 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <PopulationProvider>
-        <DataProvider>
+      <DataProvider>
+        <PopulationProvider>
           <Box sx={{ display: "flex" }}>
             <CssBaseline />
             <AppBar
@@ -119,8 +119,8 @@ function App() {
               <MainContent />
             </Box>
           </Box>
-        </DataProvider>
-      </PopulationProvider>
+        </PopulationProvider>
+      </DataProvider>
     </ThemeProvider>
   );
 }
