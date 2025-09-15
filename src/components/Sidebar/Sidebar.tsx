@@ -27,7 +27,7 @@ import {
 
 import { StatesSelector } from "./StatesSelector";
 import { useData } from "../../context/PublicationDataContext";
-import ysphLogo from "../../assets/images/ysphLogo.svg";
+import ysphLogo from "../../assets/images/ysphLogoBlues.svg";
 import { Loading } from "./Loading";
 
 export const Sidebar = () => {
