@@ -3,7 +3,6 @@ import {
   AppBar,
   Box,
   CssBaseline,
-  Drawer,
   IconButton,
   ThemeProvider,
   Toolbar,
@@ -12,24 +11,16 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import { theme } from "./Theme";
 import { useState } from "react";
-import { Sidebar } from "./components/Sidebar/Sidebar";
 import { MainContent } from "./components/MainContent";
 import { DataProvider } from "./context/PublicationDataContext";
 import { PopulationProvider } from "./context/PopulationContext";
+import { LandingHero } from "./components/LandingHero";
+import { Sidebar } from "./components/Sidebar/Sidebar";
 
 function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const drawerWidth = 260;
-
-  const handleDrawerClose = () => {
-    setIsClosing(true);
-    setMobileOpen(false);
-  };
-
-  const handleDrawerTransitionEnd = () => {
-    setIsClosing(false);
-  };
 
   const handleDrawerToggle = () => {
     if (!isClosing) {
@@ -41,6 +32,8 @@ function App() {
     <ThemeProvider theme={theme}>
       <DataProvider>
         <PopulationProvider>
+          <LandingHero />
+
           <Box sx={{ display: "flex" }}>
             <CssBaseline />
             <AppBar
@@ -69,44 +62,14 @@ function App() {
                 </Typography>
               </Toolbar>
             </AppBar>
-            <Box
-              component="nav"
-              sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-            >
-              <Drawer
-                variant="temporary"
-                open={mobileOpen}
-                onTransitionEnd={handleDrawerTransitionEnd}
-                onClose={handleDrawerClose}
-                sx={{
-                  display: { xs: "block", sm: "none" },
-                  "& .MuiDrawer-paper": {
-                    boxSizing: "border-box",
-                    width: drawerWidth,
-                  },
-                }}
-                slotProps={{
-                  root: {
-                    keepMounted: true, // Better open performance on mobile.
-                  },
-                }}
-              >
-                <Sidebar />
-              </Drawer>
-              <Drawer
-                variant="permanent"
-                sx={{
-                  display: { xs: "none", sm: "block" },
-                  "& .MuiDrawer-paper": {
-                    boxSizing: "border-box",
-                    width: drawerWidth,
-                  },
-                }}
-                open
-              >
-                <Sidebar />
-              </Drawer>
-            </Box>
+
+            <Sidebar
+              drawerWidth={drawerWidth}
+              isClosing={isClosing}
+              setIsClosing={setIsClosing}
+              mobileOpen={mobileOpen}
+              setMobileOpen={setMobileOpen}
+            />
             <Box
               component="main"
               sx={{
