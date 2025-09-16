@@ -37,6 +37,8 @@ export const Sidebar = ({
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: drawerWidth,
+            maxHeight: "100%",
+            overflow: "auto",
           },
         }}
         slotProps={{
@@ -61,6 +63,7 @@ export const Sidebar = ({
             height: "100vh",
             overflow: "auto",
           },
+          mt: 3,
         }}
         open
       >
