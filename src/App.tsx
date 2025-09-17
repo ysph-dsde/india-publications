@@ -33,9 +33,7 @@ function App() {
       <DataProvider>
         <PopulationProvider>
           <CssBaseline />
-
           <LandingHero />
-
           <Box sx={{ display: "flex" }}>
             <Sidebar
               drawerWidth={drawerWidth}
@@ -57,8 +55,6 @@ function App() {
             >
               <AppBar
                 sx={{
-                  // width: { sm: `calc(100% - ${drawerWidth}px)` },
-                  // ml: { sm: `${drawerWidth}px` },
                   position: "sticky",
                   top: 0,
                 }}
@@ -82,7 +78,6 @@ function App() {
                   </Typography>
                 </Toolbar>
               </AppBar>
-              {/* <Toolbar /> */}
               <MainContent />
             </Box>
           </Box>
