@@ -5,7 +5,7 @@ import { theme } from "../Theme";
 
 export const LandingHero = () => {
   return (
-    <Box sx={{ position: "relative" }}>
+    <Box sx={{ position: "relative", height: "100vh", width: "100%" }}>
       <Box
         sx={{
           backgroundColor: theme.palette.primary.main,
@@ -16,6 +16,7 @@ export const LandingHero = () => {
           bottom: 0,
           opacity: 0.85,
           height: "100%",
+          width: "100%",
           zIndex: 1,
           display: "flex",
           flexDirection: "column",
@@ -36,13 +37,20 @@ export const LandingHero = () => {
         </Typography>
       </Box>
       <Box
+        component="img"
+        src={landingBackground}
         sx={{
-          height: "100vh", // Full viewport height
-          backgroundImage: `url(${landingBackground})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
+          height: "100%",
+          width: "100%",
+          objectFit: "cover",
         }}
+        // sx={{
+        //   height: "100vh", // Full viewport height
+        //   backgroundImage: `url(${landingBackground})`,
+        //   backgroundSize: "cover",
+        //   backgroundPosition: "center",
+        //   backgroundRepeat: "no-repeat",
+        // }}
       />
     </Box>
   );
