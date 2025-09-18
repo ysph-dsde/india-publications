@@ -34,11 +34,11 @@ export const TemporalDistributionPlot = ({
         mode: "lines+markers",
         marker: {
           color: `${theme.palette.blue.light}`,
-          size: 18,
+          size: 14,
         },
         line: {
           color: `${theme.palette.blue.light}`,
-          width: 7,
+          width: 5,
         },
         hovertemplate: `Selected states <br>Year: %{x}<br>Publications: %{y}<extra></extra>`,
       },
