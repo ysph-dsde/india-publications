@@ -33,11 +33,12 @@ export const TemporalDistributionPlot = ({
         y: yearlyData.map((item) => item.count),
         mode: "lines+markers",
         marker: {
-          color: `${theme.palette.blue.light}`,
+          color: `${theme.palette.blue.main}`,
           size: 14,
+          symbol: "square",
         },
         line: {
-          color: `${theme.palette.blue.light}`,
+          color: `${theme.palette.blue.main}`,
           width: 5,
         },
         hovertemplate: `Selected states <br>Year: %{x}<br>Publications: %{y}<extra></extra>`,
@@ -54,6 +55,7 @@ export const TemporalDistributionPlot = ({
       marker: {
         color: stateColorMapping[state] || theme.palette.grey[500],
         size: 9,
+        symbol: "square",
       },
       line: {
         color: stateColorMapping[state] || theme.palette.grey[500],
@@ -77,6 +79,8 @@ export const TemporalDistributionPlot = ({
       title: {
         text: "Number of Publications",
       },
+      showgrid: true,
+      rangemode: "tozero",
     },
     xaxis: {
       title: {
