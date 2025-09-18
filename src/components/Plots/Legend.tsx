@@ -10,6 +10,7 @@ export const Legend = () => {
       container
       alignItems="stretch"
       px={2}
+      pb={2}
       justifyContent="center"
     >
       {[...States]
