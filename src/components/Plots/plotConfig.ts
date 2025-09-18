@@ -23,7 +23,9 @@ const baseLayout: Partial<Plotly.Layout> = {
   legend: {
     itemclick: false,
     itemdoubleclick: false,
+    orientation: "h",
   },
+  showlegend: false,
 };
 
 // Utility function to merge base layout with custom layout

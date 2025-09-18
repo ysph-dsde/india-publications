@@ -7,6 +7,7 @@ import { PlotCaption } from "./PlotCaption";
 import { CustomPlot } from "./CustomPlot";
 import { useMemo } from "react";
 import { ToggleViewButtons } from "./ToggleViewButtons";
+import { Legend } from "./Legend";
 
 interface TemportalDistributionPlotProps {
   view: "national" | "byState";
@@ -123,6 +124,7 @@ export const TemporalDistributionPlot = ({
         data={traces}
         layout={layout}
       />
+      {view === "byState" && <Legend />}
       <PlotCaption>
         This line chart displays the trend in total publications under{" "}
         {customKeyword || topic} across selected states from {yearRange[0]} to{" "}

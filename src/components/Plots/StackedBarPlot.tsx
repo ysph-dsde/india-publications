@@ -7,6 +7,7 @@ import { useMemo } from "react";
 import { usePopulationData } from "../../context/PopulationContext";
 import { ToggleViewButtons } from "./ToggleViewButtons";
 import type { LayoutAxis } from "plotly.js";
+import { Legend } from "./Legend";
 
 interface StackedBarPlotProps {
   view: string;
@@ -211,7 +212,7 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
         data={combinedTraces}
         layout={view === "yearRangeEnd" ? yearRangeEndLayout : allYearsLayout}
       />
-
+      <Legend />
       <PlotCaption>
         This stacked bar plot shows the relative contribution of each state to
         the total number of publications under {customKeyword || topic} between{" "}

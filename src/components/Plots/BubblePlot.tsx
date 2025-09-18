@@ -6,6 +6,7 @@ import { CustomPlot } from "./CustomPlot";
 import { useMemo } from "react";
 import Papa from "papaparse";
 import csvText from "../../assets/data_hdi.csv?raw";
+import { Legend } from "./Legend";
 
 interface HdiDataRawData {
   State: string;
@@ -170,6 +171,7 @@ export const BubblePlot = () => {
         data={traces}
         layout={layout}
       />
+      <Legend />
       <PlotCaption>
         This bubble plot displays the relationship between Human Development
         Index (HDI) and the number of publications under{" "}

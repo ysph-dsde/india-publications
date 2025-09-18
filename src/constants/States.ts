@@ -47,7 +47,8 @@ export const States = [
   ...population_states_high,
   ...population_states_medium,
   ...population_states_low,
-];
+] as const;
+export type States = (typeof States)[number];
 
 export type PopulationGroup = "high" | "medium" | "low";
 
