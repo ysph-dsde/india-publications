@@ -56,7 +56,7 @@ export const LandingHero = () => {
           alt="YSPH DSDE logo"
           width="90%"
         />
-        <Typography variant="h5">
+        <Typography variant="h3">
           Characterizing the Distribution of Publications in India
         </Typography>
       </Box>
