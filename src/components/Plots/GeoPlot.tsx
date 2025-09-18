@@ -79,16 +79,17 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
         colorscale: "Blues",
         reversescale: true,
         colorbar: {
-          title: { text: "Publication Count" },
+          // title: { text: "Publication Count" },
           thickness: 15,
           tick0: 0,
           nticks: 5,
           lenmode: "fraction",
-          len: 0.3,
-          yanchor: "bottom",
-          y: 0.05,
-          xanchor: "right",
-          x: 0.97,
+          len: 0.7,
+          // yanchor: "top",
+          y: -0.05,
+          // xanchor: "left",
+          x: 0.5,
+          orientation: "h",
           bordercolor: `${theme.palette.primary.main}`,
           borderwidth: 2,
           borderradius: 4,
@@ -117,7 +118,7 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
         parallels: [12.472944444, 35.172805555556],
         rotation: { lat: 24, lon: 80 },
       },
-      scale: 1,
+      // scale: 1,
     },
     hoverdistance: -1,
     margin: { r: 0, t: 90, b: 0, l: 0 },
@@ -129,7 +130,7 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
         data={plotData}
         layout={layout}
         style={{
-          minHeight: 800,
+          minHeight: 1000,
         }}
       />
       <PlotCaption>
