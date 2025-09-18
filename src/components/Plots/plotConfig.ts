@@ -13,13 +13,6 @@ const baseLayout: Partial<Plotly.Layout> = {
   yaxis: {
     showgrid: false,
   },
-  xaxis2: {
-    showgrid: false,
-    automargin: true,
-  },
-  yaxis2: {
-    showgrid: false,
-  },
   legend: {
     itemclick: false,
     itemdoubleclick: false,

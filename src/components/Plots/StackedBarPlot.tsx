@@ -174,6 +174,7 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
     },
     yaxis2: {
       showticklabels: false,
+      showgrid: false,
     },
     grid: {
       rows: 1,
@@ -195,6 +196,7 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
         text: "Percentage of Population",
       },
       domain: [0, 0.47],
+      showgrid: false,
     },
     xaxis: {
       type: "category",
