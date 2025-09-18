@@ -71,7 +71,10 @@ export const TopInstitutions = () => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.setAttribute("href", url);
-    link.setAttribute("download", "top_institutions.csv");
+    link.setAttribute(
+      "download",
+      "top_institutions - Yale School of Public Health Data Science and Data Equity.csv",
+    );
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

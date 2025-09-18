@@ -31,7 +31,8 @@ const CustomToolbar = () => {
           <ExportCsv
             options={{
               allColumns: true, // Export all columns
-              fileName: "publications_data", // Custom file name
+              fileName:
+                "publications_data - Yale School of Public Health Data Science and Data Equity", // Custom file name
             }}
             render={
               <Tooltip title={"Download all"}>
