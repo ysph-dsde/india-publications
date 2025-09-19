@@ -152,10 +152,10 @@ export const ConnectedDotPlot = () => {
       title: {
         text: "Percentage",
       },
+      showgrid: true,
     },
     xaxis: {
       range: [0.5, traces.length / 3 - 1 + 0.5],
-      showgrid: true,
       title: {
         text: "State",
         standoff: 0,
