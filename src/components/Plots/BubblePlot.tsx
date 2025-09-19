@@ -7,6 +7,7 @@ import { useMemo } from "react";
 import Papa from "papaparse";
 import csvText from "../../assets/data_hdi.csv?raw";
 import { Legend } from "./Legend";
+import { theme } from "../../Theme";
 
 interface HdiDataRawData {
   State: string;
@@ -163,6 +164,21 @@ export const BubblePlot = () => {
         text: "Human Development Index (HDI)",
       },
     },
+    shapes: [
+      {
+        type: "rect",
+        xref: "paper", // Reference to the entire plot area (0 to 1)
+        yref: "paper",
+        x0: 0.01,
+        y0: 0.01,
+        x1: 1,
+        y1: 1,
+        line: {
+          color: `${theme.palette.blue.main}`,
+          width: 2,
+        },
+      },
+    ],
   };
 
   return (
