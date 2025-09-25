@@ -1,5 +1,5 @@
 import Papa from "papaparse";
-import csvText from "../assets/population_by_year.csv?raw";
+import csvText from "../assets/data/population_by_year.csv?raw";
 
 export interface StateYearData {
   state: string;
