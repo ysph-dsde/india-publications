@@ -27,12 +27,13 @@ export const LegendChip = ({ state }: LegendChipProps) => {
         width: "100%",
         justifyContent: "flex-start",
         border: "none",
-        fontSize: "0.75rem",
+        fontSize: "1.25rem",
         "& .MuiChip-avatar": {
-          width: "1rem",
-          height: "1rem",
+          width: "1.5rem",
+          height: "1.5rem",
         },
         opacity: selected ? "100%" : "40%",
+        py: 2,
       }}
       size="small"
       label={state}

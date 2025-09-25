@@ -3,7 +3,7 @@ import { States } from "../../constants/States";
 import { LegendChip } from "./LegendChip";
 
 export const Legend = () => {
-  const maxWidth = Math.max(...States.map((state) => state.length)) * 7;
+  const maxWidth = Math.max(...States.map((state) => state.length)) * 11;
 
   return (
     <Grid
@@ -12,6 +12,7 @@ export const Legend = () => {
       px={2}
       pb={2}
       justifyContent="center"
+      rowGap={1}
     >
       {[...States]
         .sort((a, b) => a.localeCompare(b))
