@@ -1,8 +1,11 @@
 import { Box, Grid } from "@mui/material";
 import { States } from "../../constants/States";
 import { LegendChip } from "./LegendChip";
+import { getFilteredStates } from "../../utils/getFilteredStates";
+import { useData } from "../../context/PublicationDataContext";
 
 export const Legend = () => {
+  const { clientFilters } = useData();
   const maxWidth = Math.max(...States.map((state) => state.length)) * 11;
 
   return (
@@ -15,22 +18,20 @@ export const Legend = () => {
       rowGap={1}
       sx={{
         maxHeight: "14rem",
-        overflowY: "auto"
+        overflowY: "auto",
       }}
     >
-      {[...States]
-        .sort((a, b) => a.localeCompare(b))
-        .map((state, index) => (
-          <Grid key={index}>
-            <Box
-              sx={{
-                width: maxWidth,
-              }}
-            >
-              <LegendChip state={state} />
-            </Box>
-          </Grid>
-        ))}
+      {getFilteredStates(clientFilters).map((state, index) => (
+        <Grid key={index}>
+          <Box
+            sx={{
+              width: maxWidth,
+            }}
+          >
+            <LegendChip state={state} />
+          </Box>
+        </Grid>
+      ))}
     </Grid>
   );
 };

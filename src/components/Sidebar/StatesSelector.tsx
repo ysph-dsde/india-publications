@@ -12,12 +12,8 @@ import {
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { useData } from "../../context/PublicationDataContext";
-import {
-  population_states_high,
-  population_states_low,
-  population_states_medium,
-} from "../../constants/States";
 import { useState } from "react";
+import { getFilteredStates } from "../../utils/getFilteredStates";
 
 const uncheckedIcon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -29,22 +25,13 @@ export const StatesSelector = () => {
 
   const handleToggleAll = (event: any) => {
     event.preventDefault(); // Prevent any default behavior
-    if (clientFilters.states.length === getFilteredStates().length) {
+    if (
+      clientFilters.states.length === getFilteredStates(clientFilters).length
+    ) {
       updateClientFilters({ states: [] });
     } else {
-      updateClientFilters({ states: [...getFilteredStates()] });
+      updateClientFilters({ states: [...getFilteredStates(clientFilters)] });
     }
-  };
-
-  const getFilteredStates = () => {
-    const selected: string[] = [];
-    if (clientFilters.populationGroups.includes("high"))
-      selected.push(...population_states_high);
-    if (clientFilters.populationGroups.includes("medium"))
-      selected.push(...population_states_medium);
-    if (clientFilters.populationGroups.includes("low"))
-      selected.push(...population_states_low);
-    return selected.sort((a, b) => a.localeCompare(b));
   };
 
   // Custom Paper component to include the select/deselect all button
@@ -57,7 +44,8 @@ export const StatesSelector = () => {
           onClick={handleToggleAll}
           fullWidth
         >
-          {clientFilters.states.length === getFilteredStates().length
+          {clientFilters.states.length ===
+          getFilteredStates(clientFilters).length
             ? "Deselect All"
             : "Select All"}
         </Button>
@@ -73,7 +61,7 @@ export const StatesSelector = () => {
         multiple
         autoComplete
         disableCloseOnSelect
-        options={getFilteredStates()}
+        options={getFilteredStates(clientFilters)}
         fullWidth
         size="small"
         disableClearable
