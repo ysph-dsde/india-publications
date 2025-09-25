@@ -38,6 +38,7 @@ export const CustomTabs = ({ tabs }: TabsProps) => {
             label={tab.label}
             id={`simple-tab-${index}`}
             aria-controls={`simple-tabpanel-${index}`}
+            sx={{ fontSize: "1rem" }}
           />
         ))}
       </Tabs>

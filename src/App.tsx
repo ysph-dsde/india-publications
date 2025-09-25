@@ -73,6 +73,7 @@ function App() {
                     variant="h6"
                     noWrap
                     component="div"
+                    sx={{ fontSize: "1.5rem" }}
                   >
                     Characterizing the Distribution of Publications in India
                   </Typography>

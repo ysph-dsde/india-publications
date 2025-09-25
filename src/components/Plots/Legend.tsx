@@ -13,6 +13,10 @@ export const Legend = () => {
       pb={2}
       justifyContent="center"
       rowGap={1}
+      sx={{
+        maxHeight: "14rem",
+        overflowY: "auto"
+      }}
     >
       {[...States]
         .sort((a, b) => a.localeCompare(b))

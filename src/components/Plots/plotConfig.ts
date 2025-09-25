@@ -1,3 +1,5 @@
+import { theme } from "../../Theme";
+
 // Define base layout with common settings
 const baseLayout: Partial<Plotly.Layout> = {
   autosize: true,
@@ -9,9 +11,25 @@ const baseLayout: Partial<Plotly.Layout> = {
   xaxis: {
     showgrid: false,
     automargin: true,
+    title: {
+      font: {
+        size: 16,
+      },
+    },
+    tickfont: {
+      size: 12,
+    },
   },
   yaxis: {
     showgrid: false,
+    title: {
+      font: {
+        size: 16,
+      },
+    },
+    tickfont: {
+      size: 12,
+    },
   },
   legend: {
     itemclick: false,
@@ -19,6 +37,14 @@ const baseLayout: Partial<Plotly.Layout> = {
     orientation: "h",
   },
   showlegend: false,
+  font: {
+    family: theme.typography.fontFamily,
+  },
+  title: {
+    font: {
+      size: 20,
+    },
+  },
 };
 
 // Utility function to merge base layout with custom layout
@@ -31,10 +57,22 @@ export const createLayout = (
     xaxis: {
       ...baseLayout.xaxis,
       ...customLayout.xaxis,
+      title: {
+        ...baseLayout.xaxis?.title,
+        ...customLayout.xaxis?.title,
+      },
     },
     yaxis: {
       ...baseLayout.yaxis,
       ...customLayout.yaxis,
+      title: {
+        ...baseLayout.yaxis?.title,
+        ...customLayout.yaxis?.title,
+      },
+    },
+    title: {
+      ...baseLayout.title,
+      ...customLayout.title,
     },
   };
 };
