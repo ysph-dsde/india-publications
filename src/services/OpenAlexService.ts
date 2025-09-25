@@ -45,10 +45,6 @@ export async function* fetchOpenAlexData(
     );
     baseQueryParams.append("per-page", perPage.toString());
 
-    console.info(
-      `https://api.openalex.org/works?${baseQueryParams.toString()}`,
-    );
-
     let pageIterator = 0;
     let roundedTotal: number | null = null;
     while (hasMore) {
