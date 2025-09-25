@@ -24,3 +24,10 @@ package-lock.json
 *.njsproj
 *.sln
 *.sw?
+
+# Firebase CLI temporary files
+.firebase/
+
+# Firebase project ID
+.firebaserc
+
