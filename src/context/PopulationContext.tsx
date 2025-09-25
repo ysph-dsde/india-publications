@@ -39,7 +39,6 @@ export const PopulationProvider = ({
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        // const data = await loadPopulationData("/india_population.csv");
         const data = await loadPopulationData();
         setPopulationData(data);
       } catch (err) {

@@ -1,4 +1,5 @@
 import Papa from "papaparse";
+import csvText from "../assets/population_by_year.csv?raw";
 
 export interface StateYearData {
   state: string;
@@ -49,8 +50,6 @@ export const loadPopulationData = async (): Promise<PopulationData> => {
   }
 
   try {
-    const response = await fetch("/population_by_year.csv");
-    const csvText = await response.text();
     const results = await new Promise<any>((resolve, reject) => {
       Papa.parse(csvText, {
         header: true,
