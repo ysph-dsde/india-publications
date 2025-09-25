@@ -172,9 +172,6 @@ export const ConnectedDotPlot = () => {
       <CustomPlot
         data={traces}
         layout={layout}
-        style={{
-          height: 600,
-        }}
       />
       <PlotCaption>
         This plot compares the publication share versus the population share

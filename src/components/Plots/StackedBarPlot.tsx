@@ -138,7 +138,6 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
       text: "State Publications Percentage by Year",
     },
     barmode: "stack",
-    height: 600,
   };
 
   const standardYAxis: Partial<LayoutAxis> = {
