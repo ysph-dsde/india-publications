@@ -170,7 +170,7 @@ export const ConnectedDotPlot = () => {
       range: findMinMax(),
     },
     xaxis: {
-      range: [0.5, traces.length / 3 - 1 + 0.5],
+      range: [-0.5, traces.length / 3 - 1 + 0.5],
       title: {
         text: "State",
         standoff: 0,
