@@ -157,7 +157,7 @@ export const ConnectedDotPlot = () => {
 
   const layout: Partial<Plotly.Layout> = {
     title: {
-      text: "Population vs. Publication by State",
+      text: "Population vs. Publication by State and Territory",
     },
     yaxis: {
       tickmode: "linear",
@@ -172,7 +172,7 @@ export const ConnectedDotPlot = () => {
     xaxis: {
       range: [-0.5, traces.length / 3 - 1 + 0.5],
       title: {
-        text: "State",
+        text: "State and Territory",
         standoff: 0,
       },
       type: "category",
@@ -190,12 +190,13 @@ export const ConnectedDotPlot = () => {
       />
       <PlotCaption>
         This plot compares the publication share versus the population share
-        across selected Indian states for {customKeyword || topic} between the
-        years of {yearRange[0]} and {yearRange[1]}. The population percentage is
-        based on {yearRange[1]} population data. A total of {totalPublications}{" "}
-        publications were retrieved. Lines connect each state's publication
-        share (circle) with its population share (square), highlighting
-        over-representation (green) or under-representation (orange).
+        across selected Indian states / territories for {customKeyword || topic}{" "}
+        between the years of {yearRange[0]} and {yearRange[1]}. The population
+        percentage is based on {yearRange[1]} population data. A total of{" "}
+        {totalPublications} publications were retrieved. Lines connect each
+        state's publication share (circle) with its population share (square),
+        highlighting over-representation (green) or under-representation
+        (orange).
       </PlotCaption>
     </PlotWrapper>
   );

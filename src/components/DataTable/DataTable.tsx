@@ -116,7 +116,7 @@ export const DataTable = () => {
     },
     {
       field: "institution_state",
-      headerName: "State",
+      headerName: "State / Territory",
       flex: 1,
     },
   ];

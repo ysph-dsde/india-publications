@@ -123,7 +123,7 @@ export const TemporalDistributionPlot = ({
       text:
         view === "national"
           ? "Total Number of Publications Over Time"
-          : "Publications Over Time by State",
+          : "Publications Over Time by State and Territory",
     },
     yaxis: {
       title: {
@@ -150,8 +150,8 @@ export const TemporalDistributionPlot = ({
       {view === "byState" && <Legend />}
       <PlotCaption>
         This line chart displays the trend in total publications under{" "}
-        {customKeyword || topic} across selected states from {yearRange[0]} to{" "}
-        {yearRange[1]}.
+        {customKeyword || topic} across selected states / territories from{" "}
+        {yearRange[0]} to {yearRange[1]}.
       </PlotCaption>
       <ToggleViewButtons
         view={view}
@@ -159,7 +159,7 @@ export const TemporalDistributionPlot = ({
         view1value="national"
         view2value="byState"
         view1text="National"
-        view2text="By State"
+        view2text="By State and Territory"
       />
     </PlotWrapper>
   );

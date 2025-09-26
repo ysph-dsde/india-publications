@@ -255,12 +255,12 @@ export const SidebarContent = () => {
             </Box>
           </ListItem>
           <SelectionTitle
-            title="State(s)"
+            title="States / Territories"
             toolTipText="Choose one or more states to filter publications."
           />
           <StatesSelector />
           <SelectionTitle
-            title="Filter States By Share of National Population"
+            title="Filter States / Territories By Share of National Population"
             toolTipText="Filter states by population group. High (>5% of national population), Medium (1-5%), Low (<1%)."
           />
           <ListItem sx={{ display: "flex", flexWrap: "wrap" }}>

@@ -135,7 +135,7 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
 
   const layout: Partial<Plotly.Layout> = {
     title: {
-      text: "State Publications Percentage by Year",
+      text: "State and Territory Publications Percentage by Year",
     },
     barmode: "stack",
   };
@@ -215,10 +215,10 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
       />
       <Legend />
       <PlotCaption>
-        This stacked bar plot shows the relative contribution of each state to
-        the total number of publications under {customKeyword || topic} between{" "}
-        {yearRange[0]} and {yearRange[1]}. A total of {totalPublications}{" "}
-        publications were retrieved.
+        This stacked bar plot shows the relative contribution of each state /
+        territory to the total number of publications under{" "}
+        {customKeyword || topic} between {yearRange[0]} and {yearRange[1]}. A
+        total of {totalPublications} publications were retrieved.
       </PlotCaption>
       <ToggleViewButtons
         view={view}

@@ -107,8 +107,8 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
     title: {
       text:
         view === "totalPublications"
-          ? "Number of Publications by State"
-          : "Number of Publications per Million People by State",
+          ? "Number of Publications by State and Territory"
+          : "Number of Publications per Million People by State and Territory",
     },
     geo: {
       visible: false,
