@@ -141,18 +141,33 @@ export const ConnectedDotPlot = () => {
     return data;
   }, [aggregatedData]);
 
+  const dtick = 0.05;
+
+  const findMinMax = (): [min: number, max: number] => {
+    const allVals = aggregatedData.flatMap((obj) => [
+      obj.populationPercentage,
+      obj.publicationPercentage,
+    ]);
+
+    return [
+      Math.ceil(Math.min(...allVals) / dtick) * dtick - 0.01,
+      Math.ceil(Math.max(...allVals) / dtick) * dtick + 0.01,
+    ];
+  };
+
   const layout: Partial<Plotly.Layout> = {
     title: {
       text: "Population vs. Publication by State",
     },
     yaxis: {
       tickmode: "linear",
-      dtick: 0.05,
+      dtick: dtick,
       tickformat: ".0%",
       title: {
         text: "Percentage",
       },
       showgrid: true,
+      range: findMinMax(),
     },
     xaxis: {
       range: [0.5, traces.length / 3 - 1 + 0.5],
