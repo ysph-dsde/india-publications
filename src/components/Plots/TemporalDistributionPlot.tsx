@@ -68,6 +68,56 @@ export const TemporalDistributionPlot = ({
   const traces: Plotly.Data[] =
     view === "national" ? nationalTrace : statesTrace;
 
+  const calcBounds = (): {
+    lowerBound: number;
+    upperBound: number;
+    dtick: number;
+  } => {
+    let overallMax = -Infinity; // Initialize with negative infinity to ensure any value is greater
+    let overallMin = Infinity; // Initialize with positive infinity to ensure any value is less
+
+    traces.forEach((trace) => {
+      // Check if the trace has a 'y' property (to account for Type)
+      if ("y" in trace && Array.isArray(trace.y)) {
+        const yValues = trace.y as number[]; // Cast to number[] for safety
+        if (yValues.length > 0) {
+          const traceMax = Math.max(...yValues.filter((val) => !isNaN(val)));
+          const traceMin = Math.min(...yValues.filter((val) => !isNaN(val)));
+          overallMax = Math.max(overallMax, traceMax);
+          overallMin = Math.min(overallMin, traceMin);
+        }
+      }
+    });
+
+    // Handle edge case where min and max are equal
+    if (overallMin === overallMax) {
+      const offset = overallMin === 0 ? 1 : overallMin;
+      overallMin = 0;
+      overallMax = overallMin + offset;
+    }
+
+    const maxTicks = 7;
+    const range = overallMax - overallMin;
+    const roughDtick = range / (maxTicks - 1);
+    const exponent = Math.floor(Math.log10(Math.abs(roughDtick)));
+    const fraction = roughDtick / Math.pow(10, exponent);
+
+    // Choose a nice tick interval (1, 2, 5, or 10 scaled by 10^exponent)
+    let niceFraction: number;
+    if (fraction < 1.5) niceFraction = 1;
+    else if (fraction < 3) niceFraction = 2;
+    else if (fraction < 7) niceFraction = 5;
+    else niceFraction = 10;
+
+    const dtick = niceFraction * Math.pow(10, exponent);
+    const lowerBound = Math.floor(overallMin / dtick) * dtick - 1;
+    const upperBound = Math.ceil(overallMax / dtick) * dtick * 1.1;
+
+    return { lowerBound, upperBound, dtick };
+  };
+
+  const yAxisBounds = calcBounds();
+
   const layout: Partial<Plotly.Layout> = {
     title: {
       text:
@@ -80,7 +130,8 @@ export const TemporalDistributionPlot = ({
         text: "Number of Publications",
       },
       showgrid: true,
-      rangemode: "tozero",
+      range: [yAxisBounds.lowerBound, yAxisBounds.upperBound],
+      dtick: yAxisBounds.dtick,
     },
     xaxis: {
       title: {
