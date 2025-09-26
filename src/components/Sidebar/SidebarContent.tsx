@@ -61,11 +61,11 @@ export const SidebarContent = () => {
         : clientFilters.populationGroups.filter((g) => g !== group);
 
       // Remove states from deselected group
-      const statesToRemove = populationGroupMap[group];
+      const statesToUpdate = populationGroupMap[group];
       const newStates = isChecked
-        ? clientFilters.states
+        ? [...clientFilters.states, ...statesToUpdate]
         : clientFilters.states.filter(
-            (state) => !statesToRemove.includes(state),
+            (state) => !statesToUpdate.includes(state),
           );
 
       updateClientFilters({
