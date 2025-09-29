@@ -135,7 +135,7 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
 
   const layout: Partial<Plotly.Layout> = {
     title: {
-      text: "State and Territory Publications Percentage by Year",
+      text: "State and Union Territory Publications Percentage by Year",
     },
     barmode: "stack",
   };

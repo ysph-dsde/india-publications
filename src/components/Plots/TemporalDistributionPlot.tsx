@@ -123,7 +123,7 @@ export const TemporalDistributionPlot = ({
       text:
         view === "national"
           ? "Total Number of Publications Over Time"
-          : "Publications Over Time by State and Territory",
+          : "Publications Over Time by State and Union Territory",
     },
     yaxis: {
       title: {
@@ -159,7 +159,7 @@ export const TemporalDistributionPlot = ({
         view1value="national"
         view2value="byState"
         view1text="National"
-        view2text="By State and Territory"
+        view2text="By State and Union Territory"
       />
     </PlotWrapper>
   );

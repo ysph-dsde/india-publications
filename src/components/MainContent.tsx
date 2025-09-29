@@ -58,7 +58,7 @@ export const MainContent = () => {
       content: <ConnectedDotPlot />,
     },
     {
-      label: "State and Territory Publication Percentage",
+      label: "State and Union Territory Publication Percentage",
       content: (
         <StackedBarPlot
           view={stackedView}

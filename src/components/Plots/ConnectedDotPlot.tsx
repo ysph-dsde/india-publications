@@ -157,7 +157,7 @@ export const ConnectedDotPlot = () => {
 
   const layout: Partial<Plotly.Layout> = {
     title: {
-      text: "Population vs. Publication by State and Territory",
+      text: "Population vs. Publication by State and Union Territory",
     },
     yaxis: {
       tickmode: "linear",
@@ -172,7 +172,7 @@ export const ConnectedDotPlot = () => {
     xaxis: {
       range: [-0.5, traces.length / 3 - 1 + 0.5],
       title: {
-        text: "State and Territory",
+        text: "State and Union Territory",
         standoff: 0,
       },
       type: "category",
