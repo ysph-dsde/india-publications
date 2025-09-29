@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import {
-  loadPopulationData,
+  computePopulationData,
+  loadRawPopulationData,
   type PopulationData,
   type StateYearData,
 } from "../services/PopulationDataService";
@@ -33,14 +34,16 @@ export const PopulationProvider = ({
 
   const {
     serverFilters: { yearRange },
+    clientFilters: { states: selectedStates },
   } = useData();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        const data = await loadPopulationData();
-        setPopulationData(data);
+        const rawData = await loadRawPopulationData();
+        const dataWithProportions = computePopulationData(selectedStates, rawData);
+        setPopulationData(dataWithProportions);
       } catch (err) {
         setError("Failed to load population data");
       } finally {
@@ -48,7 +51,7 @@ export const PopulationProvider = ({
       }
     };
     fetchData();
-  }, []);
+  }, [selectedStates]);
 
   useEffect(() => {
     const yearData = populationData.get(yearRange[1].toString());

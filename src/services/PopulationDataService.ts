@@ -8,45 +8,16 @@ export interface StateYearData {
 }
 
 export type PopulationData = Map<string, StateYearData[]>;
+export type RawPopulationData = Map<string, Map<string, number>>;
 
-let cachedData: PopulationData | null = null;
+let cachedRawData: RawPopulationData | null = null;
 
-const createEmptyMap = (): PopulationData => new Map<string, StateYearData[]>();
+const createEmptyRawMap = (): RawPopulationData =>
+  new Map<string, Map<string, number>>();
 
-const validateRow = (
-  row: Record<string, any>,
-  year: string,
-): StateYearData | null => {
-  const state = row.state;
-  const population = row[`${year}_population`];
-  const proportion = row[`${year}_proportion`];
-
-  if (
-    typeof state !== "string" ||
-    state.trim() === "" ||
-    population == null ||
-    proportion == null ||
-    typeof population !== "number" ||
-    typeof proportion !== "number"
-  ) {
-    if (
-      state &&
-      (population == null ||
-        proportion == null ||
-        typeof population !== "number" ||
-        typeof proportion !== "number")
-    ) {
-      console.warn(`Invalid numeric data for ${state} in ${year}`);
-    }
-    return null;
-  }
-
-  return { state, population, proportion };
-};
-
-export const loadPopulationData = async (): Promise<PopulationData> => {
-  if (cachedData) {
-    return cachedData;
+export const loadRawPopulationData = async (): Promise<RawPopulationData> => {
+  if (cachedRawData) {
+    return cachedRawData;
   }
 
   try {
@@ -62,12 +33,14 @@ export const loadPopulationData = async (): Promise<PopulationData> => {
       });
     });
 
+    // ensure there is data with headers
     const parsedData = results.data as Record<string, any>[];
     if (!parsedData.length || !results.meta?.fields) {
       console.warn("No data or headers found in CSV");
-      return (cachedData = createEmptyMap());
+      return (cachedRawData = createEmptyRawMap());
     }
 
+    // extract the years
     const years = new Set(
       (results.meta.fields as string[]).flatMap((header) => {
         const match = header.match(/^(\d{4})_population$/);
@@ -75,27 +48,60 @@ export const loadPopulationData = async (): Promise<PopulationData> => {
       }),
     );
 
+    // ensure there is at least 1 year
     if (years.size === 0) {
       console.warn(
         "No valid year columns found (expected format: {year}_population)",
       );
-      return (cachedData = createEmptyMap());
+      return (cachedRawData = createEmptyRawMap());
     }
 
-    const dataMap = new Map<string, StateYearData[]>();
+    // parse data
+    const rawData = new Map<string, Map<string, number>>();
     years.forEach((year) => {
-      const yearData = parsedData
-        .map((row) => validateRow(row, year))
-        .filter((item): item is StateYearData => item !== null);
-
-      if (yearData.length > 0) {
-        dataMap.set(year, yearData);
-      }
+      const yearMap = new Map<string, number>();
+      parsedData.forEach((row) => {
+        const state = row.state as string;
+        const population = row[`${year}_population`] as number;
+        yearMap.set(state, population);
+      });
+      rawData.set(year, yearMap);
     });
 
-    return (cachedData = dataMap);
+    return (cachedRawData = rawData);
   } catch (error) {
     console.error("Error loading population data:", error);
-    return (cachedData = createEmptyMap());
+    return (cachedRawData = createEmptyRawMap());
   }
+};
+
+export const computePopulationData = (
+  selectedStates: string[],
+  rawData: RawPopulationData,
+): PopulationData => {
+  const dataMap: PopulationData = new Map();
+
+  for (const [year, statePopulation] of rawData.entries()) {
+    const selectedWithData = selectedStates.filter((state) =>
+      statePopulation.has(state),
+    );
+    let total = 0;
+    for (const state of selectedWithData) {
+      total += statePopulation.get(state)!;
+    }
+
+    const yearData: StateYearData[] = [];
+    for (const [state, pop] of statePopulation.entries()) {
+      const proportion = selectedStates.includes(state)
+        ? total > 0
+          ? pop / total
+          : NaN
+        : NaN;
+      yearData.push({ state, population: pop, proportion });
+    }
+
+    dataMap.set(year, yearData);
+  }
+
+  return dataMap;
 };
