@@ -150,10 +150,12 @@ export const ConnectedDotPlot = () => {
     ]);
 
     return [
-      Math.ceil(Math.min(...allVals) / dtick) * dtick - 0.01,
+      Math.floor(Math.min(...allVals) / dtick) * dtick - 0.01,
       Math.ceil(Math.max(...allVals) / dtick) * dtick + 0.01,
     ];
   };
+
+  console.log(findMinMax());
 
   const layout: Partial<Plotly.Layout> = {
     title: {
