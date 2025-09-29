@@ -52,7 +52,7 @@ export async function* fetchOpenAlexData(
       queryParams.append("cursor", cursor);
 
       const response = await fetch(
-        `https://api.openalex.org/works?${queryParams.toString()}`,
+        `https://api.openalex.org/works?mailto=dsde.ysph@gmail.com&${queryParams.toString()}`,
         { signal },
       );
       if (!response.ok) {
@@ -91,7 +91,7 @@ export async function* fetchOpenAlexData(
       hasMore = cursor !== null && newResults.length > 0;
 
       // Throttle requests to avoid hitting API rate limits
-      // await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
   }
 }
