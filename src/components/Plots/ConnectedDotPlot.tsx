@@ -155,8 +155,6 @@ export const ConnectedDotPlot = () => {
     ];
   };
 
-  console.log(findMinMax());
-
   const layout: Partial<Plotly.Layout> = {
     title: {
       text: "Population vs. Publication by State and Territory",
