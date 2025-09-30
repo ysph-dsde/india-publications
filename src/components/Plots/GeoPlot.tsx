@@ -137,7 +137,7 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
         This plot shows the number of publications under{" "}
         {customKeyword || topic} between the years of {yearRange[0]} and{" "}
         {yearRange[1]}. A total of {totalPublications} publications were
-        retrieved. The population data is based on 2018 estimates.
+        retrieved. The population data is based on {yearRange[1]} estimates.
       </PlotCaption>
       <ToggleViewButtons
         view={view}
