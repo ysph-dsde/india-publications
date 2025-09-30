@@ -1,7 +1,8 @@
-import { Button, Tooltip } from "@mui/material";
 import { useMemo } from "react";
 import { useData } from "../../context/PublicationDataContext";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import Tooltip from "@mui/material/Tooltip";
+import Button from "@mui/material/Button";
 
 interface InstitutionData {
   institution_name: string;

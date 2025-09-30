@@ -1,13 +1,4 @@
 import "./App.css";
-import {
-  AppBar,
-  Box,
-  CssBaseline,
-  IconButton,
-  ThemeProvider,
-  Toolbar,
-  Typography,
-} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { theme } from "./Theme";
 import { useState } from "react";
@@ -16,6 +7,13 @@ import { DataProvider } from "./context/PublicationDataContext";
 import { PopulationProvider } from "./context/PopulationContext";
 import { LandingHero } from "./components/LandingHero";
 import { Sidebar } from "./components/Sidebar/Sidebar";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import Box from "@mui/material/Box";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
 
 function App() {
   const [mobileOpen, setMobileOpen] = useState(false);

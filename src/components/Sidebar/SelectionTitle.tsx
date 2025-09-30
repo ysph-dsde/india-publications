@@ -1,11 +1,9 @@
-import {
-  ClickAwayListener,
-  IconButton,
-  ListItem,
-  Tooltip,
-  Typography,
-} from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
+import IconButton from "@mui/material/IconButton";
+import ListItem from "@mui/material/ListItem";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 import { useState } from "react";
 
 interface SelectionTitleProps {

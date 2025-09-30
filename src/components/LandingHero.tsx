@@ -1,7 +1,8 @@
-import { Box, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
 import landingBackground from "../assets/images/landingBackground.jpeg";
 import ysphLogo from "../assets/images/ysphLogoWhite.svg";
 import { theme } from "../Theme";
+import Typography from "@mui/material/Typography";
 
 export const LandingHero = () => {
   return (

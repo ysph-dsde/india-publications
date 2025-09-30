@@ -1,6 +1,9 @@
 // components/shared/Tabs.tsx
 
-import { Box, Tab, Tabs, Divider, tabsClasses } from "@mui/material";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import Tab from "@mui/material/Tab";
+import Tabs, { tabsClasses } from "@mui/material/Tabs";
 import { useState, type ReactNode, type SyntheticEvent } from "react";
 
 interface TabConfig {

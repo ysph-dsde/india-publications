@@ -1,16 +1,3 @@
-import {
-  Autocomplete,
-  Box,
-  Checkbox,
-  debounce,
-  Divider,
-  FormControlLabel,
-  List,
-  ListItem,
-  Slider,
-  TextField,
-  Toolbar,
-} from "@mui/material";
 import React, { useEffect, useRef, useState, type ChangeEvent } from "react";
 import { SelectionTitle } from "./SelectionTitle";
 import {
@@ -29,6 +16,17 @@ import { StatesSelector } from "./StatesSelector";
 import { useData } from "../../context/PublicationDataContext";
 import ysphLogo from "../../assets/images/ysphLogoBlues.svg";
 import { Loading } from "./Loading";
+import { debounce } from "@mui/material/utils";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Divider from "@mui/material/Divider";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+import Slider from "@mui/material/Slider";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 
 export const SidebarContent = () => {
   const {

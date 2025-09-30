@@ -1,6 +1,9 @@
-import { Box, Button, LinearProgress, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
 import { useData } from "../../context/PublicationDataContext";
 import { useEffect, useState } from "react";
+import LinearProgress from "@mui/material/LinearProgress";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 const ProgressWithLabel = ({ value }: any) => {
   return (

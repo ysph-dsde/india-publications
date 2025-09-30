@@ -1,4 +1,3 @@
-import { Alert, Box, Snackbar } from "@mui/material";
 import { CustomTabs } from "./shared/CustomTabs";
 
 import { DataTable } from "./DataTable/DataTable";
@@ -9,6 +8,9 @@ import { StackedBarPlot } from "./Plots/StackedBarPlot";
 import { BubblePlot } from "./Plots/BubblePlot";
 import { useEffect, useState } from "react";
 import { useData } from "../context/PublicationDataContext";
+import Box from "@mui/material/Box";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 export const MainContent = () => {
   const { data, clearError } = useData();

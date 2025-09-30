@@ -1,19 +1,16 @@
-import {
-  Autocomplete,
-  Button,
-  Checkbox,
-  Chip,
-  Divider,
-  ListItem,
-  Paper,
-  TextField,
-  type PaperProps,
-} from "@mui/material";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { useData } from "../../context/PublicationDataContext";
 import { useState } from "react";
 import { getFilteredStates } from "../../utils/getFilteredStates";
+import Paper, { type PaperProps } from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import Autocomplete from "@mui/material/Autocomplete";
+import Checkbox from "@mui/material/Checkbox";
+import TextField from "@mui/material/TextField";
+import Chip from "@mui/material/Chip";
 
 const uncheckedIcon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;

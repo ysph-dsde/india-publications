@@ -1,4 +1,4 @@
-import { Drawer } from "@mui/material";
+import Drawer from "@mui/material/Drawer";
 import { SidebarContent } from "./SidebarContent";
 
 interface SidebarProps {

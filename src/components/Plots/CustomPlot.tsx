@@ -4,7 +4,7 @@ import { baseConfig, createLayout } from "./plotConfig";
 import { useEffect, useMemo, useState } from "react";
 import createPlotlyComponent from "react-plotly.js/factory";
 import Plotly from "../../customPlotly";
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 
 interface CustomPlotProps
   extends Omit<PlotParams, "layout" | "config" | "style" | "useResizeHandler"> {
