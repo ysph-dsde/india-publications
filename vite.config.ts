@@ -13,4 +13,20 @@ export default defineConfig({
   define: {
     global: "globalThis",
   },
+  build: {
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          plotly: [
+            "plotly.js/lib/core",
+            "plotly.js/lib/bar",
+            "plotly.js/lib/scatter",
+            "plotly.js/lib/choropleth",
+          ],
+          mui: ["@mui/material", "@mui/x-data-grid"],
+        },
+      },
+    },
+  },
 });
