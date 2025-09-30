@@ -10,4 +10,7 @@ export default defineConfig({
       open: true, // Automatically open the report in your browser after build
     }),
   ],
+  define: {
+    global: "globalThis",
+  },
 });
