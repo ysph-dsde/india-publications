@@ -68,6 +68,7 @@ export const TemporalDistributionPlot = ({
   const traces: Plotly.Data[] =
     view === "national" ? nationalTrace : statesTrace;
 
+  // calculate bounds for y-axis
   const calcBounds = (): {
     lowerBound: number;
     upperBound: number;
@@ -77,9 +78,9 @@ export const TemporalDistributionPlot = ({
     let overallMin = Infinity; // Initialize with positive infinity to ensure any value is less
 
     traces.forEach((trace) => {
-      // Check if the trace has a 'y' property (to account for Type)
+      // Check if the trace has a 'y' property (to account for Typescript Type)
       if ("y" in trace && Array.isArray(trace.y)) {
-        const yValues = trace.y as number[]; // Cast to number[] for safety
+        const yValues = trace.y as number[];
         if (yValues.length > 0) {
           const traceMax = Math.max(...yValues.filter((val) => !isNaN(val)));
           const traceMin = Math.min(...yValues.filter((val) => !isNaN(val)));
