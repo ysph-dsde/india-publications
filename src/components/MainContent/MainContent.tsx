@@ -89,7 +89,7 @@ export const MainContent = () => {
           variant="filled"
           sx={{ width: "100%" }}
         >
-          An error occurred while loading data.
+          An error occurred while loading data. Please try again.
         </Alert>
       </Snackbar>
     </Box>
