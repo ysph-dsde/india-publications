@@ -1,5 +1,5 @@
-import { useData } from "../../context/PublicationDataContext";
-import { stateColorMapping } from "../../constants/States";
+import { useData } from "../../../context/PublicationDataContext";
+import { stateColorMapping } from "../../../constants/States";
 import { PlotWrapper } from "./PlotWrapper";
 import { PlotCaption } from "./PlotCaption";
 import { CustomPlot } from "./CustomPlot";
@@ -7,7 +7,7 @@ import { useMemo } from "react";
 import Papa from "papaparse";
 import csvText from "../../assets/data/data_hdi.csv?raw";
 import { Legend } from "./Legend";
-import { theme } from "../../Theme";
+import { theme } from "../../../Theme";
 
 interface HdiDataRawData {
   State: string;

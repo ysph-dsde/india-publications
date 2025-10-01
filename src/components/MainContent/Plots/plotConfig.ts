@@ -1,4 +1,4 @@
-import { theme } from "../../Theme";
+import { theme } from "../../../Theme";
 
 // Define base layout with common settings
 const baseLayout: Partial<Plotly.Layout> = {

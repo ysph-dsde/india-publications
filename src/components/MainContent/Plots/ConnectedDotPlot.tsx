@@ -1,5 +1,5 @@
-import { useData } from "../../context/PublicationDataContext";
-import { usePopulationData } from "../../context/PopulationContext";
+import { useData } from "../../../context/PublicationDataContext";
+import { usePopulationData } from "../../../context/PopulationContext";
 import { useMemo } from "react";
 import { PlotWrapper } from "./PlotWrapper";
 import { PlotCaption } from "./PlotCaption";

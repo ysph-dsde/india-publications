@@ -1,10 +1,10 @@
-import { useData } from "../../context/PublicationDataContext";
-import { stateColorMapping } from "../../constants/States";
+import { useData } from "../../../context/PublicationDataContext";
+import { stateColorMapping } from "../../../constants/States";
 import { PlotWrapper } from "./PlotWrapper";
 import { PlotCaption } from "./PlotCaption";
 import { CustomPlot } from "./CustomPlot";
 import { useMemo } from "react";
-import { usePopulationData } from "../../context/PopulationContext";
+import { usePopulationData } from "../../../context/PopulationContext";
 import { ToggleViewButtons } from "./ToggleViewButtons";
 import type { LayoutAxis } from "plotly.js";
 import { Legend } from "./Legend";

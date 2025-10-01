@@ -3,7 +3,7 @@ import type { PlotParams } from "react-plotly.js";
 import { baseConfig, createLayout } from "./plotConfig";
 import { useMemo } from "react";
 import createPlotlyComponent from "react-plotly.js/factory";
-import Plotly from "../../customPlotly";
+import Plotly from "../../../customPlotly";
 
 const Plot = createPlotlyComponent(Plotly);
 

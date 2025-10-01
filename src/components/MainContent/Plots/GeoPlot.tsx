@@ -1,12 +1,12 @@
 import { useMemo } from "react";
-import { useData } from "../../context/PublicationDataContext";
-import { theme } from "../../Theme";
-import { States as allStates } from "../../constants/States";
-import geojson from "../../assets/data/states_geo.json";
+import { useData } from "../../../context/PublicationDataContext";
+import { theme } from "../../../Theme";
+import { States as allStates } from "../../../constants/States";
+import geojson from "../../../assets/data/states_geo.json";
 import { PlotWrapper } from "./PlotWrapper";
 import { PlotCaption } from "./PlotCaption";
 import { CustomPlot } from "./CustomPlot";
-import { usePopulationData } from "../../context/PopulationContext";
+import { usePopulationData } from "../../../context/PopulationContext";
 import { ToggleViewButtons } from "./ToggleViewButtons";
 
 interface GeoPlotProps {

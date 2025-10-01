@@ -1,6 +1,6 @@
 import Chip from "@mui/material/Chip";
-import { stateColorMapping, type States } from "../../constants/States";
-import { useData } from "../../context/PublicationDataContext";
+import { stateColorMapping, type States } from "../../../constants/States";
+import { useData } from "../../../context/PublicationDataContext";
 import Avatar from "@mui/material/Avatar";
 
 interface LegendChipProps {

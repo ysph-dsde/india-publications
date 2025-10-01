@@ -1,6 +1,6 @@
-import { useData } from "../../context/PublicationDataContext";
-import { theme } from "../../Theme";
-import { stateColorMapping } from "../../constants/States";
+import { useData } from "../../../context/PublicationDataContext";
+import { theme } from "../../../Theme";
+import { stateColorMapping } from "../../../constants/States";
 import { PlotWrapper } from "./PlotWrapper";
 import { PlotCaption } from "./PlotCaption";
 import { CustomPlot } from "./CustomPlot";

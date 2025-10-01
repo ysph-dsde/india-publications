@@ -1,7 +1,7 @@
-import { States } from "../../constants/States";
+import { States } from "../../../constants/States";
 import { LegendChip } from "./LegendChip";
-import { getFilteredStates } from "../../utils/getFilteredStates";
-import { useData } from "../../context/PublicationDataContext";
+import { getFilteredStates } from "../../../utils/getFilteredStates";
+import { useData } from "../../../context/PublicationDataContext";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 

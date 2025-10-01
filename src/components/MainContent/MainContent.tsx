@@ -1,4 +1,4 @@
-import { CustomTabs } from "./shared/CustomTabs";
+import { CustomTabs } from "./CustomTabs";
 
 import { DataTable } from "./DataTable/DataTable";
 import { GeoPlot } from "./Plots/GeoPlot";
@@ -7,10 +7,10 @@ import { ConnectedDotPlot } from "./Plots/ConnectedDotPlot";
 import { StackedBarPlot } from "./Plots/StackedBarPlot";
 import { BubblePlot } from "./Plots/BubblePlot";
 import { useEffect, useState } from "react";
-import { useData } from "../context/PublicationDataContext";
 import Box from "@mui/material/Box";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import { useData } from "../../context/PublicationDataContext";
 
 export const MainContent = () => {
   const { data, clearError } = useData();

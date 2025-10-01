@@ -2,7 +2,7 @@ import "./App.css";
 import MenuIcon from "@mui/icons-material/Menu";
 import { theme } from "./Theme";
 import { useState } from "react";
-import { MainContent } from "./components/MainContent";
+import { MainContent } from "./components/MainContent/MainContent";
 import { DataProvider } from "./context/PublicationDataContext";
 import { PopulationProvider } from "./context/PopulationContext";
 import { LandingHero } from "./components/LandingHero";
