@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import landingBackground from "../assets/images/landingBackground.jpeg";
+import landingBackground from "../assets/images/landingBackground.webp";
 import ysphLogo from "../assets/images/ysphLogoWhite.svg";
 import { theme } from "../Theme";
 import Typography from "@mui/material/Typography";
@@ -9,8 +9,6 @@ export const LandingHero = () => {
     <Box sx={{ position: "relative", height: "100vh", width: "100%" }}>
       {/* Background image */}
       <Box
-        component="img"
-        src={landingBackground}
         sx={{
           height: "100%",
           width: "100%",
@@ -18,7 +16,10 @@ export const LandingHero = () => {
           top: 0,
           left: 0,
           zIndex: 0,
-          objectFit: "cover",
+          backgroundImage: `url(${landingBackground})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          willChange: "transform",
         }}
       />
       {/* Background overlay */}
