@@ -53,12 +53,12 @@ export const TemporalDistributionPlot = ({
       mode: "lines+markers",
       name: state,
       marker: {
-        color: stateColorMapping[state] || theme.palette.grey[500],
+        color: stateColorMapping[state] || theme.palette.gray.dark,
         size: 9,
         symbol: "square",
       },
       line: {
-        color: stateColorMapping[state] || theme.palette.grey[500],
+        color: stateColorMapping[state] || theme.palette.gray.dark,
         width: 3,
       },
       hovertemplate: `State: ${state}<br>Year: %{x}<br>Publications: %{y}<extra></extra>`,

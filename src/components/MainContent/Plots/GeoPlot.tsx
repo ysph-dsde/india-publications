@@ -79,22 +79,19 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
         colorscale: "Blues",
         reversescale: true,
         colorbar: {
-          // title: { text: "Publication Count" },
           thickness: 15,
           tick0: 0,
           nticks: 5,
           lenmode: "fraction",
           len: 0.7,
-          // yanchor: "top",
           y: -0.05,
-          // xanchor: "left",
           x: 0.5,
           orientation: "h",
           bordercolor: `${theme.palette.primary.main}`,
           borderwidth: 2,
           borderradius: 4,
         },
-        marker: { line: { color: "black" } }, // state borders
+        marker: { line: { color: theme.palette.gray.dark } }, // state borders
         hovertemplate:
           view === "totalPublications"
             ? "%{location}: %{z} publications<extra></extra>"
@@ -118,7 +115,6 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
         parallels: [12.472944444, 35.172805555556],
         rotation: { lat: 24, lon: 80 },
       },
-      // scale: 1,
     },
     hoverdistance: -1,
     margin: { r: 0, t: 90, b: 0, l: 0 },

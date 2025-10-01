@@ -82,7 +82,7 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
         xaxis: "x2",
         yaxis: "y2",
         marker: {
-          color: stateColorMapping[data.state] || theme.palette.grey[500],
+          color: stateColorMapping[data.state] || theme.palette.gray.dark,
         },
         showlegend: false,
         text: [(data.proportion * 100).toFixed(1)],
@@ -117,7 +117,7 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
           xaxis: "x",
           yaxis: "y2",
           marker: {
-            color: stateColorMapping[data.state] || theme.palette.grey[500],
+            color: stateColorMapping[data.state] || theme.palette.gray.dark,
           },
           showlegend: false,
           text: [(data.proportion * 100).toFixed(1)],
