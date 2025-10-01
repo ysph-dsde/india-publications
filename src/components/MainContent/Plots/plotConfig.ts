@@ -1,6 +1,6 @@
 import { theme } from "../../../Theme";
 
-// Define base layout with common settings
+// base layout with common settings
 const baseLayout: Partial<Plotly.Layout> = {
   autosize: true,
   dragmode: false,
@@ -47,7 +47,7 @@ const baseLayout: Partial<Plotly.Layout> = {
   },
 };
 
-// Utility function to merge base layout with custom layout
+// function to merge base layout with custom layout
 export const createLayout = (
   customLayout: Partial<Plotly.Layout> = {},
 ): Partial<Plotly.Layout> => {
@@ -77,6 +77,7 @@ export const createLayout = (
   };
 };
 
+// base configuration
 export const baseConfig: Partial<Plotly.Config> = {
   responsive: true,
   displayModeBar: true,
