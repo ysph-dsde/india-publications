@@ -87,7 +87,7 @@ export const BubblePlot = () => {
         mode: "markers" as const,
         marker: {
           size: sizes,
-          color: stateColorMapping[state] || "#333333", // Fallback to black if state not in mapping
+          color: stateColorMapping[state] || theme.palette.gray.dark, // Fallback to black if state not in mapping
           sizemode: "area",
         },
         name: state,
