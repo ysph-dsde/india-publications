@@ -81,6 +81,8 @@ export const baseConfig: Partial<Plotly.Config> = {
   responsive: true,
   displayModeBar: true,
   displaylogo: false,
+  scrollZoom: false,
+  doubleClick: false,
   modeBarButtonsToRemove: [
     "pan2d",
     "zoomIn2d",
@@ -95,4 +97,8 @@ export const baseConfig: Partial<Plotly.Config> = {
     "resetGeo",
     "zoomOut2d",
   ],
+  toImageButtonOptions: {
+    filename:
+      "indiapub.org - Yale School of Public Health Data Science and Data Equity",
+  },
 };
