@@ -12,6 +12,8 @@ export const LegendChip = ({ state }: LegendChipProps) => {
     clientFilters: { states: selectedStates },
     updateClientFilters,
   } = useData();
+
+  // add / remove state when clicked
   const handleClick = () => {
     const updatedStates = selectedStates.includes(state)
       ? selectedStates.filter((id) => id !== state) // Remove state
