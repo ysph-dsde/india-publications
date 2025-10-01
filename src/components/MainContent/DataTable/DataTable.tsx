@@ -33,9 +33,9 @@ const CustomToolbar = () => {
         >
           <ExportCsv
             options={{
-              allColumns: true, // Export all columns
+              allColumns: true,
               fileName:
-                "publications_data - Yale School of Public Health Data Science and Data Equity", // Custom file name
+                "publications_data - Yale School of Public Health Data Science and Data Equity",
             }}
             render={
               <Tooltip title={"Download all"}>
@@ -133,7 +133,7 @@ export const DataTable = () => {
             lineHeight: "normal",
           },
           "& .MuiDataGrid-columnHeader": {
-            // Forced to use important since overriding inline styles
+            // important since overriding inline styles
             height: "unset !important",
           },
           ".MuiDataGrid-cell": {

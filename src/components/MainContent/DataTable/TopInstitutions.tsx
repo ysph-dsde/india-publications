@@ -19,15 +19,15 @@ export const TopInstitutions = () => {
     // Build a map with counts and state
     const institutionMap = publications.reduce<
       Record<string, { count: number; state: string }>
-    >((acc, pub) => {
+    >((accumulator, pub) => {
       const inst = pub.institution_name;
       if (inst) {
-        if (!acc[inst]) {
-          acc[inst] = { count: 0, state: pub.institution_state || "Unknown" };
+        if (!accumulator[inst]) {
+          accumulator[inst] = { count: 0, state: pub.institution_state || "Unknown" };
         }
-        acc[inst].count += 1;
+        accumulator[inst].count += 1;
       }
-      return acc;
+      return accumulator;
     }, {});
 
     // Convert to array, sort by count descending, take top 50
@@ -61,7 +61,7 @@ export const TopInstitutions = () => {
         return [
           quoteIfNeeded(row.institution_name),
           quoteIfNeeded(row.institution_state),
-          row.publication_count, // Never quote numbers
+          row.publication_count,
         ].join(",");
       }),
     ];
