@@ -69,7 +69,7 @@ export const MainContent = () => {
       ),
     },
     {
-      label: "HDI vs Publications",
+      label: "Human Development Index vs Publications",
       content: <BubblePlot />,
     },
   ];
