@@ -44,7 +44,7 @@ export const BubblePlot = () => {
       }, 1);
   }, [stateYearlyData, selectedStates, yearRange]);
 
-  const desired_maximum_marker_size = 25;
+  const desired_maximum_marker_size = 30;
 
   const traces: Plotly.Data[] = useMemo(() => {
     return sortedStates.map((state) => {
