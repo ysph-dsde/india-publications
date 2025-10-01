@@ -8,6 +8,7 @@ import { usePopulationData } from "../../../context/PopulationContext";
 import { ToggleViewButtons } from "./ToggleViewButtons";
 import type { LayoutAxis } from "plotly.js";
 import { Legend } from "./Legend";
+import { theme } from "../../../Theme";
 
 interface StackedBarPlotProps {
   view: string;
@@ -66,6 +67,7 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
     });
   }, [stateYearlyData, sortedStates, years, yearlyTotals]);
 
+  // population trace for year at end of year range
   const yearRangeEndTrace: Plotly.Data[] = useMemo(() => {
     const filteredAndSortedData = endYearPopulationData
       .filter((data) => sortedStates.includes(data.state))
@@ -80,7 +82,7 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
         xaxis: "x2",
         yaxis: "y2",
         marker: {
-          color: stateColorMapping[data.state] || "#333333", // Fallback to black if state not in mapping
+          color: stateColorMapping[data.state] || theme.palette.grey[500],
         },
         showlegend: false,
         text: [(data.proportion * 100).toFixed(1)],
@@ -91,6 +93,7 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
     });
   }, [endYearPopulationData]);
 
+  // population traces for each year within year range
   const populationTraces: Plotly.Data[] = useMemo(() => {
     const popTraces: Plotly.Data[] = [];
 
@@ -98,7 +101,7 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
       const yearData = populationData.get(year.toString());
 
       if (!yearData) {
-        // Skip if no data for this year (optional: add logging if needed)
+        // Skip if no data for this year (shouldn't happen, but just in case)
         continue;
       }
       const filteredAndSortedData = yearData
@@ -114,7 +117,7 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
           xaxis: "x",
           yaxis: "y2",
           marker: {
-            color: stateColorMapping[data.state] || "#333333", // Fallback to black if state not in mapping
+            color: stateColorMapping[data.state] || theme.palette.grey[500],
           },
           showlegend: false,
           text: [(data.proportion * 100).toFixed(1)],
@@ -127,6 +130,7 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
     return popTraces;
   }, [endYearPopulationData]);
 
+  // combine publication traces with population trace(s)
   const combinedTraces: Plotly.Data[] = useMemo(() => {
     return view === "yearRangeEnd"
       ? [...publicationTraces, ...yearRangeEndTrace]
