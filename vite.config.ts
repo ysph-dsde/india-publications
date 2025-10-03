@@ -25,6 +25,7 @@ export default defineConfig({
             "plotly.js/lib/choropleth",
           ],
           mui: ["@mui/material", "@mui/x-data-grid"],
+          geojson: ["./src/assets/data/states_geo.json"],
         },
       },
     },
