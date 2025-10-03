@@ -117,7 +117,7 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
       },
     },
     hoverdistance: -1,
-    margin: { r: 0, t: 90, b: 0, l: 0 },
+    margin: { r: 0, t: 90, b: 50, l: 0 },
   };
 
   return (
