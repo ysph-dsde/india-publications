@@ -10,20 +10,28 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { PublicationTopics } from "../../constants/FilterTypes";
 import { useData } from "../../context/PublicationDataContext";
 import TextField from "@mui/material/TextField";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import Button from "@mui/material/Button";
-import { debounce } from "@mui/material/utils";
+// import { debounce } from "@mui/material/utils";
 
 export const Search = () => {
   const { serverFilters, updateServerFilters } = useData();
 
   // for visual change BEFORE API call
-  const [localCustomKeyword, setLocalCustomKeyword] = useState<string>("");
+  const [localCustomKeyword, setLocalCustomKeyword] = useState<string>(
+    serverFilters.customKeyword,
+  );
   const [localYearRange, setLocalYearRange] = useState<[number, number]>(
     serverFilters.yearRange,
   );
+
+  //
+  //
+  //
+  // TODO need to make this type safe
+  const [localTopic, setLocalTopic] = useState<string>(serverFilters.topic);
 
   useEffect(() => {
     setLocalYearRange(serverFilters.yearRange);
@@ -33,18 +41,22 @@ export const Search = () => {
     setLocalCustomKeyword(serverFilters.customKeyword);
   }, [serverFilters.customKeyword]);
 
-  // Persist debounced function across renders using useRef
-  const debouncedUpdateCustomKeyword = useRef(
-    debounce((value: string) => {
-      updateServerFilters({ customKeyword: value.trim() }); // Trim to clean input
-    }, 750),
-  ).current;
+  useEffect(() => {
+    setLocalTopic(serverFilters.topic);
+  }, [serverFilters.topic]);
 
-  const debouncedUpdateYearRange = useRef(
-    debounce((value: [number, number]) => {
-      updateServerFilters({ yearRange: value });
-    }, 750),
-  ).current;
+  // // Persist debounced function across renders using useRef
+  // const debouncedUpdateCustomKeyword = useRef(
+  //   debounce((value: string) => {
+  //     updateServerFilters({ customKeyword: value.trim() }); // Trim to clean input
+  //   }, 750),
+  // ).current;
+
+  // const debouncedUpdateYearRange = useRef(
+  //   debounce((value: [number, number]) => {
+  //     updateServerFilters({ yearRange: value });
+  //   }, 750),
+  // ).current;
 
   return (
     <Accordion
@@ -104,7 +116,7 @@ export const Search = () => {
                 onChange={(e) => {
                   const newValue = e.target.value;
                   setLocalCustomKeyword(newValue); // Update local state immediately
-                  debouncedUpdateCustomKeyword(newValue); // Update serverFilters after delay
+                  // debouncedUpdateCustomKeyword(newValue); // Update serverFilters after delay
                 }}
                 placeholder="Enter keywords"
               />
@@ -126,7 +138,7 @@ export const Search = () => {
                 value={localYearRange}
                 onChange={(_event: Event, newValue: number[]) => {
                   setLocalYearRange(newValue as [number, number]);
-                  debouncedUpdateYearRange(newValue as [number, number]);
+                  // debouncedUpdateYearRange(newValue as [number, number]);
 
                   // updateServerFilters({
                   //   yearRange: newValue as [number, number],
@@ -144,7 +156,18 @@ export const Search = () => {
             </Box>
           </ListItem>
           <Box textAlign="center">
-            <Button variant="contained">Search</Button>
+            <Button
+              variant="contained"
+              onClick={() =>
+                updateServerFilters({
+                  yearRange: localYearRange,
+                  customKeyword: localCustomKeyword,
+                  topic: localTopic,
+                })
+              }
+            >
+              Search
+            </Button>
           </Box>
         </List>
       </AccordionDetails>
