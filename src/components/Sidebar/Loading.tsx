@@ -49,32 +49,36 @@ export const Loading = () => {
   }, [loading]);
 
   return (
-    <Box
-      sx={{
-        backgroundColor: "rgba(219, 219, 219, 0.92)",
-        height: "100%",
-        position: "absolute",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        padding: 2,
-        zIndex: 1,
-        display: "flex",
-        flexDirection: "column",
-        gap: 2,
-      }}
-    >
-      <Typography>{loadingMessages[currentMessageIndex]}</Typography>
-      <ProgressWithLabel value={progress["title.search"]} />
-      <ProgressWithLabel value={progress["abstract.search"]} />
+    <>
+      {loading && (
+        <Box
+          sx={{
+            backgroundColor: "rgba(219, 219, 219, 0.92)",
+            height: "100%",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            padding: 2,
+            zIndex: 1,
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+          }}
+        >
+          <Typography>{loadingMessages[currentMessageIndex]}</Typography>
+          <ProgressWithLabel value={progress["title.search"]} />
+          <ProgressWithLabel value={progress["abstract.search"]} />
 
-      <Button
-        variant="contained"
-        onClick={cancelSearch}
-      >
-        Cancel Search
-      </Button>
-    </Box>
+          <Button
+            variant="contained"
+            onClick={cancelSearch}
+          >
+            Cancel Search
+          </Button>
+        </Box>
+      )}
+    </>
   );
 };
