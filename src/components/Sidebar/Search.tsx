@@ -51,8 +51,8 @@ export const Search = () => {
       disableGutters
       elevation={0}
       sx={{
-        "&.Mui-expanded::before": {
-          opacity: 1,
+        "::before": {
+          display: "none",
         },
       }}
     >

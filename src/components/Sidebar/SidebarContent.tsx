@@ -21,6 +21,7 @@ export const SidebarContent = () => {
       <Box sx={{ position: "relative" }}>
         <Loading />
         <CurrentSearch />
+        <Divider />
         <Search />
         <Filter />
       </Box>
