@@ -7,7 +7,10 @@ import List from "@mui/material/List";
 import { SelectionTitle } from "./SelectionTitle";
 import ListItem from "@mui/material/ListItem";
 import Autocomplete from "@mui/material/Autocomplete";
-import { PublicationTopics } from "../../constants/FilterTypes";
+import {
+  PublicationTopics,
+  type PublicationTopic,
+} from "../../constants/FilterTypes";
 import { useData } from "../../context/PublicationDataContext";
 import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
@@ -31,7 +34,9 @@ export const Search = () => {
   //
   //
   // TODO need to make this type safe
-  const [localTopic, setLocalTopic] = useState<string>(serverFilters.topic);
+  const [localTopic, setLocalTopic] = useState<PublicationTopic>(
+    serverFilters.topic,
+  );
 
   useEffect(() => {
     setLocalYearRange(serverFilters.yearRange);
@@ -90,7 +95,7 @@ export const Search = () => {
               // value={serverFilters.topic}
               value={localTopic}
               disableClearable
-              onChange={(_event, newValue: string) => {
+              onChange={(_event, newValue: PublicationTopic) => {
                 setLocalCustomKeyword(
                   newValue === "Custom Keyword Search"
                     ? serverFilters.customKeyword

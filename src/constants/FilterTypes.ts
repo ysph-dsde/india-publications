@@ -11,7 +11,8 @@ export const PublicationTopics = [
   "Game Theory",
   "Environmental Science",
   "Custom Keyword Search",
-];
+] as const;
+export type PublicationTopic = (typeof PublicationTopics)[number];
 
 export type AuthorPositions = "First" | "First and last" | "Any";
 

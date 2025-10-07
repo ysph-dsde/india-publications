@@ -1,6 +1,6 @@
 // src/context/types.ts
 
-import type { AuthorPositions, GrantTypes } from "../constants/FilterTypes";
+import type { AuthorPositions, GrantTypes, PublicationTopic } from "../constants/FilterTypes";
 import type { PopulationGroup } from "../constants/States";
 
 // filters on data
@@ -13,7 +13,7 @@ export interface ClientFilters {
 }
 
 export interface ServerFilters {
-  topic: string;
+  topic: PublicationTopic;
   customKeyword: string;
   yearRange: [number, number];
 }
