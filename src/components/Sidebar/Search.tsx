@@ -22,7 +22,6 @@ import Button from "@mui/material/Button";
 export const Search = () => {
   const { serverFilters, updateServerFilters } = useData();
 
-  // for visual change BEFORE API call
   const [localCustomKeyword, setLocalCustomKeyword] = useState<string>(
     serverFilters.customKeyword,
   );
@@ -45,19 +44,6 @@ export const Search = () => {
   useEffect(() => {
     setLocalTopic(serverFilters.topic);
   }, [serverFilters.topic]);
-
-  // // Persist debounced function across renders using useRef
-  // const debouncedUpdateCustomKeyword = useRef(
-  //   debounce((value: string) => {
-  //     updateServerFilters({ customKeyword: value.trim() }); // Trim to clean input
-  //   }, 750),
-  // ).current;
-
-  // const debouncedUpdateYearRange = useRef(
-  //   debounce((value: [number, number]) => {
-  //     updateServerFilters({ yearRange: value });
-  //   }, 750),
-  // ).current;
 
   return (
     <Accordion
@@ -88,7 +74,6 @@ export const Search = () => {
               autoComplete
               options={PublicationTopics}
               fullWidth
-              // value={serverFilters.topic}
               value={localTopic}
               disableClearable
               onChange={(_event, newValue: PublicationTopic) => {
@@ -98,14 +83,6 @@ export const Search = () => {
                     : "",
                 );
                 setLocalTopic(newValue);
-
-                // updateServerFilters({
-                //   topic: newValue,
-                //   customKeyword:
-                //     newValue === "Custom Keyword Search"
-                //       ? serverFilters.customKeyword
-                //       : "",
-                // });
               }}
               renderInput={(params) => (
                 <TextField
@@ -130,8 +107,7 @@ export const Search = () => {
                 value={localCustomKeyword}
                 onChange={(e) => {
                   const newValue = e.target.value;
-                  setLocalCustomKeyword(newValue); // Update local state immediately
-                  // debouncedUpdateCustomKeyword(newValue); // Update serverFilters after delay
+                  setLocalCustomKeyword(newValue);
                 }}
                 placeholder="Enter keywords"
               />
@@ -149,15 +125,9 @@ export const Search = () => {
             >
               <Slider
                 getAriaLabel={() => "Years range"}
-                // value={serverFilters.yearRange}
                 value={localYearRange}
                 onChange={(_event: Event, newValue: number[]) => {
                   setLocalYearRange(newValue as [number, number]);
-                  // debouncedUpdateYearRange(newValue as [number, number]);
-
-                  // updateServerFilters({
-                  //   yearRange: newValue as [number, number],
-                  // });
                 }}
                 valueLabelDisplay="auto"
                 disableSwap
