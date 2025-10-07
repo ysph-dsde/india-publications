@@ -17,7 +17,6 @@ import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import Button from "@mui/material/Button";
-// import { debounce } from "@mui/material/utils";
 
 export const Search = () => {
   const { serverFilters, updateServerFilters } = useData();
@@ -44,6 +43,33 @@ export const Search = () => {
   useEffect(() => {
     setLocalTopic(serverFilters.topic);
   }, [serverFilters.topic]);
+
+  const handleSearch = () => {
+    // custom keyword isn't blank
+    if (
+      localTopic === "Custom Keyword Search" &&
+      localCustomKeyword.length === 0
+    )
+      return;
+
+    // at least 1 local filter is different than server filters
+    if (
+      localYearRange[0] === serverFilters.yearRange[0] &&
+      localYearRange[1] === serverFilters.yearRange[1] &&
+      ((localTopic === serverFilters.topic &&
+        localTopic !== "Custom Keyword Search") ||
+        (localCustomKeyword === serverFilters.customKeyword &&
+          localTopic === "Custom Keyword Search"))
+    ) {
+      return;
+    }
+
+    updateServerFilters({
+      yearRange: localYearRange,
+      customKeyword: localCustomKeyword,
+      topic: localTopic,
+    });
+  };
 
   return (
     <Accordion
@@ -143,17 +169,7 @@ export const Search = () => {
           <Box textAlign="center">
             <Button
               variant="contained"
-              onClick={() => {
-                if (
-                  localTopic !== "Custom Keyword Search" ||
-                  localCustomKeyword.length !== 0
-                )
-                  updateServerFilters({
-                    yearRange: localYearRange,
-                    customKeyword: localCustomKeyword,
-                    topic: localTopic,
-                  });
-              }}
+              onClick={() => handleSearch()}
             >
               Search
             </Button>
