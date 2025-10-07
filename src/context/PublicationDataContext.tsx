@@ -35,12 +35,9 @@ const DataContext = createContext<DataContextType | undefined>(undefined);
 export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   // default filters
   const [serverFilters, setServerFilters] = useState<ServerFilters>({
-    // topic: "Custom Keyword Search",
-    // topic: "Electronic Health Records",
-    topic: "Digital Health",
+    topic: "Electronic Health Records",
     customKeyword: "",
-    // yearRange: [2014, 2024],
-    yearRange: [2014, 2018],
+    yearRange: [2014, 2024],
   });
   const [clientFilters, setClientFilters] = useState<ClientFilters>({
     authorPosition: "First",
