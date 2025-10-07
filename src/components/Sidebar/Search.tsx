@@ -30,10 +30,6 @@ export const Search = () => {
     serverFilters.yearRange,
   );
 
-  //
-  //
-  //
-  // TODO need to make this type safe
   const [localTopic, setLocalTopic] = useState<PublicationTopic>(
     serverFilters.topic,
   );
