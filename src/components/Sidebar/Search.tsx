@@ -61,7 +61,13 @@ export const Search = () => {
   return (
     <Accordion
       defaultExpanded
+      disableGutters
       elevation={0}
+      sx={{
+        "&.Mui-expanded::before": {
+          opacity: 1,
+        },
+      }}
     >
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
@@ -81,16 +87,24 @@ export const Search = () => {
               autoComplete
               options={PublicationTopics}
               fullWidth
-              value={serverFilters.topic}
+              // value={serverFilters.topic}
+              value={localTopic}
               disableClearable
               onChange={(_event, newValue: string) => {
-                updateServerFilters({
-                  topic: newValue,
-                  customKeyword:
-                    newValue === "Custom Keyword Search"
-                      ? serverFilters.customKeyword
-                      : "",
-                });
+                setLocalCustomKeyword(
+                  newValue === "Custom Keyword Search"
+                    ? serverFilters.customKeyword
+                    : "",
+                );
+                setLocalTopic(newValue);
+
+                // updateServerFilters({
+                //   topic: newValue,
+                //   customKeyword:
+                //     newValue === "Custom Keyword Search"
+                //       ? serverFilters.customKeyword
+                //       : "",
+                // });
               }}
               renderInput={(params) => (
                 <TextField
@@ -101,13 +115,13 @@ export const Search = () => {
               )}
             />
           </ListItem>
-          {serverFilters.topic === "Custom Keyword Search" && (
+          {localTopic === "Custom Keyword Search" && (
             <SelectionTitle
               title="Keyword(s)"
               toolTip={false}
             />
           )}
-          {serverFilters.topic === "Custom Keyword Search" && (
+          {localTopic === "Custom Keyword Search" && (
             <ListItem>
               <TextField
                 fullWidth

@@ -25,10 +25,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
 export const Filter = () => {
-  const {
-    clientFilters,
-    updateClientFilters,
-  } = useData();
+  const { clientFilters, updateClientFilters } = useData();
 
   const handleMinCitationsChange = (
     event: React.KeyboardEvent<HTMLInputElement>,
@@ -71,7 +68,13 @@ export const Filter = () => {
   return (
     <Accordion
       defaultExpanded
+      disableGutters
       elevation={0}
+      sx={{
+        "&.Mui-expanded::before": {
+          opacity: 1,
+        },
+      }}
     >
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}

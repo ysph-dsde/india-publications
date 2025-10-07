@@ -5,6 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Divider from "@mui/material/Divider";
 import { Search } from "./Search";
 import { Filter } from "./Filter";
+import { CurrentSearch } from "./CurrentSearch";
 
 export const SidebarContent = () => {
   return (
@@ -19,6 +20,7 @@ export const SidebarContent = () => {
       <Divider />
       <Box sx={{ position: "relative" }}>
         <Loading />
+        <CurrentSearch />
         <Search />
         <Filter />
       </Box>
