@@ -143,13 +143,17 @@ export const Search = () => {
           <Box textAlign="center">
             <Button
               variant="contained"
-              onClick={() =>
-                updateServerFilters({
-                  yearRange: localYearRange,
-                  customKeyword: localCustomKeyword,
-                  topic: localTopic,
-                })
-              }
+              onClick={() => {
+                if (
+                  localTopic !== "Custom Keyword Search" ||
+                  localCustomKeyword.length !== 0
+                )
+                  updateServerFilters({
+                    yearRange: localYearRange,
+                    customKeyword: localCustomKeyword,
+                    topic: localTopic,
+                  });
+              }}
             >
               Search
             </Button>
