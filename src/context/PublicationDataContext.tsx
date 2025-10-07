@@ -36,10 +36,11 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   // default filters
   const [serverFilters, setServerFilters] = useState<ServerFilters>({
     // topic: "Custom Keyword Search",
-    topic: "Electronic Health Records",
+    // topic: "Electronic Health Records",
+    topic: "Digital Health",
     customKeyword: "",
-    yearRange: [2014, 2024],
-    // yearRange: [2014, 2018],
+    // yearRange: [2014, 2024],
+    yearRange: [2014, 2018],
   });
   const [clientFilters, setClientFilters] = useState<ClientFilters>({
     authorPosition: "First",
@@ -123,8 +124,14 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const previousServerFiltersRef = useRef<ServerFilters>(serverFilters);
   const controllerRef = useRef<AbortController | null>(null);
   const isFetchingRef = useRef<Symbol | null>(null);
+  const isCancellingRef = useRef<boolean>(false);
 
   useEffect(() => {
+    if (isCancellingRef.current) {
+      isCancellingRef.current = false;
+      return;
+    }
+
     const controller = new AbortController();
     controllerRef.current = controller;
     const signal = controller.signal;
@@ -144,19 +151,15 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
 
     const loadData = async () => {
       try {
-        if (
-          serverFilters.topic !== "Custom Keyword Search" ||
-          serverFilters.customKeyword.length !== 0
-        ) {
-          for await (const page of fetchOpenAlexData(
-            serverFilters,
-            signal,
-            setProgress,
-          )) {
-            // progressively add data as it loads
-            setSourceData((prev) => [...prev, ...page]);
-          }
+        for await (const page of fetchOpenAlexData(
+          serverFilters,
+          signal,
+          setProgress,
+        )) {
+          // progressively add data as it loads
+          setSourceData((prev) => [...prev, ...page]);
         }
+        // }
 
         // update server filters if not cancelled
         if (!signal.aborted) {
@@ -178,14 +181,15 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
             loading: false,
             error: "Search cancelled",
           }));
-          return;
+        } else {
+          // On non-abort error, set error but keep previous sourceData
+          setData((prev) => ({
+            ...prev,
+            loading: false,
+            error:
+              error instanceof Error ? error.message : "Failed to load data",
+          }));
         }
-        // On non-abort error, set error but keep previous sourceData
-        setData((prev) => ({
-          ...prev,
-          loading: false,
-          error: error instanceof Error ? error.message : "Failed to load data",
-        }));
       } finally {
         if (isFetchingRef.current === fetchId) {
           isFetchingRef.current = null;
@@ -210,6 +214,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
 
   const cancelSearch = () => {
     if (controllerRef.current) {
+      isCancellingRef.current = true;
       setServerFilters(previousServerFiltersRef.current);
       controllerRef.current.abort();
       controllerRef.current = null;
