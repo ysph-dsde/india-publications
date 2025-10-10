@@ -177,6 +177,7 @@ export const ConnectedDotPlot = () => {
         standoff: 0,
       },
       type: "category",
+      dtick: 1,
     },
     margin: {
       r: 30,
