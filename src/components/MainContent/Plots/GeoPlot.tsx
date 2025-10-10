@@ -82,6 +82,9 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
           thickness: 15,
           tick0: 0,
           nticks: 5,
+          tickfont: {
+            size: 16
+          },
           lenmode: "fraction",
           len: 0.7,
           y: -0.05,

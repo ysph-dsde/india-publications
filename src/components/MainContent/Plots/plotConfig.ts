@@ -17,7 +17,7 @@ const baseLayout: Partial<Plotly.Layout> = {
       },
     },
     tickfont: {
-      size: 12,
+      size: 16,
     },
   },
   yaxis: {
@@ -28,7 +28,7 @@ const baseLayout: Partial<Plotly.Layout> = {
       },
     },
     tickfont: {
-      size: 12,
+      size: 16,
     },
   },
   legend: {
@@ -68,6 +68,22 @@ export const createLayout = (
       title: {
         ...baseLayout.yaxis?.title,
         ...customLayout.yaxis?.title,
+      },
+    },
+    xaxis2: {
+      ...baseLayout.xaxis,
+      ...customLayout.xaxis2,
+      title: {
+        ...baseLayout.xaxis?.title,
+        ...customLayout.xaxis2?.title,
+      },
+    },
+    yaxis2: {
+      ...baseLayout.yaxis,
+      ...customLayout.yaxis2,
+      title: {
+        ...baseLayout.yaxis?.title,
+        ...customLayout.yaxis2?.title,
       },
     },
     title: {
