@@ -12,9 +12,6 @@ import {
   type DataState,
   type ServerFilters,
   type ClientFilters,
-  // type YearlyPublication,
-  // type StateYearlyPublication,
-  // type totalPublicationsByState,
 } from "./types";
 import { fetchOpenAlexData } from "../services/OpenAlexService";
 import { States } from "../constants/States";
@@ -37,7 +34,8 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const [serverFilters, setServerFilters] = useState<ServerFilters>({
     topic: "Electronic Health Records",
     customKeyword: "",
-    yearRange: [2014, 2024],
+    // yearRange: [2014, 2024],
+    yearRange: [2014, 2018],
   });
   const [clientFilters, setClientFilters] = useState<ClientFilters>({
     authorPosition: "First",
@@ -156,38 +154,27 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
           // progressively add data as it loads
           setSourceData((prev) => [...prev, ...page]);
         }
-        // }
-
-        // update server filters if not cancelled
-        if (!signal.aborted) {
-          previousServerFiltersRef.current = serverFilters;
-        }
-
-        // Always set loading false on completion (success or not)
-        setData((prev) => ({
-          ...prev,
-          loading: false,
-        }));
+        // update server filters on completion
+        previousServerFiltersRef.current = serverFilters;
       } catch (error) {
         // Fetch aborted due to user cancellation.
         if (signal.aborted) {
           // revert to previous data source
           setSourceData([...dataBackup]);
-          setData((prev) => ({
-            ...prev,
-            loading: false,
-            error: "Search cancelled",
-          }));
         } else {
-          // On non-abort error, set error but keep previous sourceData
+          // On non-abort error, set error
           setData((prev) => ({
             ...prev,
-            loading: false,
             error:
               error instanceof Error ? error.message : "Failed to load data",
           }));
         }
       } finally {
+        // set loading to false after process finishes
+        setData((prev) => ({
+          ...prev,
+          loading: false,
+        }));
         if (isFetchingRef.current === fetchId) {
           isFetchingRef.current = null;
           controllerRef.current = null;

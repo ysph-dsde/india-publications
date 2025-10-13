@@ -3,7 +3,7 @@ import { useState } from "react";
 import { MainContent } from "./components/MainContent/MainContent";
 import { DataProvider } from "./context/PublicationDataContext";
 import { PopulationProvider } from "./context/PopulationContext";
-import { LandingHero } from "./components/LandingHero";
+import { LandingHero } from "./components/LandingHero/LandingHero";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
