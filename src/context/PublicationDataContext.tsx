@@ -34,8 +34,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const [serverFilters, setServerFilters] = useState<ServerFilters>({
     topic: "Electronic Health Records",
     customKeyword: "",
-    // yearRange: [2014, 2024],
-    yearRange: [2014, 2018],
+    yearRange: [2014, 2024],
   });
   const [clientFilters, setClientFilters] = useState<ClientFilters>({
     authorPosition: "First",
@@ -54,14 +53,6 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     progress: { "title.search": 0, "abstract.search": 0 },
     error: null,
   });
-
-  // Callback to update progress for a specific searchField
-  const setProgress = useCallback((searchField: string, value: number) => {
-    setData((prev) => ({
-      ...prev,
-      progress: { ...prev.progress, [searchField]: value },
-    }));
-  }, []);
 
   // Client-side filtering (doesn't trigger API call)
   const filteredPublications = useMemo(() => {
@@ -116,7 +107,16 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     totalPublicationsByState,
   ]);
 
+  // Callback to update progress for a specific searchField
+  const setProgress = useCallback((searchField: string, value: number) => {
+    setData((prev) => ({
+      ...prev,
+      progress: { ...prev.progress, [searchField]: value },
+    }));
+  }, []);
+
   const previousServerFiltersRef = useRef<ServerFilters>(serverFilters);
+  const lastCompletedDataRef = useRef<FlattenedPublication[]>([]);
   const controllerRef = useRef<AbortController | null>(null);
   const isFetchingRef = useRef<Symbol | null>(null);
   const isCancellingRef = useRef<boolean>(false);
@@ -134,48 +134,62 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     const fetchId = Symbol();
     isFetchingRef.current = fetchId;
 
-    // Set loading true, backup previous search, clear current data
+    // Set loading true, progress to 0
     setData((prev) => ({
       ...prev,
       loading: true,
       progress: { "title.search": 0, "abstract.search": 0 },
       error: null,
     }));
-    const dataBackup: FlattenedPublication[] = [...sourceData];
+    // clear data
     setSourceData([]);
 
     const loadData = async () => {
+      // data accumulator for local use
+      let accumulatedData: FlattenedPublication[] = [];
+
       try {
         for await (const page of fetchOpenAlexData(
           serverFilters,
           signal,
-          setProgress,
+          (searchField: string, value: number) => {
+            if (isFetchingRef.current === fetchId) {
+              setProgress(searchField, value);
+            }
+          },
         )) {
-          // progressively add data as it loads
-          setSourceData((prev) => [...prev, ...page]);
+          if (isFetchingRef.current === fetchId) {
+            // progressively add data as it loads
+            setSourceData((prev) => [...prev, ...page]);
+            accumulatedData = [...accumulatedData, ...page];
+          }
         }
-        // update server filters on completion
-        previousServerFiltersRef.current = serverFilters;
+        if (isFetchingRef.current === fetchId) {
+          // Update refs on successful completion
+          previousServerFiltersRef.current = serverFilters;
+          lastCompletedDataRef.current = accumulatedData;
+        }
       } catch (error) {
-        // Fetch aborted due to user cancellation.
-        if (signal.aborted) {
-          // revert to previous data source
-          setSourceData([...dataBackup]);
-        } else {
-          // On non-abort error, set error
-          setData((prev) => ({
-            ...prev,
-            error:
-              error instanceof Error ? error.message : "Failed to load data",
-          }));
+        if (isFetchingRef.current === fetchId) {
+          if (signal.aborted) {
+            // revert to previous data source on search cancellation
+            setSourceData([...lastCompletedDataRef.current]);
+          } else {
+            // set error message and leave the user with partially loaded data
+            setData((prev) => ({
+              ...prev,
+              error:
+                error instanceof Error ? error.message : "Failed to load data",
+            }));
+          }
         }
       } finally {
-        // set loading to false after process finishes
-        setData((prev) => ({
-          ...prev,
-          loading: false,
-        }));
         if (isFetchingRef.current === fetchId) {
+          // set loading to false after process finishes
+          setData((prev) => ({
+            ...prev,
+            loading: false,
+          }));
           isFetchingRef.current = null;
           controllerRef.current = null;
         }
