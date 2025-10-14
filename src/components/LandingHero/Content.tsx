@@ -47,7 +47,7 @@ export const Content = ({ exploreOptions }: ContentProps) => {
           variant="h3"
           color={theme.palette.blue.main}
         >
-          A new lens on India's research ecosystem.
+          A new lens on India's published research output.
         </Typography>
       </Box>
       <Box
@@ -68,6 +68,7 @@ export const Content = ({ exploreOptions }: ContentProps) => {
         {exploreOptions.map((item, id) => (
           <Button
             disableElevation
+            size="large"
             sx={{
               bgcolor: theme.palette.gray.light,
               color: theme.palette.gray.darkest,
