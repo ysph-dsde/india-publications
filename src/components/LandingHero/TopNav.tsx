@@ -20,7 +20,8 @@ interface TopNavProps {
 }
 
 export const TopNav = ({ exploreOptions }: TopNavProps) => {
-  const navItems = ["Home", "About", "FAQ"];
+  // const navItems: string[] = ["Home", "About", "FAQ"];
+  const navItems: string[] = [];
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
 
   const handleDrawerToggle = () => {
@@ -42,8 +43,7 @@ export const TopNav = ({ exploreOptions }: TopNavProps) => {
             </ListItemButton>
           </ListItem>
         ))}
-        <Divider />
-        <Divider />
+        {navItems.length > 0 && <Divider />}
         {exploreOptions.map((item, id) => (
           <ListItem
             key={id}
