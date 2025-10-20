@@ -1,5 +1,4 @@
 import Box from "@mui/material/Box";
-import { theme } from "../../Theme";
 import { TopNav } from "./TopNav";
 import { Content } from "./Content";
 import type { PublicationTopic } from "../../constants/FilterTypes";
@@ -20,7 +19,8 @@ export const LandingHero = () => {
     <Box
       sx={{
         width: "100%",
-        bgcolor: theme.palette.gray.lightest,
+        background: "linear-gradient(to right, #000C8D, #790DA7)",
+        color: "#fff",
         borderBottomLeftRadius: 50,
         borderBottomRightRadius: 50,
       }}

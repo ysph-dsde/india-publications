@@ -1,5 +1,9 @@
 import Drawer from "@mui/material/Drawer";
 import { SidebarContent } from "./SidebarContent";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import { Search } from "./Search";
+import { Filter } from "./Filter";
 
 interface SidebarProps {
   drawerWidth: number;
@@ -33,12 +37,13 @@ export const Sidebar = ({
         onTransitionEnd={handleDrawerTransitionEnd}
         onClose={handleDrawerClose}
         sx={{
-          display: { xs: "block", sm: "none" },
+          display: { sm: "block", md: "none" },
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: drawerWidth,
             maxHeight: "100%",
             overflow: "auto",
+            borderRadius: 0,
           },
         }}
         slotProps={{
@@ -50,7 +55,23 @@ export const Sidebar = ({
         <SidebarContent />
       </Drawer>
       {/* Desktop */}
-      <Drawer
+      <Box
+        sx={{
+          display: { xs: "none", md: "flex" },
+          flexDirection: "column",
+          width: drawerWidth,
+          gap: 3,
+        }}
+      >
+        <Paper elevation={1}>
+          <Search />
+        </Paper>
+        <Paper>
+          <Filter />
+        </Paper>
+        {/* <SidebarContent /> */}
+      </Box>
+      {/* <Drawer
         variant="permanent"
         sx={{
           display: { xs: "none", sm: "block" },
@@ -60,15 +81,12 @@ export const Sidebar = ({
             position: "sticky",
             top: 0,
             width: drawerWidth,
-            height: "100vh",
-            overflow: "auto",
           },
-          mt: 3,
         }}
         open
       >
         <SidebarContent />
-      </Drawer>
+      </Drawer> */}
     </>
   );
 };

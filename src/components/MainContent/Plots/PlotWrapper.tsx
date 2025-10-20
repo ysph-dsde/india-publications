@@ -31,7 +31,11 @@ export const PlotWrapper = ({ children }: PlotWrapperProps) => {
   return (
     <Paper
       elevation={1}
-      sx={{ display: "flex", flexDirection: "column", position: "relative" }}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        position: "relative",
+      }}
     >
       {loading && (
         <Box

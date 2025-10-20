@@ -26,28 +26,43 @@ function App() {
       <DataProvider>
         <PopulationProvider>
           <CssBaseline />
-          <LandingHero />
-          <Box sx={{ display: "flex" }}>
-            <Sidebar
-              drawerWidth={drawerWidth}
-              isClosing={isClosing}
-              setIsClosing={setIsClosing}
-              mobileOpen={mobileOpen}
-              setMobileOpen={setMobileOpen}
-            />
+          <Box
+            sx={{
+              bgcolor: theme.palette.gray.lightest,
+              display: "flex",
+              flexDirection: "column",
+              gap: 10,
+            }}
+          >
+            <LandingHero />
             <Box
-              component="main"
               sx={{
-                flexGrow: 1,
-                p: 3,
-                minHeight: "100vh",
-                width: { sm: `calc(100% - ${drawerWidth}px)` },
                 display: "flex",
-                flexDirection: "column",
+                bgcolor: theme.palette.gray.lightest,
+                px: "3%",
+                gap: 3,
               }}
             >
-              <Topbar handleDrawerToggle={handleDrawerToggle} />
-              <MainContent />
+              <Sidebar
+                drawerWidth={drawerWidth}
+                isClosing={isClosing}
+                setIsClosing={setIsClosing}
+                mobileOpen={mobileOpen}
+                setMobileOpen={setMobileOpen}
+              />
+              <Box
+                component="main"
+                sx={{
+                  flexGrow: 1,
+                  minHeight: "100vh",
+                  width: { sm: `calc(100% - ${drawerWidth}px)` },
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <Topbar handleDrawerToggle={handleDrawerToggle} />
+                <MainContent />
+              </Box>
             </Box>
           </Box>
         </PopulationProvider>

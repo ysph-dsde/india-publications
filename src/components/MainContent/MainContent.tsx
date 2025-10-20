@@ -75,8 +75,8 @@ export const MainContent = () => {
   ];
 
   return (
-    <Box>
-      <CustomTabs tabs={tabs}></CustomTabs>
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+      <CustomTabs tabs={tabs} />
       <DataTable />
 
       <Snackbar

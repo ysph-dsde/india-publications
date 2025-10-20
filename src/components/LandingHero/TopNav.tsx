@@ -63,10 +63,11 @@ export const TopNav = ({ exploreOptions }: TopNavProps) => {
       <AppBar
         component="nav"
         position="static"
+        elevation={0}
         sx={{
-          background: "linear-gradient(to right, #000C8D, #790DA7)",
+          bgcolor: "inherit",
           height: 100,
-          px: { xs: "3%", xl: "15%" },
+          px: { xs: "3%" },
         }}
       >
         <Toolbar

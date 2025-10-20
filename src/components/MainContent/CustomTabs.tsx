@@ -8,6 +8,8 @@ import React, {
   type ReactNode,
   type SyntheticEvent,
 } from "react";
+import Paper from "@mui/material/Paper";
+import { theme } from "../../Theme";
 
 interface TabConfig {
   label: string;
@@ -29,16 +31,33 @@ export const CustomTabs = React.memo(({ tabs }: TabsProps) => {
   );
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Paper
+      sx={{
+        width: "100%",
+        bgcolor: "#fff",
+      }}
+      elevation={1}
+      color="secondary"
+    >
       <Tabs
         value={value}
         onChange={handleChange}
         variant="scrollable"
         scrollButtons
         sx={{
-          // display disabled scroll button on ends
           [`& .${tabsClasses.scrollButtons}`]: {
-            "&.Mui-disabled": { opacity: 0.3 },
+            // // display disabled scroll button on ends
+            // "&.Mui-disabled": { opacity: 0.3 },
+            bgcolor: theme.palette.secondary.light,
+          },
+          "& .MuiTabScrollButton-root:first-of-type": {
+            borderTopLeftRadius: 20,
+          },
+          "& .MuiTabScrollButton-root:last-of-type": {
+            borderTopRightRadius: 20,
+          },
+          [`& .${tabsClasses.indicator}`]: {
+            bgcolor: theme.palette.secondary.main,
           },
         }}
       >
@@ -48,22 +67,27 @@ export const CustomTabs = React.memo(({ tabs }: TabsProps) => {
             label={tab.label}
             id={`simple-tab-${index}`}
             aria-controls={`simple-tabpanel-${index}`}
-            sx={{ fontSize: "1rem" }}
+            sx={{
+              fontSize: "1rem",
+              "&.Mui-selected": {
+                color: theme.palette.secondary.main,
+              },
+            }}
           />
         ))}
       </Tabs>
       <Divider />
       {tabs.map((tab, index) => (
-        <div
+        <Box
           key={index}
           role="tabpanel"
           hidden={value !== index}
           id={`simple-tabpanel-${index}`}
           aria-labelledby={`simple-tab-${index}`}
         >
-          {value === index && <Box sx={{ py: 3 }}>{tab.content}</Box>}
-        </div>
+          {value === index && <>{tab.content}</>}
+        </Box>
       ))}
-    </Box>
+    </Paper>
   );
 });

@@ -42,6 +42,12 @@ const StyledTextField = styled(TextField)<{
   width: ownerState.expanded ? 260 : "var(--trigger-width)",
   opacity: ownerState.expanded ? 1 : 0,
   transition: theme.transitions.create(["width", "opacity"]),
+  "& .MuiOutlinedInput-root": {
+    "&.Mui-focused fieldset": {
+      borderRadius: 20,
+      borderColor: theme.palette.secondary.main,
+    },
+  },
 }));
 
 export const ToolbarSearch = () => {

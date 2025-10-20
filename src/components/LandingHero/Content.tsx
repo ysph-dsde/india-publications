@@ -21,7 +21,7 @@ export const Content = ({ exploreOptions }: ContentProps) => {
   return (
     <Box
       sx={{
-        px: { xs: "3%", xl: "15%" },
+        px: { xs: "3%" },
         py: "5%",
         display: "flex",
         flexDirection: "row",
@@ -40,13 +40,11 @@ export const Content = ({ exploreOptions }: ContentProps) => {
         <Box
           component="img"
           src={siteSymbol}
+          color="white"
           alt="Magnifying glass site symbol"
           width="50%"
         />
-        <Typography
-          variant="h3"
-          color={theme.palette.blue.main}
-        >
+        <Typography variant="h3">
           A new lens on India's published research output.
         </Typography>
       </Box>
@@ -59,7 +57,6 @@ export const Content = ({ exploreOptions }: ContentProps) => {
         }}
       >
         <Typography
-          color={theme.palette.gray.darkest}
           fontWeight="bold"
           variant="h5"
         >
@@ -67,12 +64,16 @@ export const Content = ({ exploreOptions }: ContentProps) => {
         </Typography>
         {exploreOptions.map((item, id) => (
           <Button
-            disableElevation
             size="large"
             sx={{
-              bgcolor: theme.palette.gray.light,
-              color: theme.palette.gray.darkest,
+              bgcolor: "white",
+              color: theme.palette.primary.main,
               borderRadius: 2,
+              justifyContent: "left",
+              transition: "transform 0.3s ease-in-out",
+              "&:hover": {
+                transform: "scale(1.01)",
+              },
             }}
             variant="contained"
             key={id}

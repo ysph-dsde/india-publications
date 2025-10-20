@@ -5,7 +5,11 @@ const yaleBlue = "#00356b";
 export const theme = createTheme({
   palette: {
     primary: {
-      main: yaleBlue,
+      main: "#000C8D",
+    },
+    secondary: {
+      main: "#6E37A6",
+      light: "#E5D8F2",
     },
     blue: {
       main: yaleBlue,
@@ -33,6 +37,13 @@ export const theme = createTheme({
         },
         ".js-plotly-plot .plotly .legendtoggle": {
           cursor: "default !important",
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          borderRadius: 20,
         },
       },
     },

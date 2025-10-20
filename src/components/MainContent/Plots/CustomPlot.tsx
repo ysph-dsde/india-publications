@@ -24,7 +24,6 @@ export const CustomPlot = ({
   const defaultStyle: React.CSSProperties = {
     width: "100%",
     minHeight: 600,
-    borderRadius: 4,
   };
 
   return (

@@ -14,6 +14,7 @@ import Box from "@mui/material/Box";
 import Tooltip from "@mui/material/Tooltip";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
 
 const CustomToolbar = () => {
   const {
@@ -42,10 +43,8 @@ const CustomToolbar = () => {
                 <ToolbarButton
                   render={
                     <Button
-                      variant="text"
-                      sx={{
-                        color: "#707070",
-                      }}
+                      variant="contained"
+                      color="secondary"
                       size="small"
                       endIcon={<FileDownloadIcon fontSize="small" />}
                     >
@@ -125,7 +124,7 @@ export const DataTable = () => {
   ];
 
   return (
-    <Box>
+    <Paper elevation={1}>
       <DataGrid
         sx={{
           "& .MuiDataGrid-columnHeaderTitle": {
@@ -139,6 +138,7 @@ export const DataTable = () => {
           ".MuiDataGrid-cell": {
             padding: 1,
           },
+          borderRadius: "inherit",
         }}
         rows={data.publications}
         getRowId={(row) => row.rowId}
@@ -177,6 +177,6 @@ export const DataTable = () => {
         disableRowSelectionOnClick
         disableColumnResize
       />
-    </Box>
+    </Paper>
   );
 };

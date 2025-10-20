@@ -23,7 +23,10 @@ export const TopInstitutions = () => {
       const inst = pub.institution_name;
       if (inst) {
         if (!accumulator[inst]) {
-          accumulator[inst] = { count: 0, state: pub.institution_state || "Unknown" };
+          accumulator[inst] = {
+            count: 0,
+            state: pub.institution_state || "Unknown",
+          };
         }
         accumulator[inst].count += 1;
       }
@@ -86,10 +89,8 @@ export const TopInstitutions = () => {
     <Tooltip title={"Download top 50 list"}>
       <Button
         onClick={downloadCSV}
-        variant="text"
-        sx={{
-          color: "#707070",
-        }}
+        variant="contained"
+        color="secondary"
         size="small"
         endIcon={<FileDownloadIcon fontSize="small" />}
       >
