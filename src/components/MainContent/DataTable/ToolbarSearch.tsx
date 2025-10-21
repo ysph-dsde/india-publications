@@ -43,7 +43,7 @@ const StyledTextField = styled(TextField)<{
   opacity: ownerState.expanded ? 1 : 0,
   transition: theme.transitions.create(["width", "opacity"]),
   "& .MuiOutlinedInput-root": {
-    "&.Mui-focused fieldset": {
+    "& .MuiOutlinedInput-notchedOutline": {
       borderRadius: 20,
       borderColor: theme.palette.secondary.main,
     },

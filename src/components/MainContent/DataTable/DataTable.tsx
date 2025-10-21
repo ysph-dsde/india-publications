@@ -15,6 +15,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
+import { theme } from "../../../Theme";
 
 const CustomToolbar = () => {
   const {
@@ -22,15 +23,25 @@ const CustomToolbar = () => {
   } = useData();
 
   return (
-    <Toolbar>
+    <>
       {publications.length > 0 && !loading && (
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-            gap: 2,
-          }}
+        <Toolbar
+          render={(props) => (
+            <Box
+              {...props}
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
+                alignItems: { xs: "left", sm: "center" },
+                justifyContent: "flex-end",
+                flexWrap: "wrap",
+                gap: 2,
+                p: 1,
+                borderBottom: 1,
+                borderBottomColor: theme.palette.gray.light,
+              }}
+            />
+          )}
         >
           <ExportCsv
             options={{
@@ -57,9 +68,9 @@ const CustomToolbar = () => {
           />
           <TopInstitutions />
           <ToolbarSearch />
-        </Box>
+        </Toolbar>
       )}
-    </Toolbar>
+    </>
   );
 };
 
