@@ -14,6 +14,8 @@ const baseLayout: Partial<Plotly.Layout> = {
     title: {
       font: {
         size: 16,
+        weight: "bold",
+        color: theme.palette.secondary.main,
       },
     },
     tickfont: {
@@ -25,6 +27,8 @@ const baseLayout: Partial<Plotly.Layout> = {
     title: {
       font: {
         size: 16,
+        weight: "bold",
+        color: theme.palette.secondary.main,
       },
     },
     tickfont: {
@@ -42,7 +46,9 @@ const baseLayout: Partial<Plotly.Layout> = {
   },
   title: {
     font: {
-      size: 20,
+      size: 24,
+      weight: "bold",
+      color: theme.palette.secondary.main,
     },
   },
 };
