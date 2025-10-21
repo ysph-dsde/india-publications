@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { theme } from "../../Theme";
 import Button from "@mui/material/Button";
-import siteSymbol from "../../assets/images/siteSymbol.svg";
+import indiapubIcon from "../../assets/images/indiapubIconWhite.svg";
 import type { ExploreOption } from "./LandingHero";
 import { useData } from "../../context/PublicationDataContext";
 import type { PublicationTopic } from "../../constants/FilterTypes";
@@ -39,10 +39,10 @@ export const Content = ({ exploreOptions }: ContentProps) => {
       >
         <Box
           component="img"
-          src={siteSymbol}
+          src={indiapubIcon}
           color="white"
           alt="Magnifying glass site symbol"
-          width="50%"
+          width="20%"
         />
         <Typography variant="h3">
           A new lens on India's published research output.
