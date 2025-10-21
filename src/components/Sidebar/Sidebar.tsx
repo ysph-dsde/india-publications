@@ -1,5 +1,4 @@
 import Drawer from "@mui/material/Drawer";
-import { SidebarContent } from "./SidebarContent";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import { Search } from "./Search";
@@ -52,7 +51,8 @@ export const Sidebar = ({
           },
         }}
       >
-        <SidebarContent />
+        <Search />
+        <Filter />
       </Drawer>
       {/* Desktop */}
       <Box
@@ -69,24 +69,7 @@ export const Sidebar = ({
         <Paper>
           <Filter />
         </Paper>
-        {/* <SidebarContent /> */}
       </Box>
-      {/* <Drawer
-        variant="permanent"
-        sx={{
-          display: { xs: "none", sm: "block" },
-          width: drawerWidth,
-          "& .MuiDrawer-paper": {
-            boxSizing: "border-box",
-            position: "sticky",
-            top: 0,
-            width: drawerWidth,
-          },
-        }}
-        open
-      >
-        <SidebarContent />
-      </Drawer> */}
     </>
   );
 };

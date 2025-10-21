@@ -65,6 +65,8 @@ export const Loading = () => {
             display: "flex",
             flexDirection: "column",
             gap: 2,
+            borderBottomLeftRadius: { md: 20 },
+            borderBottomRightRadius: { md: 20 },
           }}
         >
           <Typography>{loadingMessages[currentMessageIndex]}</Typography>

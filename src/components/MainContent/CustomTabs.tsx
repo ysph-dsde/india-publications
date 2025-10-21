@@ -72,6 +72,7 @@ export const CustomTabs = React.memo(({ tabs }: TabsProps) => {
               "&.Mui-selected": {
                 color: theme.palette.secondary.main,
               },
+              textTransform: "none",
             }}
           />
         ))}

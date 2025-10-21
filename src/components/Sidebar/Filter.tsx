@@ -18,6 +18,7 @@ import type { ChangeEvent } from "react";
 import { StatesSelector } from "./StatesSelector";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import { SectionTitle } from "./SectionTitle";
 
 export const Filter = () => {
   const { clientFilters, updateClientFilters } = useData();
@@ -61,122 +62,131 @@ export const Filter = () => {
     };
 
   return (
-    <List>
-      <SelectionTitle
-        title="Author position"
-        toolTipText="Filter whether the author is first, first and last, or appears anywhere."
-      />
-      <ListItem>
-        <Autocomplete
-          autoComplete
-          options={AuthorPositionsList}
-          fullWidth
-          value={clientFilters.authorPosition}
-          disableClearable
-          onChange={(_event, newValue: AuthorPositions) => {
-            updateClientFilters({ authorPosition: newValue });
+    <>
+      <SectionTitle title="Filter" />
+      <List sx={{ pt: 0 }}>
+        <SelectionTitle
+          title="Author position"
+          toolTipText="Filter whether the author is first, first and last, or appears anywhere."
+        />
+        <ListItem>
+          <Autocomplete
+            autoComplete
+            options={AuthorPositionsList}
+            fullWidth
+            value={clientFilters.authorPosition}
+            disableClearable
+            onChange={(_event, newValue: AuthorPositions) => {
+              updateClientFilters({ authorPosition: newValue });
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="standard"
+                placeholder="Author position"
+              />
+            )}
+          />
+        </ListItem>
+        <SelectionTitle
+          title="Minimum Citations"
+          toolTipText="Only include publications with citations greater than or equal to this number"
+        />
+        <ListItem>
+          <TextField
+            fullWidth
+            variant="standard"
+            type="number"
+            value={clientFilters.minimumCitations}
+            onChange={(event) => {
+              const newValue = parseInt(event.target.value);
+              updateClientFilters({ minimumCitations: newValue });
+            }}
+            onBlur={() => {
+              if (
+                clientFilters.minimumCitations < 0 ||
+                clientFilters.minimumCitations == null ||
+                isNaN(clientFilters.minimumCitations)
+              )
+                updateClientFilters({ minimumCitations: 0 });
+            }}
+            onKeyDown={handleMinCitationsChange}
+            slotProps={{
+              htmlInput: {
+                min: 0,
+                step: 1,
+              },
+            }}
+          />
+        </ListItem>
+        <SelectionTitle
+          title="States / Territories"
+          toolTipText="Choose one or more states to filter publications."
+        />
+        <StatesSelector />
+        <SelectionTitle
+          title="Filter States / Territories By Share of National Population"
+          toolTipText="Filter states by population group. High (>5% of national population), Medium (1-5%), Low (<1%)."
+        />
+        <ListItem
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
           }}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              variant="standard"
-              placeholder="Author position"
-            />
-          )}
+        >
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={clientFilters.populationGroups.includes("high")}
+                onChange={handlePopulationGroups("high")}
+              />
+            }
+            label="High"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={clientFilters.populationGroups.includes("medium")}
+                onChange={handlePopulationGroups("medium")}
+              />
+            }
+            label="Medium"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={clientFilters.populationGroups.includes("low")}
+                onChange={handlePopulationGroups("low")}
+              />
+            }
+            label="Low"
+          />
+        </ListItem>
+        <SelectionTitle
+          title="Grant information accessible?"
+          toolTipText="Filter publication by whether grant information is available."
         />
-      </ListItem>
-      <SelectionTitle
-        title="Minimum Citations"
-        toolTipText="Only include publications with citations greater than or equal to this number"
-      />
-      <ListItem>
-        <TextField
-          fullWidth
-          variant="standard"
-          type="number"
-          value={clientFilters.minimumCitations}
-          onChange={(event) => {
-            const newValue = parseInt(event.target.value);
-            updateClientFilters({ minimumCitations: newValue });
-          }}
-          onBlur={() => {
-            if (
-              clientFilters.minimumCitations < 0 ||
-              clientFilters.minimumCitations == null ||
-              isNaN(clientFilters.minimumCitations)
-            )
-              updateClientFilters({ minimumCitations: 0 });
-          }}
-          onKeyDown={handleMinCitationsChange}
-          slotProps={{
-            htmlInput: {
-              min: 0,
-              step: 1,
-            },
-          }}
-        />
-      </ListItem>
-      <SelectionTitle
-        title="States / Territories"
-        toolTipText="Choose one or more states to filter publications."
-      />
-      <StatesSelector />
-      <SelectionTitle
-        title="Filter States / Territories By Share of National Population"
-        toolTipText="Filter states by population group. High (>5% of national population), Medium (1-5%), Low (<1%)."
-      />
-      <ListItem sx={{ display: "flex", flexWrap: "wrap" }}>
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={clientFilters.populationGroups.includes("high")}
-              onChange={handlePopulationGroups("high")}
-            />
-          }
-          label="High"
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={clientFilters.populationGroups.includes("medium")}
-              onChange={handlePopulationGroups("medium")}
-            />
-          }
-          label="Medium"
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={clientFilters.populationGroups.includes("low")}
-              onChange={handlePopulationGroups("low")}
-            />
-          }
-          label="Low"
-        />
-      </ListItem>
-      <SelectionTitle
-        title="Grant information accessible?"
-        toolTipText="Filter publication by whether grant information is available."
-      />
-      <ListItem>
-        <Autocomplete
-          autoComplete
-          options={GrantTypesList}
-          fullWidth
-          value={clientFilters.grantInformation}
-          disableClearable
-          onChange={(_event, newValue: GrantTypes) => {
-            updateClientFilters({ grantInformation: newValue });
-          }}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              variant="standard"
-              placeholder="Grant information"
-            />
-          )}
-        />
-      </ListItem>
-    </List>
+        <ListItem>
+          <Autocomplete
+            autoComplete
+            options={GrantTypesList}
+            fullWidth
+            value={clientFilters.grantInformation}
+            disableClearable
+            onChange={(_event, newValue: GrantTypes) => {
+              updateClientFilters({ grantInformation: newValue });
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="standard"
+                placeholder="Grant information"
+              />
+            )}
+          />
+        </ListItem>
+      </List>
+    </>
   );
 };

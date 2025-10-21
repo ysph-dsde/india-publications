@@ -29,6 +29,13 @@ export const theme = createTheme({
       orange: "#bd5319",
     },
   },
+  typography: {
+    fontFamily: [
+      "Nunito Sans",
+      "Arial",
+      "sans-serif",
+    ].join(","),
+  },
   components: {
     MuiCssBaseline: {
       styleOverrides: {

@@ -48,7 +48,7 @@ export const SelectionTitle = ({
 
   return (
     <ListItem sx={{ display: "flex", justifyContent: "space-between" }}>
-      <Typography>{formattedTitle}</Typography>
+      <Typography fontWeight="bold">{formattedTitle}</Typography>
       {toolTip && (
         <ClickAwayListener onClickAway={handleTooltipClose}>
           <Tooltip
@@ -59,7 +59,7 @@ export const SelectionTitle = ({
             disableTouchListener
           >
             <IconButton onClick={handleTooltipToggle}>
-              <InfoIcon></InfoIcon>
+              <InfoIcon />
             </IconButton>
           </Tooltip>
         </ClickAwayListener>
