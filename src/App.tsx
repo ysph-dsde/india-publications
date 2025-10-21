@@ -55,7 +55,7 @@ function App() {
                 sx={{
                   flexGrow: 1,
                   minHeight: "100vh",
-                  width: { sm: `calc(100% - ${drawerWidth}px)` },
+                  width: { xs: `calc(100% - ${drawerWidth}px)` },
                   display: "flex",
                   flexDirection: "column",
                 }}
