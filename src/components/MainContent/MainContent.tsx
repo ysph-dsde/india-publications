@@ -75,7 +75,7 @@ export const MainContent = () => {
   ];
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 3, py: 3 }}>
       <CustomTabs tabs={tabs} />
       <DataTable />
 
