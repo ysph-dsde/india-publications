@@ -23,54 +23,54 @@ const CustomToolbar = () => {
   } = useData();
 
   return (
-    <>
-      {publications.length > 0 && !loading && (
-        <Toolbar
-          render={(props) => (
+    <Toolbar
+      render={(props) => (
+        <>
+          {publications.length > 0 && !loading && (
             <Box
               {...props}
               sx={{
                 display: "flex",
                 flexDirection: { xs: "column", sm: "row" },
-                alignItems: { xs: "left", sm: "center" },
+                alignItems: { xs: "flex-end", sm: "center" },
                 justifyContent: "flex-end",
                 flexWrap: "wrap",
-                gap: 2,
+                gap: { xs: 1, sm: 2 },
                 p: 1,
                 borderBottom: 1,
                 borderBottomColor: theme.palette.gray.light,
               }}
             />
           )}
-        >
-          <ExportCsv
-            options={{
-              allColumns: true,
-              fileName:
-                "publications_data - Yale School of Public Health Data Science and Data Equity",
-            }}
-            render={
-              <Tooltip title={"Download all"}>
-                <ToolbarButton
-                  render={
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      size="small"
-                      endIcon={<FileDownloadIcon fontSize="small" />}
-                    >
-                      Download all data
-                    </Button>
-                  }
-                />
-              </Tooltip>
-            }
-          />
-          <TopInstitutions />
-          <ToolbarSearch />
-        </Toolbar>
+        </>
       )}
-    </>
+    >
+      <ExportCsv
+        options={{
+          allColumns: true,
+          fileName:
+            "publications_data - Yale School of Public Health Data Science and Data Equity",
+        }}
+        render={
+          <Tooltip title={"Download all"}>
+            <ToolbarButton
+              render={
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  size="small"
+                  endIcon={<FileDownloadIcon fontSize="small" />}
+                >
+                  Download all data
+                </Button>
+              }
+            />
+          </Tooltip>
+        }
+      />
+      <TopInstitutions />
+      <ToolbarSearch />
+    </Toolbar>
   );
 };
 

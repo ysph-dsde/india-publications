@@ -19,7 +19,6 @@ type OwnerState = {
 const StyledQuickFilter = styled(QuickFilter)({
   display: "grid",
   alignItems: "center",
-  marginLeft: "auto",
 });
 
 const StyledToolbarButton = styled(ToolbarButton)<{ ownerState: OwnerState }>(
@@ -44,6 +43,10 @@ const StyledTextField = styled(TextField)<{
   transition: theme.transitions.create(["width", "opacity"]),
   "& .MuiOutlinedInput-root": {
     "& .MuiOutlinedInput-notchedOutline": {
+      borderRadius: 20,
+      borderColor: theme.palette.secondary.main,
+    },
+    "&.Mui-focused fieldset": {
       borderRadius: 20,
       borderColor: theme.palette.secondary.main,
     },
