@@ -8,10 +8,11 @@ export interface ExploreOption {
 }
 const exploreOptions: ExploreOption[] = [
   { label: "Electronic Health Records" },
+  { label: "Genome-Wide Association Studies" },
   { label: "Artificial Intelligence" },
+  { label: "Development Economics" },
+  { label: "Environmental Science" },
   { label: "COVID-19" },
-  { label: "International Trade" },
-  { label: "Digital Health" },
 ];
 
 export const LandingHero = () => {
