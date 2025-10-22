@@ -52,7 +52,7 @@ export const Content = ({ exploreOptions }: ContentProps) => {
         sx={{
           display: { xs: "none", md: "flex" },
           flexDirection: "column",
-          minWidth: 300,
+          minWidth: 325,
           gap: 2,
         }}
       >
@@ -70,7 +70,7 @@ export const Content = ({ exploreOptions }: ContentProps) => {
               color: theme.palette.primary.main,
               borderRadius: 2,
               justifyContent: "left",
-              transition: "transform 0.3s ease-in-out",
+              transition: "transform 0.2s ease-in-out",
               "&:hover": {
                 transform: "scale(1.01)",
               },
