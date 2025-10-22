@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material/styles";
+import "./fonts.css";
 
 const yaleBlue = "#00356b";
 
@@ -30,11 +31,7 @@ export const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: [
-      "Nunito Sans",
-      "Arial",
-      "sans-serif",
-    ].join(","),
+    fontFamily: ["Nunito Sans", "Arial", "sans-serif"].join(","),
   },
   components: {
     MuiCssBaseline: {
