@@ -7,6 +7,7 @@ import { useMemo } from "react";
 import { Legend } from "./Legend";
 import { theme } from "../../../Theme";
 import { getHdiData } from "../../../utils/getHdiData";
+import { Title } from "./Title";
 
 export const BubblePlot = () => {
   const {
@@ -100,9 +101,6 @@ export const BubblePlot = () => {
   }, [stateYearlyData, sortedStates, yearRange, globalMaxPublications]);
 
   const layout: Partial<Plotly.Layout> = {
-    title: {
-      text: "Publications vs Human Development Index (HDI) Over Time",
-    },
     xaxis: {
       title: {
         text: "Year",
@@ -134,6 +132,7 @@ export const BubblePlot = () => {
 
   return (
     <PlotWrapper>
+      <Title>Publications vs Human Development Index (HDI) Over Time</Title>
       <CustomPlot
         data={traces}
         layout={layout}

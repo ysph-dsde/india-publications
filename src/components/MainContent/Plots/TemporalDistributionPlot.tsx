@@ -7,6 +7,7 @@ import { CustomPlot } from "./CustomPlot";
 import { useMemo } from "react";
 import { ToggleViewButtons } from "./ToggleViewButtons";
 import { Legend } from "./Legend";
+import { Title } from "./Title";
 
 interface TemportalDistributionPlotProps {
   view: "national" | "byState";
@@ -120,12 +121,6 @@ export const TemporalDistributionPlot = ({
   const yAxisBounds = calcBounds();
 
   const layout: Partial<Plotly.Layout> = {
-    title: {
-      text:
-        view === "national"
-          ? "Total Number of Publications Over Time"
-          : "Publications Over Time by State and Union Territory",
-    },
     yaxis: {
       title: {
         text: "Number of Publications",
@@ -144,6 +139,11 @@ export const TemporalDistributionPlot = ({
 
   return (
     <PlotWrapper>
+      <Title>
+        {view === "national"
+          ? "Total Number of Publications Over Time"
+          : "Publications Over Time by State and Union Territory"}
+      </Title>
       <CustomPlot
         data={traces}
         layout={layout}

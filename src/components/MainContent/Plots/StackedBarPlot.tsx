@@ -9,6 +9,7 @@ import { ToggleViewButtons } from "./ToggleViewButtons";
 import type { LayoutAxis } from "plotly.js";
 import { Legend } from "./Legend";
 import { theme } from "../../../Theme";
+import { Title } from "./Title";
 
 interface StackedBarPlotProps {
   view: string;
@@ -138,9 +139,6 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
   }, [publicationTraces, yearRangeEndTrace, populationTraces]);
 
   const layout: Partial<Plotly.Layout> = {
-    title: {
-      text: "State and Union Territory Publications Percentage by Year",
-    },
     barmode: "stack",
   };
 
@@ -213,6 +211,7 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
 
   return (
     <PlotWrapper>
+      <Title>State and Union Territory Publications Percentage by Year</Title>
       <CustomPlot
         data={combinedTraces}
         layout={view === "yearRangeEnd" ? yearRangeEndLayout : allYearsLayout}

@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { PlotWrapper } from "./PlotWrapper";
 import { PlotCaption } from "./PlotCaption";
 import { CustomPlot } from "./CustomPlot";
+import { Title } from "./Title";
 
 interface AggregatedData {
   state: string;
@@ -157,9 +158,6 @@ export const ConnectedDotPlot = () => {
   };
 
   const layout: Partial<Plotly.Layout> = {
-    title: {
-      text: "Population vs. Publication by State and Union Territory",
-    },
     yaxis: {
       tickmode: "linear",
       dtick: dtick,
@@ -186,6 +184,7 @@ export const ConnectedDotPlot = () => {
 
   return (
     <PlotWrapper>
+      <Title>Population vs. Publication by State and Union Territory</Title>
       <CustomPlot
         data={traces}
         layout={layout}

@@ -8,6 +8,7 @@ import { PlotCaption } from "./PlotCaption";
 import { CustomPlot } from "./CustomPlot";
 import { usePopulationData } from "../../../context/PopulationContext";
 import { ToggleViewButtons } from "./ToggleViewButtons";
+import { Title } from "./Title";
 
 interface GeoPlotProps {
   view: string;
@@ -83,7 +84,7 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
           tick0: 0,
           nticks: 5,
           tickfont: {
-            size: 16
+            size: 16,
           },
           lenmode: "fraction",
           len: 0.7,
@@ -94,6 +95,7 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
           borderwidth: 2,
           borderradius: 4,
         },
+        // showscale: false,
         marker: { line: { color: theme.palette.gray.dark } }, // state borders
         hovertemplate:
           view === "totalPublications"
@@ -104,12 +106,6 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
   }, [totalPublicationsByState, view]);
 
   const layout: Partial<Plotly.Layout> = {
-    title: {
-      text:
-        view === "totalPublications"
-          ? "Number of Publications by State and Union Territory"
-          : "Number of Publications per Million People by State and Union Territory",
-    },
     geo: {
       visible: false,
       fitbounds: "locations",
@@ -120,16 +116,21 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
       },
     },
     hoverdistance: -1,
-    margin: { r: 0, t: 90, b: 50, l: 0 },
+    margin: { r: 0, t: 0, b: 50, l: 0 },
   };
 
   return (
     <PlotWrapper>
+      <Title>
+        {view === "totalPublications"
+          ? "Number of Publications by State and Union Territory"
+          : "Number of Publications per Million People by State and Union Territory"}
+      </Title>
       <CustomPlot
         data={plotData}
         layout={layout}
         style={{
-          minHeight: 1000,
+          minHeight: 700,
         }}
       />
       <PlotCaption>

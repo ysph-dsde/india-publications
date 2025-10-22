@@ -34,7 +34,8 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const [serverFilters, setServerFilters] = useState<ServerFilters>({
     topic: "Electronic Health Records",
     customKeyword: "",
-    yearRange: [2014, 2024],
+    // yearRange: [2014, 2024],
+    yearRange: [2014, 2018],
   });
   const [clientFilters, setClientFilters] = useState<ClientFilters>({
     authorPosition: "First",

@@ -51,6 +51,7 @@ const baseLayout: Partial<Plotly.Layout> = {
       color: theme.palette.secondary.main,
     },
   },
+  margin: { t: 0 },
 };
 
 // function to merge base layout with custom layout
@@ -60,6 +61,10 @@ export const createLayout = (
   return {
     ...baseLayout,
     ...customLayout,
+    margin: {
+      ...baseLayout.margin,
+      ...customLayout.margin,
+    },
     xaxis: {
       ...baseLayout.xaxis,
       ...customLayout.xaxis,
@@ -102,7 +107,7 @@ export const createLayout = (
 // base configuration
 export const baseConfig: Partial<Plotly.Config> = {
   responsive: true,
-  displayModeBar: true,
+  displayModeBar: false,
   displaylogo: false,
   scrollZoom: false,
   doubleClick: false,
