@@ -32,13 +32,17 @@ export const TopNav = ({ exploreOptions }: TopNavProps) => {
       onClick={handleDrawerToggle}
       sx={{ textAlign: "center" }}
     >
-      <List>
+      <List sx={{ textAlign: "left" }}>
+        <ListItem>
+          <Typography fontWeight="bold">Search by topic</Typography>
+        </ListItem>
+        <Divider />
         {navItems.map((item) => (
           <ListItem
             key={item}
             disablePadding
           >
-            <ListItemButton sx={{ textAlign: "left" }}>
+            <ListItemButton>
               <ListItemText primary={item} />
             </ListItemButton>
           </ListItem>
