@@ -135,8 +135,9 @@ export const PlotWrapper = ({ children }: PlotWrapperProps) => {
       )}
       <Box
         display="flex"
-        justifyContent="center"
+        justifyContent="left"
         pb={2}
+        px={2}
       >
         <Button
           sx={{ width: 190 }}
