@@ -20,6 +20,7 @@ export const ToggleViewButtons = ({
 }: ToggleViewButtonsProps) => {
   return (
     <ToggleButtonGroup
+      className="hide-on-screenshot"
       sx={{ alignSelf: "center", pb: 2 }}
       value={view}
       exclusive

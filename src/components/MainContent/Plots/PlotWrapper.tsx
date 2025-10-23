@@ -4,10 +4,9 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import LinearProgress from "@mui/material/LinearProgress";
-import domtoimage from "dom-to-image";
+import { toPng } from "html-to-image";
 import Button from "@mui/material/Button";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
-import "./styles.css";
 
 interface PlotWrapperProps {
   children: React.ReactNode;
@@ -36,24 +35,50 @@ export const PlotWrapper = ({ children }: PlotWrapperProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
 
   const handleDownload = async () => {
-    if (contentRef.current) {
-      try {
-        // Convert the DOM element to a PNG blob
-        const dataUrl = await domtoimage.toPng(contentRef.current, {
-          quality: 1, // Maximum quality
-          bgcolor: "#ffffff", // White background for the image
-        });
+    if (!contentRef.current) return;
 
-        // Create a temporary link to trigger download
-        const link = document.createElement("a");
-        link.href = dataUrl;
-        link.download = "graph-snapshot.png";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      } catch (error) {
-        console.error("Error generating image:", error);
-      }
+    // Clone the node
+    const clone = contentRef.current.cloneNode(true) as HTMLElement;
+
+    // Create a temporary container
+    const container = document.createElement("div");
+    container.style.width = contentRef.current.offsetWidth + "px";
+    document.body.appendChild(container);
+    container.appendChild(clone);
+
+    // Find watermark element(s)
+    const watermarks = clone.querySelectorAll(".watermark");
+    // Find elements to hide
+    const toHide = clone.querySelectorAll(".hide-on-screenshot");
+
+    // Set watermark display
+    watermarks.forEach((e) => {
+      (e as HTMLElement).style.display = "flex";
+    });
+
+    // Set elements to hide
+    toHide.forEach((e) => {
+      (e as HTMLElement).style.display = "none";
+    });
+
+    try {
+      // Convert to PNG
+      const dataUrl = await toPng(container, {
+        quality: 1,
+        pixelRatio: 2,
+        backgroundColor: "white",
+      });
+
+      // Trigger download
+      const link = document.createElement("a");
+      link.download = "chart-with-watermark.png";
+      link.href = dataUrl;
+      link.click();
+    } catch (err) {
+      console.error("Failed to generate image:", err);
+    } finally {
+      // Cleanup
+      document.body.removeChild(container);
     }
   };
 
@@ -94,6 +119,18 @@ export const PlotWrapper = ({ children }: PlotWrapperProps) => {
             </Box>
           )}
           {children}
+          <div
+            className="watermark"
+            style={{
+              top: 16,
+              right: 16,
+              display: "none",
+              fontSize: 36,
+              pointerEvents: "none",
+            }}
+          >
+            WATERMARK
+          </div>
         </Box>
       )}
       <Box
