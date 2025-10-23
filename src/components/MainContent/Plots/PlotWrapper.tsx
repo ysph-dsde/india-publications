@@ -7,6 +7,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import { toPng } from "html-to-image";
 import Button from "@mui/material/Button";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import ysphLogoBlues from "../../../assets/images/ysphLogoBlues.svg";
 
 interface PlotWrapperProps {
   children: React.ReactNode;
@@ -119,18 +120,17 @@ export const PlotWrapper = ({ children }: PlotWrapperProps) => {
             </Box>
           )}
           {children}
-          <div
+          <Box
             className="watermark"
-            style={{
-              top: 16,
-              right: 16,
+            sx={{
+              p: 2,
+              pt: 0,
               display: "none",
-              fontSize: 36,
-              pointerEvents: "none",
+              width: 250,
             }}
           >
-            WATERMARK
-          </div>
+            <img src={ysphLogoBlues} />
+          </Box>
         </Box>
       )}
       <Box
