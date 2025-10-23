@@ -72,7 +72,8 @@ export const PlotWrapper = ({ children }: PlotWrapperProps) => {
 
       // Trigger download
       const link = document.createElement("a");
-      link.download = "chart-with-watermark.png";
+      link.download =
+        "indiapub.org - Yale School of Public Health Data Science and Data Equity.png";
       link.href = dataUrl;
       link.click();
     } catch (err) {
