@@ -10,7 +10,8 @@ export const Title = ({ children }: TitleProps) => {
   return (
     <Box
       px={6}
-      pt={2}
+      pt={3}
+      pb={2}
       display="flex"
       justifyContent="center"
     >
