@@ -13,7 +13,7 @@ export const Legend = () => {
       flexWrap="wrap"
       px={2}
       pb={2}
-      justifyContent="center"
+      justifyContent="space-between"
       rowGap={0.5}
       columnGap={0.5}
     >
