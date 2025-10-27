@@ -35,6 +35,8 @@ export const CustomTabs = React.memo(({ tabs }: TabsProps) => {
       sx={{
         width: "100%",
         bgcolor: "#fff",
+        borderTopRightRadius: 0,
+        borderTopLeftRadius: 0,
       }}
       elevation={1}
       color="secondary"
@@ -49,12 +51,6 @@ export const CustomTabs = React.memo(({ tabs }: TabsProps) => {
             // // display disabled scroll button on ends
             // "&.Mui-disabled": { opacity: 0.3 },
             bgcolor: theme.palette.secondary.light,
-          },
-          "& .MuiTabScrollButton-root:first-of-type": {
-            borderTopLeftRadius: 20,
-          },
-          "& .MuiTabScrollButton-root:last-of-type": {
-            borderTopRightRadius: 20,
           },
           [`& .${tabsClasses.indicator}`]: {
             bgcolor: theme.palette.secondary.main,
