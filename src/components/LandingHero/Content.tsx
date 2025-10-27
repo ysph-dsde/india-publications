@@ -44,7 +44,11 @@ export const Content = ({ exploreOptions }: ContentProps) => {
           alt="Magnifying glass site symbol"
           width="20%"
         />
-        <Typography variant="h3" fontWeight={600} lineHeight={1}>
+        <Typography
+          variant="h3"
+          fontWeight="medium"
+          lineHeight={1}
+        >
           A new lens on India's published research output.
         </Typography>
       </Box>
