@@ -11,6 +11,9 @@ import Box from "@mui/material/Box";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useData } from "../../context/PublicationDataContext";
+import { MobileNote } from "./MobileNote";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { theme } from "../../Theme";
 
 export const MainContent = () => {
   const { data, clearError } = useData();
@@ -74,9 +77,12 @@ export const MainContent = () => {
     },
   ];
 
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 3, pb: 3 }}>
       <CustomTabs tabs={tabs} />
+      {isMobile && <MobileNote />}
       <DataTable />
 
       <Snackbar
