@@ -5,9 +5,8 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import LinearProgress from "@mui/material/LinearProgress";
 import { toPng } from "html-to-image";
-import Button from "@mui/material/Button";
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import ysphLogoBlues from "../../../assets/images/ysphLogoBlues.svg";
+import { DownloadButton } from "../../shared/DownloadButton";
 
 interface PlotWrapperProps {
   children: React.ReactNode;
@@ -140,16 +139,7 @@ export const PlotWrapper = ({ children }: PlotWrapperProps) => {
         pb={2}
         px={2}
       >
-        <Button
-          sx={{ width: 190, borderRadius: 5, fontWeight: "bold" }}
-          variant="contained"
-          color="secondary"
-          onClick={handleDownload}
-          size="small"
-          endIcon={<FileDownloadIcon fontSize="small" />}
-        >
-          Download plot
-        </Button>
+        <DownloadButton onClick={handleDownload}>Download plot</DownloadButton>
       </Box>
     </Paper>
   );

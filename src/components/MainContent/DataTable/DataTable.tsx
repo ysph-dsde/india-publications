@@ -5,17 +5,15 @@ import {
   ToolbarButton,
   type GridColDef,
 } from "@mui/x-data-grid";
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
-
 import { useData } from "../../../context/PublicationDataContext";
 import { ToolbarSearch } from "./ToolbarSearch";
 import { TopInstitutions } from "./TopInstitutions";
 import Box from "@mui/material/Box";
 import Tooltip from "@mui/material/Tooltip";
-import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import { theme } from "../../../Theme";
+import { DownloadButton } from "../../shared/DownloadButton";
 
 const CustomToolbar = () => {
   const {
@@ -54,16 +52,7 @@ const CustomToolbar = () => {
         render={
           <Tooltip title={"Download all"}>
             <ToolbarButton
-              render={
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  size="small"
-                  endIcon={<FileDownloadIcon fontSize="small" />}
-                >
-                  Download all data
-                </Button>
-              }
+              render={<DownloadButton>Download all data</DownloadButton>}
             />
           </Tooltip>
         }

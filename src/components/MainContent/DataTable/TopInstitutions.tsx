@@ -1,8 +1,7 @@
 import { useMemo } from "react";
 import { useData } from "../../../context/PublicationDataContext";
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import Tooltip from "@mui/material/Tooltip";
-import Button from "@mui/material/Button";
+import { DownloadButton } from "../../shared/DownloadButton";
 
 interface InstitutionData {
   institution_name: string;
@@ -87,15 +86,9 @@ export const TopInstitutions = () => {
 
   return (
     <Tooltip title={"Download top 50 list"}>
-      <Button
-        onClick={downloadCSV}
-        variant="contained"
-        color="secondary"
-        size="small"
-        endIcon={<FileDownloadIcon fontSize="small" />}
-      >
+      <DownloadButton onClick={downloadCSV}>
         Download list of top 50 institutions
-      </Button>
+      </DownloadButton>
     </Tooltip>
   );
 };
