@@ -74,6 +74,7 @@ export const Content = ({ exploreOptions }: ContentProps) => {
               "&:hover": {
                 transform: "scale(1.01)",
               },
+              textTransform: "capitalize",
             }}
             variant="contained"
             key={id}
