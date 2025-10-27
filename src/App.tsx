@@ -31,7 +31,7 @@ function App() {
               bgcolor: theme.palette.gray.lightest,
               display: "flex",
               flexDirection: "column",
-              gap: 10,
+              gap: 5,
             }}
           >
             <LandingHero />
