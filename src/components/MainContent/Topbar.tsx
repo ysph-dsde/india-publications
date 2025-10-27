@@ -18,6 +18,8 @@ export const Topbar = ({ handleDrawerToggle }: TopbarProps) => {
       sx={{
         position: "sticky",
         top: 0,
+        borderBottomRightRadius: 0,
+        borderBottomLeftRadius: 0,
       }}
     >
       <Toolbar>
