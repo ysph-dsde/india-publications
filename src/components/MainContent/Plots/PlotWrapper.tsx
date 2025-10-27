@@ -136,12 +136,12 @@ export const PlotWrapper = ({ children }: PlotWrapperProps) => {
       )}
       <Box
         display="flex"
-        justifyContent="left"
+        justifyContent="right"
         pb={2}
         px={2}
       >
         <Button
-          sx={{ width: 190 }}
+          sx={{ width: 190, borderRadius: 5, fontWeight: "bold" }}
           variant="contained"
           color="secondary"
           onClick={handleDownload}
