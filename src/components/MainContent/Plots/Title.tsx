@@ -18,6 +18,7 @@ export const Title = ({ children }: TitleProps) => {
         color="secondary"
         fontWeight="bold"
         fontSize={24}
+        lineHeight={1}
       >
         {children}
       </Typography>
