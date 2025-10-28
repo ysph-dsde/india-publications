@@ -43,6 +43,12 @@ export const Content = ({ exploreOptions }: ContentProps) => {
           color="white"
           alt="Magnifying glass site symbol"
           width="20%"
+          sx={{
+            transition: "transform 0.2s ease-in-out",
+            "&:hover": {
+              transform: "scale(1.1)",
+            },
+          }}
         />
         <Typography
           variant="h3"
