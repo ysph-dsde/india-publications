@@ -70,12 +70,15 @@ export const DataTable = () => {
     {
       field: "publication_year",
       headerName: "Year",
-      flex: 1,
+      width: 100,
+      maxWidth: 100,
+      minWidth: 100,
     },
     {
       field: "title",
       headerName: "Title",
       flex: 1,
+      minWidth: 200,
       renderCell: (params: any) => {
         const doi = params?.row?.doi;
         const title = params?.row?.title;
@@ -94,17 +97,22 @@ export const DataTable = () => {
     {
       field: "cited_by_count",
       headerName: "Citations",
-      flex: 1,
+      width: 150,
+      maxWidth: 150,
+      minWidth: 150,
     },
     {
       field: "author_name",
       headerName: "Author",
       flex: 1,
+      minWidth: 100,
     },
     {
       field: "author_position",
       headerName: "Author Position",
-      flex: 1,
+      width: 150,
+      maxWidth: 150,
+      minWidth: 150,
       renderCell: (params: any) => {
         return (
           <>{params.value.charAt(0).toUpperCase() + params.value.slice(1)}</>
@@ -115,11 +123,13 @@ export const DataTable = () => {
       field: "institution_name",
       headerName: "Institution",
       flex: 1,
+      minWidth: 150,
     },
     {
       field: "institution_state",
       headerName: "State / Territory",
       flex: 1,
+      minWidth: 150,
     },
   ];
 
@@ -139,6 +149,7 @@ export const DataTable = () => {
             padding: 1,
           },
           borderRadius: "inherit",
+          height: 1000,
         }}
         rows={data.publications}
         getRowId={(row) => row.rowId}
