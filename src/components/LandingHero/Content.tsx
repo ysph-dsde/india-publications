@@ -82,7 +82,7 @@ export const Content = ({ exploreOptions }: ContentProps) => {
               justifyContent: "left",
               transition: "transform 0.2s ease-in-out",
               "&:hover": {
-                transform: "scale(1.01)",
+                transform: "scale(1.1)",
               },
               textTransform: "capitalize",
             }}
