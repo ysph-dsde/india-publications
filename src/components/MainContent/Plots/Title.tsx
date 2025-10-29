@@ -9,7 +9,7 @@ interface TitleProps {
 export const Title = ({ children }: TitleProps) => {
   return (
     <Box
-      px={6}
+      px={{ xs: 3, md: 6 }}
       pt={3}
       pb={2}
       display="flex"

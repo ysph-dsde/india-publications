@@ -89,7 +89,7 @@ export const TopNav = ({ exploreOptions }: TopNavProps) => {
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
-              gap: 2,
+              gap: { xs: 1, sm: 2 },
             }}
           >
             <Typography
@@ -115,7 +115,7 @@ export const TopNav = ({ exploreOptions }: TopNavProps) => {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { md: "none" } }}
+            sx={{ mr: 2, display: { md: "none" }, m: 0 }}
           >
             <MenuIcon />
           </IconButton>
@@ -147,6 +147,11 @@ export const TopNav = ({ exploreOptions }: TopNavProps) => {
             },
           }}
           anchor="bottom"
+          slotProps={{
+            paper: {
+              sx: { borderBottomLeftRadius: 0, borderBottomRightRadius: 0 },
+            },
+          }}
         >
           {drawer}
         </Drawer>

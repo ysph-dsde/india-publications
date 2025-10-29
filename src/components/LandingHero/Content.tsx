@@ -21,8 +21,8 @@ export const Content = ({ exploreOptions }: ContentProps) => {
   return (
     <Box
       sx={{
-        px: { xs: "3%" },
-        py: "5%",
+        px: { xs: "7%", md: "3%" },
+        py: { xs: "7%", md: "5%" },
         display: "flex",
         flexDirection: "row",
         gap: 10,

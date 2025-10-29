@@ -4,6 +4,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useData } from "../../context/PublicationDataContext";
+import Divider from "@mui/material/Divider";
+import Box from "@mui/material/Box";
 
 interface TopbarProps {
   handleDrawerToggle: () => void;
@@ -32,15 +34,31 @@ export const Topbar = ({ handleDrawerToggle }: TopbarProps) => {
         >
           <MenuIcon />
         </IconButton>
-        <Typography
-          variant="h6"
-          noWrap
-          component="div"
-          sx={{ fontSize: "1.5rem" }}
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            flexDirection: { xs: "column", md: "row" },
+            gap: { xs: 0.5, md: 1 },
+            py: { xs: 1.5, md: 0 },
+            "& > *": {
+              fontSize: "1.5rem",
+              lineHeight: 1,
+            },
+          }}
         >
-          {serverFilters.customKeyword || serverFilters.topic} |{" "}
-          {serverFilters.yearRange[0]} - {serverFilters.yearRange[1]}
-        </Typography>
+          <Typography variant="h6">
+            {serverFilters.customKeyword || serverFilters.topic}
+          </Typography>
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{ bgcolor: "white" }}
+          />
+          <Typography variant="h6">
+            {serverFilters.yearRange[0]} - {serverFilters.yearRange[1]}
+          </Typography>
+        </Box>
       </Toolbar>
     </AppBar>
   );
