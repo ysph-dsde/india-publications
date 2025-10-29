@@ -1,5 +1,5 @@
 import { createTheme } from "@mui/material/styles";
-import "./fonts.css";
+import "../src/styles/fonts.css";
 
 const yaleBlue = "#00356b";
 
