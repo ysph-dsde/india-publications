@@ -111,6 +111,7 @@ export const BubblePlot = () => {
     yaxis: {
       title: {
         text: "Human Development Index (HDI)",
+        standoff: 10,
       },
     },
     shapes: [
@@ -128,6 +129,7 @@ export const BubblePlot = () => {
         },
       },
     ],
+    margin: { r: 10, l: 70 },
   };
 
   return (

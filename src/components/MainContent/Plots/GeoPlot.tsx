@@ -9,6 +9,7 @@ import { CustomPlot } from "./CustomPlot";
 import { usePopulationData } from "../../../context/PopulationContext";
 import { ToggleViewButtons } from "./ToggleViewButtons";
 import { Title } from "./Title";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 interface GeoPlotProps {
   view: string;
@@ -119,6 +120,8 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
     margin: { r: 0, t: 0, b: 50, l: 0 },
   };
 
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <PlotWrapper>
       <Title>
@@ -130,7 +133,7 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
         data={plotData}
         layout={layout}
         style={{
-          minHeight: 700,
+          minHeight: isMobile ? 500 : 700,
         }}
       />
       <PlotCaption>

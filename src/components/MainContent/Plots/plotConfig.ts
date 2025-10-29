@@ -34,6 +34,7 @@ const baseLayout: Partial<Plotly.Layout> = {
     tickfont: {
       size: 16,
     },
+    automargin: true,
   },
   legend: {
     itemclick: false,
@@ -51,7 +52,7 @@ const baseLayout: Partial<Plotly.Layout> = {
       color: theme.palette.secondary.main,
     },
   },
-  margin: { t: 0 },
+  margin: { t: 0, b: 0 },
 };
 
 // function to merge base layout with custom layout

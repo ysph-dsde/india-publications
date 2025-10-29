@@ -4,6 +4,8 @@ import { baseConfig, createLayout } from "./plotConfig";
 import { useMemo } from "react";
 import createPlotlyComponent from "react-plotly.js/factory";
 import Plotly from "../../../customPlotly";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { theme } from "../../../Theme";
 
 const Plot = createPlotlyComponent(Plotly);
 
@@ -21,9 +23,11 @@ export const CustomPlot = ({
 }: CustomPlotProps) => {
   const mergedLayout = useMemo(() => createLayout(layout), [layout]);
 
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const defaultStyle: React.CSSProperties = {
     width: "100%",
-    minHeight: 600,
+    minHeight: isMobile ? 400 : 600,
   };
 
   return (

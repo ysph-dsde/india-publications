@@ -135,6 +135,7 @@ export const TemporalDistributionPlot = ({
       },
       type: "category",
     },
+    margin: { r: 20, l: 70},
   };
 
   return (
