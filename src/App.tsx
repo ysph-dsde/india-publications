@@ -9,6 +9,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import { Topbar } from "./components/MainContent/Topbar";
+import "../src/styles/customScrollbar.css";
 
 function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
