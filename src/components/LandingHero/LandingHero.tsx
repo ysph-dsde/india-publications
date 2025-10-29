@@ -45,6 +45,11 @@ export const LandingHero = () => {
           // Base opacity (max opacity on the right)
           opacity: 0.2,
         },
+
+        "& > *": {
+          position: "relative",
+          zIndex: 1,
+        },
       }}
     >
       <TopNav exploreOptions={exploreOptions} />
