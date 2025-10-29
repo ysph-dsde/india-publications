@@ -14,6 +14,11 @@ const exploreOptions: ExploreOption[] = [
   { label: "Development Economics" },
   { label: "Environmental Science" },
   { label: "COVID-19" },
+  { label: "Digital Health" },
+  { label: "Game Theory" },
+  { label: "International Trade" },
+  { label: "Macroeconomics" },
+  { label: "Public Finance" },
 ];
 
 export const LandingHero = () => {

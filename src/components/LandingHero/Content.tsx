@@ -1,23 +1,14 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { theme } from "../../Theme";
-import Button from "@mui/material/Button";
 import indiapubIcon from "../../assets/images/indiapubIconWhite.svg";
 import type { ExploreOption } from "./LandingHero";
-import { useData } from "../../context/PublicationDataContext";
-import type { PublicationTopic } from "../../constants/FilterTypes";
+import ExploreButtonsList from "./ExploreButtons";
 
 interface ContentProps {
   exploreOptions: ExploreOption[];
 }
 
 export const Content = ({ exploreOptions }: ContentProps) => {
-  const { updateServerFilters } = useData();
-  const handleOptionSelect = (selectedTopic: PublicationTopic) => {
-    updateServerFilters({
-      topic: selectedTopic,
-    });
-  };
   return (
     <Box
       sx={{
@@ -58,42 +49,7 @@ export const Content = ({ exploreOptions }: ContentProps) => {
           A new lens on India's published research output.
         </Typography>
       </Box>
-      <Box
-        sx={{
-          display: { xs: "none", md: "flex" },
-          flexDirection: "column",
-          minWidth: 325,
-          gap: 2,
-        }}
-      >
-        <Typography
-          fontWeight="bold"
-          variant="h5"
-        >
-          Explore the Data
-        </Typography>
-        {exploreOptions.map((item, id) => (
-          <Button
-            size="large"
-            sx={{
-              bgcolor: "white",
-              color: theme.palette.primary.main,
-              borderRadius: 2,
-              justifyContent: "left",
-              transition: "transform 0.2s ease-in-out",
-              "&:hover": {
-                transform: "scale(1.1)",
-              },
-              textTransform: "capitalize",
-            }}
-            variant="contained"
-            key={id}
-            onClick={() => handleOptionSelect(item.label)}
-          >
-            {item.label}
-          </Button>
-        ))}
-      </Box>
+      <ExploreButtonsList exploreOptions={exploreOptions} />
     </Box>
   );
 };
