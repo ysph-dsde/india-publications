@@ -6,6 +6,9 @@ import Typography from "@mui/material/Typography";
 import type { ExploreOption } from "./LandingHero";
 import type { PublicationTopic } from "../../constants/FilterTypes";
 import { useData } from "../../context/PublicationDataContext";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 interface CustomButtonProps extends ButtonProps {
   children: React.ReactNode;
@@ -21,9 +24,9 @@ const CustomButton = ({ children, sx, ...restProps }: CustomButtonProps) => {
         color: theme.palette.primary.main,
         borderRadius: 2,
         justifyContent: "left",
-        transition: "transform 0.2s ease-in-out",
+        transition: "all 0.2s ease-in-out",
         "&:hover": {
-          transform: "scale(1.1)",
+          bgcolor: theme.palette.secondary.light,
         },
         textTransform: "capitalize",
         ...sx,
@@ -44,15 +47,26 @@ export default function ExploreButtonsList({
 }: ExploreButtonsListProps) {
   const { updateServerFilters } = useData();
 
-  const [expanded, setExpanded] = useState(false);
-
-  const visibleCount = expanded ? exploreOptions.length : 6;
-  const hiddenCount = exploreOptions.length - visibleCount;
+  const visibleCount = Math.min(6, exploreOptions.length);
 
   const handleOptionSelect = (selectedTopic: PublicationTopic) => {
     updateServerFilters({
       topic: selectedTopic,
     });
+  };
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const dropdownSelected = (selectedTopic: PublicationTopic) => {
+    handleClose();
+    handleOptionSelect(selectedTopic);
   };
 
   return (
@@ -83,19 +97,58 @@ export default function ExploreButtonsList({
           </CustomButton>
         ))}
 
-      {/* “+X more” button */}
-      {!expanded && hiddenCount > 0 && (
-        <CustomButton onClick={() => setExpanded(true)}>
-          +{hiddenCount} more
-        </CustomButton>
-      )}
-
-      {/* “show less” button */}
-      {expanded && (
-        <CustomButton onClick={() => setExpanded(false)}>
-          show less
-        </CustomButton>
-      )}
+      {/* Other options dropdown */}
+      <CustomButton
+        onClick={handleClick}
+        sx={{ justifyContent: "space-between" }}
+        endIcon={
+          <ArrowDropDownIcon
+            sx={{
+              transition: "transform 0.2s ease-in-out",
+              transform: open ? "rotate(180deg)" : "rotate(0deg)",
+            }}
+          />
+        }
+      >
+        See more datasets
+      </CustomButton>
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        slotProps={{
+          list: {
+            sx: {
+              width: anchorEl ? anchorEl.offsetWidth : undefined,
+            },
+          },
+        }}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+      >
+        {exploreOptions
+          .slice(visibleCount, exploreOptions.length)
+          .map((e: ExploreOption, index: number) => (
+            <MenuItem
+              sx={{
+                color: theme.palette.primary.main,
+                "&:hover": {
+                  bgcolor: theme.palette.secondary.light,
+                },
+              }}
+              onClick={() => dropdownSelected(e.label)}
+              key={index}
+            >
+              {e.label}
+            </MenuItem>
+          ))}
+      </Menu>
     </Box>
   );
 }
