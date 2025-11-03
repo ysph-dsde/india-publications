@@ -29,8 +29,8 @@ export const LandingHero = () => {
         background: "linear-gradient(to right, #000C8D, #790DA7)",
         position: "relative",
         color: "#fff",
-        borderBottomLeftRadius: 50,
-        borderBottomRightRadius: 50,
+        borderBottomLeftRadius: { xs: 25, sm: 50 },
+        borderBottomRightRadius: { xs: 25, sm: 50 },
 
         // Semi-transparent image
         "&::before": {
