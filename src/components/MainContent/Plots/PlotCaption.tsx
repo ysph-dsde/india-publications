@@ -10,7 +10,7 @@ export const PlotCaption = ({ children }: PlotCaptionProps) => {
   return (
     <Box
       px={2}
-      pb={2}
+      py={2}
     >
       <Typography
         variant="caption"
