@@ -6,6 +6,7 @@ import createPlotlyComponent from "react-plotly.js/factory";
 import Plotly from "../../../customPlotly";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { theme } from "../../../Theme";
+import Box from "@mui/material/Box";
 
 const Plot = createPlotlyComponent(Plotly);
 
@@ -31,13 +32,15 @@ export const CustomPlot = ({
   };
 
   return (
-    <Plot
-      data={data}
-      layout={mergedLayout}
-      config={baseConfig}
-      useResizeHandler
-      {...rest}
-      style={{ ...defaultStyle, ...style }}
-    />
+    <Box sx={{ pb: 1 }}>
+      <Plot
+        data={data}
+        layout={mergedLayout}
+        config={baseConfig}
+        useResizeHandler
+        {...rest}
+        style={{ ...defaultStyle, ...style }}
+      />
+    </Box>
   );
 };
