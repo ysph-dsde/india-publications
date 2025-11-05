@@ -9,6 +9,7 @@ import { useData } from "../../context/PublicationDataContext";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import SvgIcon from "@mui/material/SvgIcon";
 
 interface CustomButtonProps extends ButtonProps {
   children: React.ReactNode;
@@ -92,6 +93,17 @@ export default function ExploreButtonsList({
           <CustomButton
             onClick={() => handleOptionSelect(e.label)}
             key={index}
+            startIcon={
+              <>
+                {e.icon && (
+                  <SvgIcon
+                    component={e.icon}
+                    inheritViewBox
+                    sx={{ fontSize: 20 }} // MUI sx works here!
+                  />
+                )}
+              </>
+            }
           >
             {e.label}
           </CustomButton>

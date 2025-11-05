@@ -4,16 +4,27 @@ import { Content } from "./Content";
 import type { PublicationTopic } from "../../constants/FilterTypes";
 import binary from "../../assets/images/binary.svg";
 
+import AiIcon from "../../assets/images/topicIcons/ai.svg?react";
+import COVID19Icon from "../../assets/images/topicIcons/COVID-19.svg?react";
+import DevelopmentEconomicsIcon from "../../assets/images/topicIcons/developmentEconomics.svg?react";
+import ElectronicHealthRecordsIcon from "../../assets/images/topicIcons/electronicHealthrecords.svg?react";
+import EnvironmentalScienceIcon from "../../assets/images/topicIcons/environmentalScience.svg?react";
+import GenomeWideAssociationsIcon from "../../assets/images/topicIcons/genome-wideAssociation.svg?react";
+
 export interface ExploreOption {
   label: PublicationTopic;
+  icon?: SvgrComponent;
 }
 const exploreOptions: ExploreOption[] = [
-  { label: "Electronic Health Records" },
-  { label: "Genome-Wide Association Studies" },
-  { label: "Artificial Intelligence" },
-  { label: "Development Economics" },
-  { label: "Environmental Science" },
-  { label: "COVID-19" },
+  { label: "Electronic Health Records", icon: ElectronicHealthRecordsIcon },
+  {
+    label: "Genome-Wide Association Studies",
+    icon: GenomeWideAssociationsIcon,
+  },
+  { label: "Artificial Intelligence", icon: AiIcon },
+  { label: "Development Economics", icon: DevelopmentEconomicsIcon },
+  { label: "Environmental Science", icon: EnvironmentalScienceIcon },
+  { label: "COVID-19", icon: COVID19Icon },
   { label: "Digital Health" },
   { label: "Game Theory" },
   { label: "International Trade" },
