@@ -41,13 +41,14 @@ export const Topbar = ({ handleDrawerToggle }: TopbarProps) => {
             flexWrap: "wrap",
             flexDirection: { xs: "column", md: "row" },
             gap: { xs: 0.5, md: 1 },
-            "& > *": {
-              fontSize: "1.5rem",
-              lineHeight: 1,
-            },
           }}
         >
-          <Typography variant="h6">
+          <Typography
+            variant="h6"
+            fontWeight="bold"
+            fontSize="1.5rem"
+            sx={{ lineHeight: 1 }}
+          >
             {serverFilters.customKeyword || serverFilters.topic}
           </Typography>
           <Divider
@@ -55,7 +56,11 @@ export const Topbar = ({ handleDrawerToggle }: TopbarProps) => {
             flexItem
             sx={{ bgcolor: "white" }}
           />
-          <Typography variant="h6">
+          <Typography
+            variant="h6"
+            fontSize="1.5rem"
+            sx={{ lineHeight: 1 }}
+          >
             {serverFilters.yearRange[0]} - {serverFilters.yearRange[1]}
           </Typography>
         </Box>
