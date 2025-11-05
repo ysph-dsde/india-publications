@@ -36,11 +36,11 @@ export const Topbar = ({ handleDrawerToggle }: TopbarProps) => {
         </IconButton>
         <Box
           sx={{
+            my: 1.5,
             display: "flex",
             flexWrap: "wrap",
             flexDirection: { xs: "column", md: "row" },
             gap: { xs: 0.5, md: 1 },
-            py: { xs: 1.5, md: 0 },
             "& > *": {
               fontSize: "1.5rem",
               lineHeight: 1,
