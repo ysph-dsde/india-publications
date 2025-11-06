@@ -10,17 +10,17 @@ interface LegendChipProps {
 export const LegendChip = ({ state }: LegendChipProps) => {
   const {
     clientFilters: { states: selectedStates },
-    updateClientFilters,
+    // updateClientFilters,
   } = useData();
 
-  // add / remove state when clicked
-  const handleClick = () => {
-    const updatedStates = selectedStates.includes(state)
-      ? selectedStates.filter((id) => id !== state) // Remove state
-      : [...selectedStates, state]; // Add state
+  // // add / remove state when clicked
+  // const handleClick = () => {
+  //   const updatedStates = selectedStates.includes(state)
+  //     ? selectedStates.filter((id) => id !== state) // Remove state
+  //     : [...selectedStates, state]; // Add state
 
-    updateClientFilters({ states: updatedStates });
-  };
+  //   updateClientFilters({ states: updatedStates });
+  // };
 
   const selected = selectedStates.includes(state);
 
@@ -36,7 +36,6 @@ export const LegendChip = ({ state }: LegendChipProps) => {
       }}
       size="small"
       label={state}
-      onClick={handleClick}
       variant="outlined"
       avatar={<Avatar sx={{ bgcolor: stateColorMapping[state] }}> </Avatar>}
     />
