@@ -1,7 +1,8 @@
-import Chip from "@mui/material/Chip";
 import { stateColorMapping, type States } from "../../../constants/States";
 import { useData } from "../../../context/PublicationDataContext";
-import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import CircleIcon from "@mui/icons-material/Circle";
 
 interface LegendChipProps {
   state: States;
@@ -10,34 +11,21 @@ interface LegendChipProps {
 export const LegendChip = ({ state }: LegendChipProps) => {
   const {
     clientFilters: { states: selectedStates },
-    // updateClientFilters,
   } = useData();
-
-  // // add / remove state when clicked
-  // const handleClick = () => {
-  //   const updatedStates = selectedStates.includes(state)
-  //     ? selectedStates.filter((id) => id !== state) // Remove state
-  //     : [...selectedStates, state]; // Add state
-
-  //   updateClientFilters({ states: updatedStates });
-  // };
 
   const selected = selectedStates.includes(state);
 
   return (
-    <Chip
+    <Box
       sx={{
-        width: "100%",
-        justifyContent: "flex-start",
-        border: "none",
-        fontSize: "1rem",
+        display: "flex",
+        flexDirection: "row",
+        gap: 0.5,
         opacity: selected ? "100%" : "40%",
-        py: 1,
       }}
-      size="small"
-      label={state}
-      variant="outlined"
-      avatar={<Avatar sx={{ bgcolor: stateColorMapping[state] }}> </Avatar>}
-    />
+    >
+      <CircleIcon sx={{ fill: stateColorMapping[state] }} />
+      <Typography fontSize="1rem">{state}</Typography>
+    </Box>
   );
 };

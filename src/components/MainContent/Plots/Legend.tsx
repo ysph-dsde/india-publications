@@ -2,26 +2,28 @@ import { LegendChip } from "./LegendChip";
 import { getFilteredStates } from "../../../utils/getFilteredStates";
 import { useData } from "../../../context/PublicationDataContext";
 import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 
 export const Legend = () => {
   const { clientFilters } = useData();
-
   return (
-    <Box
-      display="flex"
-      flexDirection="row"
-      flexWrap="wrap"
+    <Grid
+      sx={{ display: { xs: "none", sm: "flex" } }}
+      container
+      alignItems="stretch"
       px={2}
       pb={2}
-      justifyContent="space-between"
+      justifyContent="center"
       rowGap={0.5}
       columnGap={0.5}
     >
-      {getFilteredStates(clientFilters).map((state) => (
-        <Box>
-          <LegendChip state={state} />
-        </Box>
+      {getFilteredStates(clientFilters).map((state, index) => (
+        <Grid key={index}>
+          <Box sx={{ minWidth: 150, width: 200 }}>
+            <LegendChip state={state} />
+          </Box>
+        </Grid>
       ))}
-    </Box>
+    </Grid>
   );
 };
