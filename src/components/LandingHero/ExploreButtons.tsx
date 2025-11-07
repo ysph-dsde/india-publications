@@ -1,5 +1,5 @@
 import Button, { type ButtonProps } from "@mui/material/Button";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { theme } from "../../Theme";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -10,6 +10,12 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import SvgIcon from "@mui/material/SvgIcon";
+import Stack from "@mui/material/Stack";
+import Paper from "@mui/material/Paper";
+import MenuList from "@mui/material/MenuList";
+import Popper from "@mui/material/Popper";
+import Grow from "@mui/material/Grow";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 
 interface CustomButtonProps extends ButtonProps {
   children: React.ReactNode;
@@ -56,19 +62,57 @@ export default function ExploreButtonsList({
     });
   };
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
+  // const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const anchorRef = useRef<HTMLButtonElement>(null);
+
+  // const open = Boolean(anchorEl);
+  const [open, setOpen] = useState(false);
+
+  // const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
+
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
   };
 
-  const dropdownSelected = (selectedTopic: PublicationTopic) => {
-    handleClose();
-    handleOptionSelect(selectedTopic);
+  const handleClose = (event: Event | React.SyntheticEvent) => {
+    if (
+      anchorRef.current &&
+      anchorRef.current.contains(event.target as HTMLElement)
+    ) {
+      return;
+    }
+
+    setOpen(false);
   };
+
+  // const dropdownSelected = (selectedTopic: PublicationTopic) => {
+  //   handleClose();
+  //   handleOptionSelect(selectedTopic);
+  // };
+
+  function handleListKeyDown(event: React.KeyboardEvent) {
+    if (event.key === "Tab") {
+      event.preventDefault();
+      setOpen(false);
+    } else if (event.key === "Escape") {
+      setOpen(false);
+    }
+  }
+
+  // return focus to the button when we transitioned from !open -> open
+  const prevOpen = useRef(open);
+  useEffect(() => {
+    if (prevOpen.current === true && open === false) {
+      anchorRef.current!.focus();
+    }
+
+    prevOpen.current = open;
+  }, [open]);
 
   return (
     <Box
@@ -110,7 +154,7 @@ export default function ExploreButtonsList({
         ))}
 
       {/* Other options dropdown */}
-      <CustomButton
+      {/* <CustomButton
         onClick={handleClick}
         sx={{ justifyContent: "space-between" }}
         endIcon={
@@ -122,7 +166,7 @@ export default function ExploreButtonsList({
           />
         }
       >
-        See more datasets
+        
       </CustomButton>
       <Menu
         anchorEl={anchorEl}
@@ -160,7 +204,59 @@ export default function ExploreButtonsList({
               {e.label}
             </MenuItem>
           ))}
-      </Menu>
+      </Menu> */}
+      <CustomButton
+        ref={anchorRef}
+        onClick={handleToggle}
+        sx={{ justifyContent: "space-between" }}
+        endIcon={
+          <ArrowDropDownIcon
+            sx={{
+              transition: "transform 0.2s ease-in-out",
+              transform: open ? "rotate(180deg)" : "rotate(0deg)",
+            }}
+          />
+        }
+      >
+        See more datasets
+      </CustomButton>
+      <Popper
+        open={open}
+        anchorEl={anchorRef.current}
+        role={undefined}
+        placement="bottom-start"
+        transition
+        sx={{
+          zIndex: 1300,
+        }}
+      >
+        {({ TransitionProps, placement }) => (
+          <Grow
+            {...TransitionProps}
+            style={{
+              transformOrigin:
+                placement === "bottom-start" ? "left top" : "left bottom",
+            }}
+          >
+            <Paper
+              sx={{
+                borderRadius: 2,
+              }}
+            >
+              <ClickAwayListener onClickAway={handleClose}>
+                <MenuList
+                  autoFocusItem={open}
+                  onKeyDown={handleListKeyDown}
+                >
+                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                  <MenuItem onClick={handleClose}>My account</MenuItem>
+                  <MenuItem onClick={handleClose}>Logout</MenuItem>
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
     </Box>
   );
 }
