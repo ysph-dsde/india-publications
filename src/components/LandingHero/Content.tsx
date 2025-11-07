@@ -24,8 +24,8 @@ export const Content = ({ exploreOptions }: ContentProps) => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          gap: 5,
-          justifyContent: "space-between",
+          gap: 7,
+          justifyContent: "flex-end",
         }}
       >
         <Box
@@ -33,7 +33,7 @@ export const Content = ({ exploreOptions }: ContentProps) => {
           src={indiapubIcon}
           color="white"
           alt="Magnifying glass site symbol"
-          width="20%"
+          width="25%"
           sx={{
             transition: "transform 0.2s ease-in-out",
             "&:hover": {
