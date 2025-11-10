@@ -6,11 +6,9 @@ import Typography from "@mui/material/Typography";
 import type { ExploreOption } from "./LandingHero";
 import type { PublicationTopic } from "../../constants/FilterTypes";
 import { useData } from "../../context/PublicationDataContext";
-import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import SvgIcon from "@mui/material/SvgIcon";
-import Stack from "@mui/material/Stack";
 import Paper from "@mui/material/Paper";
 import MenuList from "@mui/material/MenuList";
 import Popper from "@mui/material/Popper";
@@ -62,18 +60,8 @@ export default function ExploreButtonsList({
     });
   };
 
-  // const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const anchorRef = useRef<HTMLButtonElement>(null);
-
-  // const open = Boolean(anchorEl);
   const [open, setOpen] = useState(false);
-
-  // const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-  // const handleClose = () => {
-  //   setAnchorEl(null);
-  // };
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -90,10 +78,10 @@ export default function ExploreButtonsList({
     setOpen(false);
   };
 
-  // const dropdownSelected = (selectedTopic: PublicationTopic) => {
-  //   handleClose();
-  //   handleOptionSelect(selectedTopic);
-  // };
+  const dropdownSelected = (selectedTopic: PublicationTopic) => {
+    handleToggle();
+    handleOptionSelect(selectedTopic);
+  };
 
   function handleListKeyDown(event: React.KeyboardEvent) {
     if (event.key === "Tab") {
@@ -154,57 +142,6 @@ export default function ExploreButtonsList({
         ))}
 
       {/* Other options dropdown */}
-      {/* <CustomButton
-        onClick={handleClick}
-        sx={{ justifyContent: "space-between" }}
-        endIcon={
-          <ArrowDropDownIcon
-            sx={{
-              transition: "transform 0.2s ease-in-out",
-              transform: open ? "rotate(180deg)" : "rotate(0deg)",
-            }}
-          />
-        }
-      >
-        
-      </CustomButton>
-      <Menu
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        slotProps={{
-          list: {
-            sx: {
-              width: anchorEl ? anchorEl.offsetWidth : undefined,
-            },
-          },
-        }}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "left",
-        }}
-      >
-        {exploreOptions
-          .slice(visibleCount, exploreOptions.length)
-          .map((e: ExploreOption, index: number) => (
-            <MenuItem
-              sx={{
-                color: theme.palette.primary.main,
-                "&:hover": {
-                  bgcolor: theme.palette.secondary.light,
-                },
-              }}
-              onClick={() => dropdownSelected(e.label)}
-              key={index}
-            >
-              {e.label}
-            </MenuItem>
-          ))}
-      </Menu> */}
       <CustomButton
         ref={anchorRef}
         onClick={handleToggle}
@@ -223,7 +160,6 @@ export default function ExploreButtonsList({
       <Popper
         open={open}
         anchorEl={anchorRef.current}
-        role={undefined}
         placement="bottom-start"
         transition
         sx={{
@@ -241,6 +177,7 @@ export default function ExploreButtonsList({
             <Paper
               sx={{
                 borderRadius: 2,
+                width: anchorRef ? anchorRef.current?.offsetWidth : undefined,
               }}
             >
               <ClickAwayListener onClickAway={handleClose}>
@@ -248,9 +185,22 @@ export default function ExploreButtonsList({
                   autoFocusItem={open}
                   onKeyDown={handleListKeyDown}
                 >
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={handleClose}>My account</MenuItem>
-                  <MenuItem onClick={handleClose}>Logout</MenuItem>
+                  {exploreOptions
+                    .slice(visibleCount, exploreOptions.length)
+                    .map((e: ExploreOption, index: number) => (
+                      <MenuItem
+                        sx={{
+                          color: theme.palette.primary.main,
+                          "&:hover": {
+                            bgcolor: theme.palette.secondary.light,
+                          },
+                        }}
+                        onClick={() => dropdownSelected(e.label)}
+                        key={index}
+                      >
+                        {e.label}
+                      </MenuItem>
+                    ))}
                 </MenuList>
               </ClickAwayListener>
             </Paper>
