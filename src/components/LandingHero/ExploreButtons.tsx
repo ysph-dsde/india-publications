@@ -125,19 +125,16 @@ export default function ExploreButtonsList({
           <CustomButton
             onClick={() => handleOptionSelect(e.label)}
             key={index}
-            startIcon={
-              <>
-                {e.icon && (
-                  <SvgIcon
-                    component={e.icon}
-                    inheritViewBox
-                    sx={{ fontSize: 20 }} // MUI sx works here!
-                  />
-                )}
-              </>
-            }
+            sx={{ p: 0, pl: 1, display: "flex", flexDirection: "row", gap: 1 }}
           >
-            {e.label}
+            {e.icon && (
+              <SvgIcon
+                component={e.icon}
+                inheritViewBox
+                sx={{ fontSize: 30 }} // MUI sx works here!
+              />
+            )}
+            <Typography sx={{ py: 1 }}>{e.label}</Typography>
           </CustomButton>
         ))}
 
@@ -155,7 +152,7 @@ export default function ExploreButtonsList({
           />
         }
       >
-        See more datasets
+        <Typography> See more datasets</Typography>
       </CustomButton>
       <Popper
         open={open}
