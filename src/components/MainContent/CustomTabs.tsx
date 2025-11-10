@@ -67,6 +67,7 @@ export const CustomTabs = React.memo(({ tabs }: TabsProps) => {
               fontSize: "1rem",
               "&.Mui-selected": {
                 color: theme.palette.secondary.main,
+                fontWeight: "bold",
               },
               textTransform: "none",
             }}
