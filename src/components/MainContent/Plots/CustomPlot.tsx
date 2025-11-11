@@ -32,7 +32,7 @@ export const CustomPlot = ({
   };
 
   return (
-    <Box sx={{ pb: 1 }}>
+    <Box>
       <Plot
         data={data}
         layout={mergedLayout}
