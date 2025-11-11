@@ -178,9 +178,6 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
         text: "Percentage of Publications",
       },
     },
-    xaxis: {
-      showticklabels: false,
-    },
   };
 
   const allYearsPopulationLayout: Partial<Plotly.Layout> = {
