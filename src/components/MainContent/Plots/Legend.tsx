@@ -26,7 +26,7 @@ export const Legend = () => {
         display: { xs: "none", sm: "flex" },
       }}
       px={2}
-      pb={2}
+      py={2}
       justifyContent="center"
       columnGap={5}
       columns={numCols}
