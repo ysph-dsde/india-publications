@@ -52,7 +52,7 @@ const baseLayout: Partial<Plotly.Layout> = {
       color: theme.palette.secondary.main,
     },
   },
-  margin: { t: 0, b: 50 },
+  margin: { t: 0, b: 70 },
 };
 
 // function to merge base layout with custom layout
