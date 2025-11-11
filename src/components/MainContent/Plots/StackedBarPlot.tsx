@@ -10,6 +10,9 @@ import type { LayoutAxis } from "plotly.js";
 import { Legend } from "./Legend";
 import { theme } from "../../../Theme";
 import { Title } from "./Title";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 interface StackedBarPlotProps {
   view: string;
@@ -80,8 +83,8 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
         name: data.state,
         x: [yearRange[1]],
         y: [data.proportion],
-        xaxis: "x2",
-        yaxis: "y2",
+        xaxis: "x",
+        yaxis: "y",
         marker: {
           color: stateColorMapping[data.state] || theme.palette.gray.dark,
         },
@@ -116,7 +119,7 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
           x: [year],
           y: [data.proportion],
           xaxis: "x",
-          yaxis: "y2",
+          yaxis: "y",
           marker: {
             color: stateColorMapping[data.state] || theme.palette.gray.dark,
           },
@@ -125,97 +128,141 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
           textposition: "none",
           hovertemplate:
             "State: %{data.name}<br>Year: %{x}<br>Percentage: %{text}%<extra></extra>",
+          // width: barWidthFormatter,
         });
       });
     }
     return popTraces;
   }, [endYearPopulationData]);
 
-  // combine publication traces with population trace(s)
-  const combinedTraces: Plotly.Data[] = useMemo(() => {
-    return view === "yearRangeEnd"
-      ? [...publicationTraces, ...yearRangeEndTrace]
-      : [...publicationTraces, ...populationTraces];
-  }, [publicationTraces, yearRangeEndTrace, populationTraces]);
-
   const layout: Partial<Plotly.Layout> = {
     barmode: "stack",
+    margin: { l: 0, r: 0, b: 0 },
+    xaxis: {
+      type: "category",
+    },
   };
 
   const standardYAxis: Partial<LayoutAxis> = {
     tickmode: "linear",
     dtick: 0.25,
     tickformat: ".0%",
-    title: {
-      text: "Percentage of Publications",
-    },
   };
 
-  const barWidthFormatter =
-    (1 / (yearRange[1] - yearRange[0] + 2)) * (yearRange[1] - yearRange[0] + 1);
-
-  const yearRangeEndLayout: Partial<Plotly.Layout> = {
+  const yearRangeEndPublicationsLayout: Partial<Plotly.Layout> = {
     ...layout,
     yaxis: {
       ...standardYAxis,
-    },
-    xaxis: {
       title: {
-        text: "Publication Percentage",
+        text: "Percentage of Publications",
       },
-      type: "category",
-      domain: [0, barWidthFormatter - 0.02],
-    },
-    xaxis2: {
-      title: {
-        text: "Population Percentage",
-      },
-      type: "category",
-      domain: [barWidthFormatter + 0.02, 1],
-    },
-    yaxis2: {
-      showticklabels: false,
-      showgrid: false,
-    },
-    grid: {
-      rows: 1,
-      columns: 2,
-      pattern: "independent",
-      subplots: ["x", "x2"],
     },
   };
 
-  const allYearsLayout: Partial<Plotly.Layout> = {
+  const yearRangeEndPopulationLayout: Partial<Plotly.Layout> = {
     ...layout,
     yaxis: {
-      ...standardYAxis,
-      domain: [0.53, 1],
-    },
-    yaxis2: {
       ...standardYAxis,
       title: {
         text: "Percentage of Population",
       },
-      domain: [0, 0.47],
-      showgrid: false,
+      showticklabels: false,
+    },
+  };
+
+  const allYearsPublicationsLayout: Partial<Plotly.Layout> = {
+    ...layout,
+    yaxis: {
+      ...standardYAxis,
+      title: {
+        text: "Percentage of Publications",
+      },
     },
     xaxis: {
-      type: "category",
+      showticklabels: false,
     },
-    grid: {
-      rows: 2,
-      columns: 1,
-      subplots: ["y", "y2"],
+  };
+
+  const allYearsPopulationLayout: Partial<Plotly.Layout> = {
+    ...layout,
+    yaxis: {
+      ...standardYAxis,
+      title: {
+        text: "Percentage of Population",
+      },
     },
+  };
+
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const AllYears = () => {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          px: 2,
+        }}
+      >
+        <Box>
+          <CustomPlot
+            data={publicationTraces}
+            layout={allYearsPublicationsLayout}
+            style={{ minHeight: isMobile ? 250 : 300 }}
+          />
+        </Box>
+        <Box>
+          <CustomPlot
+            data={populationTraces}
+            layout={allYearsPopulationLayout}
+            style={{ minHeight: isMobile ? 250 : 300 }}
+          />
+        </Box>
+      </Box>
+    );
+  };
+
+  const YearEnd = () => {
+    return (
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: ".8fr .2fr",
+          gap: 2,
+          px: 2,
+        }}
+      >
+        <Box>
+          <CustomPlot
+            data={publicationTraces}
+            layout={yearRangeEndPublicationsLayout}
+          />
+        </Box>
+        <Box>
+          <CustomPlot
+            data={yearRangeEndTrace}
+            layout={yearRangeEndPopulationLayout}
+          />
+        </Box>
+      </Box>
+    );
   };
 
   return (
     <PlotWrapper>
       <Title>State and Union Territory Publications Percentage by Year</Title>
-      <CustomPlot
-        data={combinedTraces}
-        layout={view === "yearRangeEnd" ? yearRangeEndLayout : allYearsLayout}
-      />
+
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
+        {view === "yearRangeEnd" ? <YearEnd /> : <AllYears />}
+        <Box sx={{ width: "100%", textAlign: "center" }}>
+          <Typography
+            color={theme.palette.secondary.main}
+            fontWeight="bold"
+          >
+            Year
+          </Typography>
+        </Box>
+      </Box>
       <Legend />
       <PlotCaption>
         This stacked bar plot shows the relative contribution of each state /
