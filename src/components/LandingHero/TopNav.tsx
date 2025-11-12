@@ -14,12 +14,16 @@ import { useState } from "react";
 import ysphLogo from "../../assets/images/ysphLogoWhite.svg";
 import MenuIcon from "@mui/icons-material/Menu";
 import type { ExploreOption } from "./LandingHero";
+import { useData } from "../../context/PublicationDataContext";
+import type { PublicationTopic } from "../../constants/FilterTypes";
 
 interface TopNavProps {
   exploreOptions: ExploreOption[];
 }
 
 export const TopNav = ({ exploreOptions }: TopNavProps) => {
+  const { updateServerFilters } = useData();
+
   // const navItems: string[] = ["Home", "About", "FAQ"];
   const navItems: string[] = [];
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
@@ -27,6 +31,13 @@ export const TopNav = ({ exploreOptions }: TopNavProps) => {
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
+
+  const handleOptionSelect = (selectedTopic: PublicationTopic) => {
+    updateServerFilters({
+      topic: selectedTopic,
+    });
+  };
+
   const drawer = (
     <Box
       onClick={handleDrawerToggle}
@@ -53,7 +64,10 @@ export const TopNav = ({ exploreOptions }: TopNavProps) => {
             key={id}
             disablePadding
           >
-            <ListItemButton sx={{ textAlign: "left" }}>
+            <ListItemButton
+              sx={{ textAlign: "left" }}
+              onClick={() => handleOptionSelect(item.label)}
+            >
               <ListItemText primary={item.label} />
             </ListItemButton>
           </ListItem>
