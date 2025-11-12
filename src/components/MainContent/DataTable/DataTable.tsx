@@ -70,9 +70,9 @@ export const DataTable = () => {
     {
       field: "publication_year",
       headerName: "Year",
-      width: 100,
-      maxWidth: 100,
-      minWidth: 100,
+      width: 125,
+      maxWidth: 125,
+      minWidth: 125,
     },
     {
       field: "title",
@@ -105,7 +105,7 @@ export const DataTable = () => {
       field: "author_name",
       headerName: "Author",
       flex: 1,
-      minWidth: 100,
+      minWidth: 125,
     },
     {
       field: "author_position",
