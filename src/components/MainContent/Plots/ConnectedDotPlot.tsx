@@ -172,7 +172,7 @@ export const ConnectedDotPlot = () => {
       range: [-0.5, traces.length / 3 - 1 + 0.5],
       title: {
         text: "State and Union Territory",
-        standoff: 10,
+        // standoff: 10,
       },
       type: "category",
       dtick: 1,

@@ -251,7 +251,7 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
 
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         {view === "yearRangeEnd" ? <YearEnd /> : <AllYears />}
-        <Box sx={{ width: "100%", textAlign: "center" }}>
+        <Box sx={{ width: "100%", textAlign: "center", pt: 1.5 }}>
           <Typography
             color={theme.palette.secondary.main}
             fontWeight="bold"
