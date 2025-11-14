@@ -5,6 +5,9 @@ import { PlotWrapper } from "./PlotWrapper";
 import { PlotCaption } from "./PlotCaption";
 import { CustomPlot } from "./CustomPlot";
 import { Title } from "./Title";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import { theme } from "../../../Theme";
 
 interface AggregatedData {
   state: string;
@@ -170,10 +173,6 @@ export const ConnectedDotPlot = () => {
     },
     xaxis: {
       range: [-0.5, traces.length / 3 - 1 + 0.5],
-      title: {
-        text: "State and Union Territory",
-        // standoff: 10,
-      },
       type: "category",
       dtick: 1,
     },
@@ -191,6 +190,14 @@ export const ConnectedDotPlot = () => {
         layout={layout}
         style={{ minHeight: 600 }}
       />
+      <Box sx={{ width: "100%", textAlign: "center", pt: 1.5, pb: 2 }}>
+        <Typography
+          color={theme.palette.secondary.main}
+          fontWeight="bold"
+        >
+          State and Union Territory
+        </Typography>
+      </Box>
       <PlotCaption>
         This plot compares the publication share versus the population share
         across selected Indian states / territories for {customKeyword || topic}{" "}
