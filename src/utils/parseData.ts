@@ -62,9 +62,15 @@ export const parseOpenAlexData = async (
       const author_name = authorship.author.display_name || "Author Unknown";
       const author_position = authorship.author_position || "Position Unknown";
 
-      // access only the FIRST institution for given author
       if (authorship.institutions && authorship.institutions.length > 0) {
-        const institution = authorship.institutions[0];
+        // Find the first Indian institution (country_code "IN")
+        const indianInstitution = authorship.institutions.find(
+          (inst: any) => inst.country_code === "IN",
+        );
+
+        // Use Indian one if found; otherwise fall back to the first institution
+        const institution = indianInstitution || authorship.institutions[0];
+
         flattened.push({
           ...commonFields,
           rowId: `${item.id}-${author_name}`,
