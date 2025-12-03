@@ -21,12 +21,11 @@ interface StackedBarPlotProps {
 
 export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
   const {
-    data: { publications: publicationData, stateYearlyData },
+    data: { totalPublications: totalPublications, stateYearlyData },
     clientFilters: { states: selectedStates },
     serverFilters: { yearRange, topic, customKeyword },
   } = useData();
   const { populationData, endYearPopulationData } = usePopulationData();
-  const totalPublications = publicationData.length;
 
   // extract years from data
   const years = stateYearlyData.map((item) => item.year);

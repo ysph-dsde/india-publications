@@ -67,7 +67,7 @@ export const Filter = () => {
       <List sx={{ pt: 0 }}>
         <SelectionTitle
           title="Author position"
-          toolTipText="Filter whether the author is first, first and last, or appears anywhere."
+          toolTipText="Filter whether the author is first, last, first or last, or appears anywhere."
         />
         <ListItem>
           <Autocomplete

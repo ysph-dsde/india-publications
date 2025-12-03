@@ -11,11 +11,10 @@ import { Title } from "./Title";
 
 export const BubblePlot = () => {
   const {
-    data: { publications: publicationData, stateYearlyData },
+    data: { totalPublications: totalPublications, stateYearlyData },
     clientFilters: { states: selectedStates },
     serverFilters: { yearRange, topic, customKeyword },
   } = useData();
-  const totalPublications = publicationData.length;
 
   const hdiData = useMemo(() => getHdiData(), []);
 

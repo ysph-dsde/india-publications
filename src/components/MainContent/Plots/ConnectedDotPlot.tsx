@@ -18,15 +18,21 @@ interface AggregatedData {
 
 export const ConnectedDotPlot = () => {
   const {
-    data: { publications: publicationData },
+    data: {
+      totalPublications: totalPublications,
+      totalPublicationsByState: totalPublicationsByState,
+    },
     clientFilters: { states: selectedStates },
     serverFilters: { yearRange, topic, customKeyword },
   } = useData();
   const { endYearPopulationData } = usePopulationData();
-  const totalPublications = publicationData.length;
 
   const aggregatedData = useMemo(() => {
-    if (!endYearPopulationData || !publicationData || !selectedStates)
+    if (
+      !endYearPopulationData ||
+      !selectedStates ||
+      !totalPublicationsByState
+    )
       return [];
 
     // filter populations to only include selected states
@@ -34,30 +40,31 @@ export const ConnectedDotPlot = () => {
       selectedStates.includes(pop.state),
     );
 
-    if (totalPublications === 0) {
+    const relevantStatePubs = totalPublicationsByState.filter((item) =>
+      selectedStates.includes(item.state),
+    );
+
+    const totalPubs = relevantStatePubs.reduce(
+      (sum, item) => sum + item.count,
+      0,
+    );
+
+    if (totalPubs === 0) {
       return filteredPopulations.map((pop) => ({
         state: pop.state,
         publicationPercentage: 0,
         populationPercentage: pop.proportion,
-        difference: 0 - pop.proportion,
+        difference: -pop.proportion,
       }));
     }
 
-    // Count publications per state
-    const pubCounts = publicationData.reduce(
-      (map: Map<string, number>, pub) => {
-        const state = pub.institution_state?.trim();
-        if (state && selectedStates.includes(state)) {
-          map.set(state, (map.get(state) || 0) + 1);
-        }
-        return map;
-      },
-      new Map<string, number>(),
+    const statePubMap = new Map(
+      relevantStatePubs.map((item) => [item.state, item.count]),
     );
 
     // Aggregate data
     const data: AggregatedData[] = filteredPopulations.map((pop) => {
-      const pubCount = pubCounts.get(pop.state) || 0;
+      const pubCount = statePubMap.get(pop.state) || 0;
       const pubPerc = pubCount / totalPublications;
       const popPerc = pop.proportion;
       return {
@@ -72,7 +79,12 @@ export const ConnectedDotPlot = () => {
     data.sort((a, b) => b.difference - a.difference);
 
     return data;
-  }, [publicationData, endYearPopulationData, selectedStates]);
+  }, [
+    // publicationData,
+    endYearPopulationData,
+    selectedStates,
+    totalPublicationsByState,
+  ]);
 
   // Prepare Plotly traces
   const traces = useMemo(() => {

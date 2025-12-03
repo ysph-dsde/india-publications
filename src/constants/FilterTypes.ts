@@ -14,11 +14,12 @@ export const PublicationTopics = [
 ] as const;
 export type PublicationTopic = (typeof PublicationTopics)[number];
 
-export type AuthorPositions = "First" | "First and last" | "Any";
+export type AuthorPositions = "First" | "Last" | "First or last" | "Any";
 
 export const AuthorPositionsList: AuthorPositions[] = [
   "First",
-  "First and last",
+  "Last",
+  "First or last",
   "Any",
 ];
 

@@ -46,6 +46,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const [sourceData, setSourceData] = useState<FlattenedPublication[]>([]);
   const [data, setData] = useState<DataState>({
     publications: [],
+    totalPublications: 0,
     yearlyData: [],
     stateYearlyData: [],
     totalPublicationsByState: [],
@@ -61,7 +62,9 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
         clientFilters.authorPosition === "Any" ||
         (clientFilters.authorPosition === "First" &&
           pub.author_position.toLowerCase() === "first") ||
-        (clientFilters.authorPosition === "First and last" &&
+        (clientFilters.authorPosition === "Last" &&
+          pub.author_position.toLowerCase() === "last") ||
+        (clientFilters.authorPosition === "First or last" &&
           (pub.author_position.toLowerCase() === "first" ||
             pub.author_position.toLowerCase() === "last"));
 
@@ -86,10 +89,14 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     });
   }, [serverFilters, clientFilters, sourceData]);
 
-  const { yearlyData, yearlyDataByState, totalPublicationsByState } =
-    useMemo(() => {
-      return prepareChartData(filteredPublications);
-    }, [filteredPublications]);
+  const {
+    yearlyData,
+    yearlyDataByState,
+    totalPublicationsByState,
+    totalPublications,
+  } = useMemo(() => {
+    return prepareChartData(filteredPublications);
+  }, [filteredPublications]);
 
   // update publications in table when source data OR filters change
   useEffect(() => {
@@ -99,12 +106,14 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
       yearlyData: yearlyData,
       stateYearlyData: yearlyDataByState,
       totalPublicationsByState: totalPublicationsByState,
+      totalPublications: totalPublications,
     }));
   }, [
     filteredPublications,
     yearlyData,
     yearlyDataByState,
     totalPublicationsByState,
+    totalPublications,
   ]);
 
   // Callback to update progress for a specific searchField

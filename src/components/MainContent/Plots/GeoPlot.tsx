@@ -18,12 +18,11 @@ interface GeoPlotProps {
 
 export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
   const {
-    data: { publications: publicationData, totalPublicationsByState },
+    data: { totalPublications: totalPublications, totalPublicationsByState },
     clientFilters: { states: selectedStates },
     serverFilters: { yearRange, topic, customKeyword },
   } = useData();
   const { endYearPopulationData } = usePopulationData();
-  const totalPublications = publicationData.length;
 
   // add states with zero publications if they are selected
   const completePublicationsByState = useMemo(() => {

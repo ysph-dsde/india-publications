@@ -11,64 +11,76 @@ export const prepareChartData = (
   yearlyData: YearlyPublication[];
   yearlyDataByState: StateYearlyPublication[];
   totalPublicationsByState: totalPublicationsByState[];
+  totalPublications: number;
 } => {
-  const yearCounts: { [year: number]: number } = {};
-  const yearStateCounts: { [year: number]: { [state: string]: number } } = {};
-  const stateTotals: { [state: string]: number } = {};
+  const yearStateIds: { [year: number]: { [state: string]: Set<string> } } = {};
+  const stateIds: { [state: string]: Set<string> } = {};
 
   publications.forEach((pub) => {
-    const { publication_year, institution_state } = pub;
-
-    // Count publications per year
-    yearCounts[publication_year] = (yearCounts[publication_year] || 0) + 1;
-
-    // Count publications per year by state
+    const { publication_year, institution_state, id } = pub;
     const state = institution_state || "State Unknown";
-    if (!yearStateCounts[publication_year]) {
-      yearStateCounts[publication_year] = {};
-    }
-    yearStateCounts[publication_year][state] =
-      (yearStateCounts[publication_year][state] || 0) + 1;
 
-    // Count total publications per state
-    stateTotals[state] = (stateTotals[state] || 0) + 1;
+    // Per-year per-state unique IDs
+    if (!yearStateIds[publication_year]) {
+      yearStateIds[publication_year] = {};
+    }
+    if (!yearStateIds[publication_year][state]) {
+      yearStateIds[publication_year][state] = new Set();
+    }
+    yearStateIds[publication_year][state].add(id);
+
+    // Overall per-state unique IDs
+    if (!stateIds[state]) {
+      stateIds[state] = new Set();
+    }
+    stateIds[state].add(id);
   });
 
   // Get all unique states across all years
   const allStates = [
     ...new Set(
-      Object.values(yearStateCounts).flatMap((stateCounts) =>
-        Object.keys(stateCounts),
-      ),
+      Object.values(yearStateIds).flatMap((stateMap) => Object.keys(stateMap)),
     ),
   ];
 
-  // Convert year counts to sorted array
-  const yearlyData: YearlyPublication[] = Object.entries(yearCounts)
-    .map(([year, count]) => ({
-      year: parseInt(year),
-      count,
-    }))
-    .sort((a, b) => a.year - b.year);
-
-  // Convert year-state counts to sorted yearlyDataByState
-  const yearlyDataByState: StateYearlyPublication[] = Object.keys(
-    yearStateCounts,
-  )
+  // Convert to sorted yearlyData (total unique publication-state pairs per year)
+  const yearlyData: YearlyPublication[] = Object.keys(yearStateIds)
     .map((year) => {
-      const yearNum = parseInt(year);
-      // Create states object with 0 for missing states
-      const states = Object.fromEntries(
-        allStates.map((state) => [state, yearStateCounts[yearNum][state] || 0]),
+      const y = parseInt(year);
+      const count = Object.values(yearStateIds[y]).reduce(
+        (sum, idSet) => sum + idSet.size,
+        0,
       );
-      return { year: yearNum, states };
+      return { year: y, count };
     })
     .sort((a, b) => a.year - b.year);
 
-  // Convert state totals to array
-  const totalPublicationsByState = Object.entries(stateTotals).map(
-    ([state, count]) => ({ state, count }),
+  // Convert to sorted yearlyDataByState (with 0 for missing states)
+  const yearlyDataByState: StateYearlyPublication[] = Object.keys(yearStateIds)
+    .map((year) => {
+      const y = parseInt(year);
+      const states = Object.fromEntries(
+        allStates.map((state) => [state, yearStateIds[y][state]?.size || 0]),
+      );
+      return { year: y, states };
+    })
+    .sort((a, b) => a.year - b.year);
+
+  // Convert overall state unique ID counts to array
+  const totalPublicationsByState = Object.entries(stateIds).map(
+    ([state, idSet]) => ({ state, count: idSet.size }),
   );
 
-  return { yearlyData, yearlyDataByState, totalPublicationsByState };
+  // Convert to total publications
+  const totalPublications = totalPublicationsByState.reduce(
+    (sum, item) => sum + item.count,
+    0,
+  );
+
+  return {
+    yearlyData,
+    yearlyDataByState,
+    totalPublicationsByState,
+    totalPublications,
+  };
 };

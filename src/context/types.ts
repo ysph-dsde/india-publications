@@ -38,6 +38,7 @@ export interface totalPublicationsByState {
 
 export interface DataState {
   publications: FlattenedPublication[];
+  totalPublications: number;
   yearlyData: YearlyPublication[];
   stateYearlyData: StateYearlyPublication[];
   totalPublicationsByState: totalPublicationsByState[];
