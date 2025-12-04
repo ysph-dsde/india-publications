@@ -44,6 +44,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     populationGroups: ["high", "medium", "low"],
   });
   const [sourceData, setSourceData] = useState<FlattenedPublication[]>([]);
+  // defualt data
   const [data, setData] = useState<DataState>({
     publications: [],
     totalPublications: 0,
@@ -89,6 +90,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     });
   }, [serverFilters, clientFilters, sourceData]);
 
+  // update data used for plotting
   const {
     yearlyData,
     yearlyDataByState,
@@ -98,7 +100,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     return prepareChartData(filteredPublications);
   }, [filteredPublications]);
 
-  // update publications in table when source data OR filters change
+  // update data when source data OR filters change
   useEffect(() => {
     setData((prev) => ({
       ...prev,
@@ -124,12 +126,14 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     }));
   }, []);
 
+  // for use in data fetching
   const previousServerFiltersRef = useRef<ServerFilters>(serverFilters);
   const lastCompletedDataRef = useRef<FlattenedPublication[]>([]);
   const controllerRef = useRef<AbortController | null>(null);
   const isFetchingRef = useRef<Symbol | null>(null);
   const isCancellingRef = useRef<boolean>(false);
 
+  // fetch data when server filters are changed
   useEffect(() => {
     if (isCancellingRef.current) {
       isCancellingRef.current = false;
