@@ -48,8 +48,6 @@ export const CustomTabs = React.memo(({ tabs }: TabsProps) => {
         scrollButtons
         sx={{
           [`& .${tabsClasses.scrollButtons}`]: {
-            // // display disabled scroll button on ends
-            // "&.Mui-disabled": { opacity: 0.3 },
             bgcolor: theme.palette.secondary.light,
           },
           [`& .${tabsClasses.indicator}`]: {

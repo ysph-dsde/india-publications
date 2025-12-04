@@ -15,7 +15,7 @@ export const ExportTopInstitutions = () => {
   } = useData();
 
   const institutionData = useMemo<InstitutionData[]>(() => {
-    // Build a map with counts and state
+    // Build a map with insitution to { counts and state }
     const institutionMap = publications.reduce<
       Record<string, { count: number; state: string }>
     >((accumulator, pub) => {

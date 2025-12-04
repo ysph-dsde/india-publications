@@ -18,12 +18,10 @@ export const BubblePlot = () => {
 
   const hdiData = useMemo(() => getHdiData(), []);
 
+  // Plotly notes:
   // To scale the bubble size, use the attribute sizeref with the following formula to calculate a sizeref value:
   // sizeref = 2.0 * Math.max(...size) / (desired_maximum_marker_size**2)
   // Note that setting 'sizeref' to a value greater than 1, decreases the rendered marker sizes, while setting 'sizeref' to less than 1, increases the rendered marker sizes. See https://plotly.com/python/reference/scatter/#scatter-marker-sizeref for more information.
-
-  // sort states alphabetically
-  const sortedStates = [...selectedStates].sort((a, b) => a.localeCompare(b));
 
   // get years for plotting order
   const yearCategories = Array.from(
@@ -31,7 +29,7 @@ export const BubblePlot = () => {
     (_, i) => (yearRange[0] + i).toString(),
   );
 
-  // find max size for publications to scale all bubbles relative to this
+  // find max publications for use in relative scaling
   const globalMaxPublications = useMemo(() => {
     return stateYearlyData
       .filter((yd) => yd.year >= yearRange[0] && yd.year <= yearRange[1])
@@ -47,7 +45,7 @@ export const BubblePlot = () => {
   const desired_maximum_marker_size = 30;
 
   const traces: Plotly.Data[] = useMemo(() => {
-    return sortedStates.map((state) => {
+    return selectedStates.map((state) => {
       const stateHdiPoints = hdiData && hdiData[state] ? hdiData[state] : [];
 
       // Filter HDI points within yearRange
@@ -87,7 +85,7 @@ export const BubblePlot = () => {
         mode: "markers" as const,
         marker: {
           size: sizes,
-          color: stateColorMapping[state] || theme.palette.gray.dark, // Fallback to black if state not in mapping
+          color: stateColorMapping[state] || theme.palette.gray.dark, // Fallback to gray if state not in mapping
           sizemode: "area",
         },
         name: state,
@@ -97,7 +95,7 @@ export const BubblePlot = () => {
           "State: %{data.name}, Publications: %{text}<extra></extra>",
       };
     });
-  }, [stateYearlyData, sortedStates, yearRange, globalMaxPublications]);
+  }, [stateYearlyData, selectedStates, yearRange, globalMaxPublications]);
 
   const layout: Partial<Plotly.Layout> = {
     xaxis: {
@@ -113,10 +111,11 @@ export const BubblePlot = () => {
         standoff: 10,
       },
     },
+    // border around plot
     shapes: [
       {
         type: "rect",
-        xref: "paper", // Reference to the entire plot area (0 to 1)
+        xref: "paper",
         yref: "paper",
         x0: 0.01,
         y0: 0.01,

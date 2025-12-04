@@ -25,6 +25,7 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
   const { endYearPopulationData } = usePopulationData();
 
   // add states with zero publications if they are selected
+  // combine population data and publication data
   const completePublicationsByState = useMemo(() => {
     return [
       ...selectedStates
@@ -50,7 +51,7 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
 
   const plotData: Plotly.Data[] = useMemo(() => {
     return [
-      // trace for unselected states
+      // trace for deselected states
       {
         type: "choropleth",
         locationmode: "geojson-id",

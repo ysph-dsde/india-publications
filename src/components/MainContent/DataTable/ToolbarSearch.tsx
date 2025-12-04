@@ -1,3 +1,6 @@
+// Based on mui's quick filter with some styling changes
+// https://mui.com/x/react-data-grid/components/quick-filter/
+
 import {
   QuickFilter,
   QuickFilterClear,

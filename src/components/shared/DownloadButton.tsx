@@ -6,6 +6,7 @@ interface DownloadButtonProps extends ButtonProps {
   children: ReactNode;
 }
 
+// a reusable and customizable download button
 export const DownloadButton = ({ children, ...props }: DownloadButtonProps) => {
   return (
     <Button

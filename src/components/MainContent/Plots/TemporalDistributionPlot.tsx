@@ -25,8 +25,6 @@ export const TemporalDistributionPlot = ({
   } = useData();
   const { yearlyData, stateYearlyData } = data;
 
-  const sortedStates = [...selectedStates].sort((a, b) => a.localeCompare(b));
-
   const nationalTrace: Plotly.Data[] = useMemo(() => {
     return [
       {
@@ -48,7 +46,7 @@ export const TemporalDistributionPlot = ({
   }, [yearlyData]);
 
   const statesTrace: Plotly.Data[] = useMemo(() => {
-    return sortedStates.map((state) => ({
+    return selectedStates.map((state) => ({
       x: stateYearlyData.map((item) => item.year),
       y: stateYearlyData.map((item) => item.states[state] || 0),
       mode: "lines+markers",
@@ -64,7 +62,7 @@ export const TemporalDistributionPlot = ({
       },
       hovertemplate: `State: ${state}<br>Year: %{x}<br>Publications: %{y}<extra></extra>`,
     }));
-  }, [stateYearlyData, sortedStates]);
+  }, [stateYearlyData, selectedStates]);
 
   const traces: Plotly.Data[] =
     view === "national" ? nationalTrace : statesTrace;
@@ -79,7 +77,7 @@ export const TemporalDistributionPlot = ({
     let overallMin = Infinity; // Initialize with positive infinity to ensure any value is less
 
     traces.forEach((trace) => {
-      // Check if the trace has a 'y' property (to account for Typescript Type)
+      // Check if the trace has a 'y' property -- it will! (to account for Typescript Type)
       if ("y" in trace && Array.isArray(trace.y)) {
         const yValues = trace.y as number[];
         if (yValues.length > 0) {

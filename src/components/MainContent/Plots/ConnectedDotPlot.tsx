@@ -80,7 +80,6 @@ export const ConnectedDotPlot = () => {
 
     return data;
   }, [
-    // publicationData,
     endYearPopulationData,
     selectedStates,
     totalPublicationsByState,
@@ -159,7 +158,7 @@ export const ConnectedDotPlot = () => {
 
   const dtick = 0.05;
 
-  // function to find y-axis range
+  // find y-axis range
   const findMinMax = (): [min: number, max: number] => {
     const allVals = aggregatedData.flatMap((obj) => [
       obj.populationPercentage,

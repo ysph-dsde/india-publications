@@ -39,7 +39,7 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
     });
   }, [stateYearlyData, selectedStates]);
 
-  // sort states alphabetically
+  // sort states reverse alphabetically (so graph has A --> Z from top --> bottom)
   const sortedStates = [...selectedStates].sort((a, b) => b.localeCompare(a));
 
   // build traces (one per state)
@@ -60,7 +60,7 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
         xaxis: "x",
         yaxis: "y",
         marker: {
-          color: stateColorMapping[state] || "#333333", // Fallback to black if state not in mapping
+          color: stateColorMapping[state] || theme.palette.gray.dark, // Fallback to gray if state not in mapping
         },
         text: percentages.map((p) => (p * 100).toFixed(1)),
         textposition: "none",
@@ -127,7 +127,6 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
           textposition: "none",
           hovertemplate:
             "State: %{data.name}<br>Year: %{x}<br>Percentage: %{text}%<extra></extra>",
-          // width: barWidthFormatter,
         });
       });
     }
@@ -244,6 +243,7 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
     );
   };
 
+  // built customly as opposed to using various plotly features for styling purposes.
   return (
     <PlotWrapper>
       <Title>State and Union Territory Publications Percentage by Year</Title>

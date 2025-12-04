@@ -28,9 +28,8 @@ const NoResults = () => {
 export const PlotWrapper = ({ children }: PlotWrapperProps) => {
   const {
     clientFilters: { states: selectedStates },
-    data: { publications, loading },
+    data: { totalPublications, loading },
   } = useData();
-  const totalPublications = publications.length;
 
   const contentRef = useRef<HTMLDivElement>(null);
 
