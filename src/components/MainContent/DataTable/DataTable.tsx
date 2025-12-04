@@ -75,6 +75,13 @@ export const DataTable = () => {
       minWidth: 125,
     },
     {
+      field: "type",
+      headerName: "Type",
+      width: 125,
+      maxWidth: 125,
+      minWidth: 125,
+    },
+    {
       field: "title",
       headerName: "Title",
       flex: 1,

@@ -1,4 +1,8 @@
-import type { AuthorPositions, GrantTypes, PublicationTopic } from "../constants/FilterTypes";
+import type {
+  AuthorPositions,
+  GrantTypes,
+  PublicationTopic,
+} from "../constants/FilterTypes";
 import type { PopulationGroup } from "../constants/States";
 
 // filters which don't require data fetch
@@ -59,6 +63,7 @@ export interface FlattenedPublication {
   doi: string;
   cited_by_count: number;
   grants: [];
+  type: string;
   author_position: string;
   author_name: string;
   institution_name: string;

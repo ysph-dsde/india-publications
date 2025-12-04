@@ -41,7 +41,7 @@ export async function* fetchOpenAlexData(
     }
     baseQueryParams.append(
       "select",
-      "id,title,publication_year,doi,authorships,cited_by_count,grants",
+      "id,title,publication_year,doi,authorships,cited_by_count,grants,type",
     );
     baseQueryParams.append("per-page", perPage.toString());
 
