@@ -9,7 +9,7 @@ interface InstitutionData {
   publication_count: number;
 }
 
-export const TopInstitutions = () => {
+export const ExportTopInstitutions = () => {
   const {
     data: { publications },
   } = useData();

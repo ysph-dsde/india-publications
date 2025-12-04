@@ -7,7 +7,7 @@ import {
 } from "@mui/x-data-grid";
 import { useData } from "../../../context/PublicationDataContext";
 import { ToolbarSearch } from "./ToolbarSearch";
-import { TopInstitutions } from "./TopInstitutions";
+import { ExportTopInstitutions } from "./TopInstitutions";
 import Box from "@mui/material/Box";
 import Tooltip from "@mui/material/Tooltip";
 import Link from "@mui/material/Link";
@@ -57,7 +57,7 @@ const CustomToolbar = () => {
           </Tooltip>
         }
       />
-      <TopInstitutions />
+      <ExportTopInstitutions />
       <ToolbarSearch />
     </Toolbar>
   );
