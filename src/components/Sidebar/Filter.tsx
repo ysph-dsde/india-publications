@@ -19,6 +19,7 @@ import { StatesSelector } from "./StatesSelector";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { SectionTitle } from "./SectionTitle";
+import { ArticleTypeSelector } from "./ArticleTypeSelector";
 
 export const Filter = () => {
   const { clientFilters, updateClientFilters } = useData();
@@ -88,6 +89,11 @@ export const Filter = () => {
             )}
           />
         </ListItem>
+        <SelectionTitle
+          title="Article Types"
+          toolTipText="Choose one or more article types to filter publications."
+        />
+        <ArticleTypeSelector />
         <SelectionTitle
           title="Minimum Citations"
           toolTipText="Only include publications with citations greater than or equal to this number"
