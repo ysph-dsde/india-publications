@@ -16,7 +16,7 @@ import {
 import { fetchOpenAlexData } from "../services/OpenAlexService";
 import { States } from "../constants/States";
 import { prepareChartData } from "../utils/prepareChartData";
-import { ArticleTypes } from "../constants/FilterTypes";
+import { PublicationTypes } from "../constants/FilterTypes";
 
 interface DataContextType {
   data: DataState;
@@ -43,7 +43,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     grantInformation: "Any",
     states: [...States],
     populationGroups: ["high", "medium", "low"],
-    articleTypes: [...ArticleTypes],
+    publicationTypes: [...PublicationTypes],
   });
   const [sourceData, setSourceData] = useState<FlattenedPublication[]>([]);
   // defualt data
@@ -83,14 +83,16 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
         pub.institution_state,
       );
 
-      const matchesArticleTypes = clientFilters.articleTypes.includes(pub.type);
+      const matchesPublicationTypes = clientFilters.publicationTypes.includes(
+        pub.type,
+      );
 
       return (
         matchesAuthorPosition &&
         matchesCitations &&
         matchesGrant &&
         matchesStates &&
-        matchesArticleTypes
+        matchesPublicationTypes
       );
     });
   }, [serverFilters, clientFilters, sourceData]);

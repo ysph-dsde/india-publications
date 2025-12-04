@@ -27,7 +27,7 @@ export type GrantTypes = "Yes" | "No" | "Any";
 
 export const GrantTypesList: GrantTypes[] = ["Yes", "No", "Any"];
 
-export const ArticleTypes = [
+export const PublicationTypes = [
   "article",
   "book-chapter",
   "dataset",
@@ -53,4 +53,4 @@ export const ArticleTypes = [
   "report-component",
   "grant",
 ] as const;
-export type ArticleTypes = (typeof ArticleTypes)[number];
+export type PublicationTypes = (typeof PublicationTypes)[number];

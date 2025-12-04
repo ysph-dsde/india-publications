@@ -10,22 +10,22 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Checkbox from "@mui/material/Checkbox";
 import TextField from "@mui/material/TextField";
 import Chip from "@mui/material/Chip";
-import { ArticleTypes } from "../../constants/FilterTypes";
+import { PublicationTypes } from "../../constants/FilterTypes";
 
 const uncheckedIcon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export const ArticleTypeSelector = () => {
+export const PublicationTypeSelector = () => {
   const { clientFilters, updateClientFilters } = useData();
   const [isFocused, setIsFocused] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
   const handleToggleAll = (event: any) => {
     event.preventDefault(); // Prevent any default behavior
-    if (clientFilters.articleTypes.length === ArticleTypes.length) {
-      updateClientFilters({ articleTypes: [] });
+    if (clientFilters.publicationTypes.length === PublicationTypes.length) {
+      updateClientFilters({ publicationTypes: [] });
     } else {
-      updateClientFilters({ articleTypes: [...ArticleTypes] });
+      updateClientFilters({ publicationTypes: [...PublicationTypes] });
     }
   };
 
@@ -39,7 +39,7 @@ export const ArticleTypeSelector = () => {
           onClick={handleToggleAll}
           fullWidth
         >
-          {clientFilters.articleTypes.length === ArticleTypes.length
+          {clientFilters.publicationTypes.length === PublicationTypes.length
             ? "Deselect All"
             : "Select All"}
         </Button>
@@ -55,7 +55,7 @@ export const ArticleTypeSelector = () => {
         multiple
         autoComplete
         disableCloseOnSelect
-        options={ArticleTypes}
+        options={PublicationTypes}
         fullWidth
         size="small"
         disableClearable
@@ -65,9 +65,11 @@ export const ArticleTypeSelector = () => {
           if (reason === "input") setInputValue(newInputValue);
         }}
         limitTags={2}
-        value={clientFilters.articleTypes.sort((a, b) => a.localeCompare(b))}
+        value={clientFilters.publicationTypes.sort((a, b) =>
+          a.localeCompare(b),
+        )}
         onChange={(_event, newValue: string[]) => {
-          updateClientFilters({ articleTypes: newValue });
+          updateClientFilters({ publicationTypes: newValue });
         }}
         slots={{ paper: CustomPaper }}
         // what options look like in dropdown
@@ -101,7 +103,7 @@ export const ArticleTypeSelector = () => {
             }}
           />
         )}
-        // a couple of selected article types displayed
+        // a couple of selected publication types displayed
         renderValue={(value: readonly string[], getItemProps) => {
           if (!isFocused) {
             const numTags = value.length;

@@ -12,7 +12,7 @@ export interface ClientFilters {
   grantInformation: GrantTypes;
   states: string[];
   populationGroups: PopulationGroup[];
-  articleTypes: string[];
+  publicationTypes: string[];
 }
 
 // filters which require data fetch
