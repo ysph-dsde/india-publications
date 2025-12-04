@@ -9,6 +9,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Checkbox from "@mui/material/Checkbox";
 import TextField from "@mui/material/TextField";
 import Chip from "@mui/material/Chip";
+import { Typography } from "@mui/material";
 
 const uncheckedIcon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -128,7 +129,11 @@ export const MultiSelectFilter = ({
                     onDelete={undefined}
                   />
                 ))}
-                {numTags > limitTags && `+${numTags - limitTags} `}
+                {numTags > limitTags && (
+                  <Typography sx={{ p: 0, m: 0, mr: 1 }}>
+                    +{numTags - limitTags}
+                  </Typography>
+                )}
               </>
             );
           }
