@@ -131,7 +131,7 @@ export default function ExploreButtonsList({
               <SvgIcon
                 component={e.icon}
                 inheritViewBox
-                sx={{ fontSize: 30 }} // MUI sx works here!
+                sx={{ fontSize: 30 }}
               />
             )}
             <Typography sx={{ py: 1 }}>{e.label}</Typography>

@@ -1,3 +1,5 @@
+// custom imports for plotly to reduce package size
+
 import PlotlyCore from "plotly.js/lib/core";
 import Bar from "plotly.js/lib/bar";
 import Scatter from "plotly.js/lib/scatter";

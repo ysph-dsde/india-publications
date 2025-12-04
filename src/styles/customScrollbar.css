@@ -1,4 +1,4 @@
-/* src/styles/customScrollbar.css */
+/* custom styling for scrollbar */
 @media (pointer: fine) {
   ::-webkit-scrollbar {
     width: 12px;

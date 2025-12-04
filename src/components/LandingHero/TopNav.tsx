@@ -24,7 +24,8 @@ interface TopNavProps {
 export const TopNav = ({ exploreOptions }: TopNavProps) => {
   const { updateServerFilters } = useData();
 
-  // const navItems: string[] = ["Home", "About", "FAQ"];
+  // navItems can be used in future implementation, left empty for now. 
+  // Could consider ["Home", "About", "FAQ"];
   const navItems: string[] = [];
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
 

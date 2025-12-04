@@ -1,7 +1,8 @@
 import { createTheme } from "@mui/material/styles";
 import "../src/styles/fonts.css";
 
-const yaleBlue = "#00356b";
+// blues, grays, accents come from Yale guidelines
+// https://yaleidentity.yale.edu/guidelines/websites
 
 export const theme = createTheme({
   palette: {
@@ -13,7 +14,7 @@ export const theme = createTheme({
       light: "#E5D8F2",
     },
     blue: {
-      main: yaleBlue,
+      main: "#00356b",
       medium: "#286dc0",
       light: "#63aaff",
     },
@@ -35,6 +36,7 @@ export const theme = createTheme({
   },
   components: {
     MuiCssBaseline: {
+      // change cursor over plots
       styleOverrides: {
         ".js-plotly-plot .plotly [class*='cursor-']": {
           cursor: "default !important",

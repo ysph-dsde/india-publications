@@ -62,6 +62,7 @@ export const LandingHero = () => {
           opacity: 0.2,
         },
 
+        // Ensure children are "above" (closer to user)
         "& > *": {
           position: "relative",
           zIndex: 1,
