@@ -1,9 +1,7 @@
-// src/context/types.ts
-
 import type { AuthorPositions, GrantTypes, PublicationTopic } from "../constants/FilterTypes";
 import type { PopulationGroup } from "../constants/States";
 
-// filters on data
+// filters which don't require data fetch
 export interface ClientFilters {
   authorPosition: AuthorPositions;
   minimumCitations: number;
@@ -12,6 +10,7 @@ export interface ClientFilters {
   populationGroups: PopulationGroup[];
 }
 
+// filters which require data fetch
 export interface ServerFilters {
   topic: PublicationTopic;
   customKeyword: string;
@@ -36,6 +35,7 @@ export interface totalPublicationsByState {
 }
 [];
 
+// all types returned by PublicationDataContext
 export interface DataState {
   publications: FlattenedPublication[];
   totalPublications: number;
@@ -50,7 +50,7 @@ export interface DataState {
   error: string | null;
 }
 
-// processed data entry
+// processed data entry (for use in table)
 export interface FlattenedPublication {
   id: string;
   rowId: string;

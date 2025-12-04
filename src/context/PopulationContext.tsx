@@ -42,7 +42,10 @@ export const PopulationProvider = ({
       try {
         setIsLoading(true);
         const rawData = await loadRawPopulationData();
-        const dataWithProportions = computePopulationData(selectedStates, rawData);
+        const dataWithProportions = computePopulationData(
+          selectedStates,
+          rawData,
+        );
         setPopulationData(dataWithProportions);
       } catch (err) {
         setError("Failed to load population data");

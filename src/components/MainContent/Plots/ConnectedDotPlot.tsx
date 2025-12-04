@@ -28,11 +28,7 @@ export const ConnectedDotPlot = () => {
   const { endYearPopulationData } = usePopulationData();
 
   const aggregatedData = useMemo(() => {
-    if (
-      !endYearPopulationData ||
-      !selectedStates ||
-      !totalPublicationsByState
-    )
+    if (!endYearPopulationData || !selectedStates || !totalPublicationsByState)
       return [];
 
     // filter populations to only include selected states
@@ -79,11 +75,7 @@ export const ConnectedDotPlot = () => {
     data.sort((a, b) => b.difference - a.difference);
 
     return data;
-  }, [
-    endYearPopulationData,
-    selectedStates,
-    totalPublicationsByState,
-  ]);
+  }, [endYearPopulationData, selectedStates, totalPublicationsByState]);
 
   // Prepare Plotly traces
   const traces = useMemo(() => {
