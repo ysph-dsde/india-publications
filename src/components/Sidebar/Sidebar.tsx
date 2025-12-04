@@ -63,7 +63,7 @@ export const Sidebar = ({
           gap: 3,
         }}
       >
-        <Paper elevation={1}>
+        <Paper>
           <Search />
         </Paper>
         <Paper>

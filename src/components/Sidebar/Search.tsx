@@ -49,7 +49,7 @@ export const Search = () => {
     )
       return;
 
-    // at least 1 local filter is different than server filters
+    // at least 1 local filter is different than current server filters
     if (
       localYearRange[0] === serverFilters.yearRange[0] &&
       localYearRange[1] === serverFilters.yearRange[1] &&

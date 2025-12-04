@@ -73,6 +73,7 @@ export const StatesSelector = () => {
           updateClientFilters({ states: newValue });
         }}
         slots={{ paper: CustomPaper }}
+        // what options look like in dropdown
         renderOption={(props, option, { selected }) => {
           const { key, ...optionProps } = props;
           return (
@@ -90,6 +91,7 @@ export const StatesSelector = () => {
             </li>
           );
         }}
+        // input field
         renderInput={(params) => (
           <TextField
             {...params}
@@ -102,6 +104,7 @@ export const StatesSelector = () => {
             }}
           />
         )}
+        // a couple of selected states displayed
         renderValue={(value: readonly string[], getItemProps) => {
           if (!isFocused) {
             const numTags = value.length;

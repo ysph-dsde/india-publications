@@ -58,6 +58,7 @@ export const populationGroupMap: Record<PopulationGroup, string[]> = {
   low: population_states_low,
 };
 
+// no inherent meaning to colors
 export const stateColorMapping: { [key: string]: string } = {
   "Andaman and Nicobar": "#4ECDC4",
   "Andhra Pradesh": "#FF6B6B",
