@@ -19,7 +19,7 @@ import { StatesSelector } from "./StatesSelector";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { SectionTitle } from "./SectionTitle";
-import { PublicationTypeSelector } from "./ArticleTypeSelector";
+import { PublicationTypeSelector } from "./PublicationTypeSelector";
 
 export const Filter = () => {
   const { clientFilters, updateClientFilters } = useData();
