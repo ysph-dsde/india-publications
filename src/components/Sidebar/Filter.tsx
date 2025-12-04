@@ -5,6 +5,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import {
   AuthorPositionsList,
   GrantTypesList,
+  PublicationTypes,
   type AuthorPositions,
   type GrantTypes,
 } from "../../constants/FilterTypes";
@@ -15,11 +16,11 @@ import {
   type PopulationGroup,
 } from "../../constants/States";
 import type { ChangeEvent } from "react";
-import { StatesSelector } from "./StatesSelector";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { SectionTitle } from "./SectionTitle";
-import { PublicationTypeSelector } from "./PublicationTypeSelector";
+import { MultiSelectFilter } from "./MulitSelectFilter";
+import { getFilteredStates } from "../../utils/getFilteredStates";
 
 export const Filter = () => {
   const { clientFilters, updateClientFilters } = useData();
@@ -93,7 +94,14 @@ export const Filter = () => {
           title="Types"
           toolTipText="Choose one or more publication type."
         />
-        <PublicationTypeSelector />
+        <MultiSelectFilter
+          value={clientFilters.publicationTypes}
+          onChange={(newValue) =>
+            updateClientFilters({ publicationTypes: newValue })
+          }
+          options={[...PublicationTypes]}
+          placeholder="Types"
+        />
         <SelectionTitle
           title="Minimum Citations"
           toolTipText="Only include publications with citations greater than or equal to this number."
@@ -129,7 +137,12 @@ export const Filter = () => {
           title="States / Territories"
           toolTipText="Choose one or more states."
         />
-        <StatesSelector />
+        <MultiSelectFilter
+          value={clientFilters.states}
+          onChange={(newValue) => updateClientFilters({ states: newValue })}
+          options={getFilteredStates(clientFilters)}
+          placeholder="States"
+        />
         <SelectionTitle
           title="Filter States / Territories By Share of National Population"
           toolTipText="Filter states by population group. High (>5% of national population), Medium (1-5%), Low (<1%)."

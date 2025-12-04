@@ -1,8 +1,6 @@
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import { useData } from "../../context/PublicationDataContext";
 import { useState } from "react";
-import { getFilteredStates } from "../../utils/getFilteredStates";
 import Paper, { type PaperProps } from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
@@ -15,19 +13,34 @@ import Chip from "@mui/material/Chip";
 const uncheckedIcon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export const StatesSelector = () => {
-  const { clientFilters, updateClientFilters } = useData();
+interface MultiSelectFilterProps {
+  // The current selected values from context
+  value: string[];
+  // Callback to update the filter in context
+  onChange: (newValue: string[]) => void;
+  // All available options (can be static or dynamic)
+  options: string[];
+  // Placeholder text for the input
+  placeholder: string;
+}
+
+export const MultiSelectFilter = ({
+  value,
+  onChange,
+  options,
+  placeholder,
+}: MultiSelectFilterProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
+  const allSelected = value.length === options.length;
+
   const handleToggleAll = (event: any) => {
     event.preventDefault(); // Prevent any default behavior
-    if (
-      clientFilters.states.length === getFilteredStates(clientFilters).length
-    ) {
-      updateClientFilters({ states: [] });
+    if (allSelected) {
+      onChange([]);
     } else {
-      updateClientFilters({ states: [...getFilteredStates(clientFilters)] });
+      onChange([...options]);
     }
   };
 
@@ -41,10 +54,7 @@ export const StatesSelector = () => {
           onClick={handleToggleAll}
           fullWidth
         >
-          {clientFilters.states.length ===
-          getFilteredStates(clientFilters).length
-            ? "Deselect All"
-            : "Select All"}
+          {allSelected ? "Deselect All" : "Select All"}
         </Button>
         <Divider />
         {props.children}
@@ -58,7 +68,7 @@ export const StatesSelector = () => {
         multiple
         autoComplete
         disableCloseOnSelect
-        options={getFilteredStates(clientFilters)}
+        options={options}
         fullWidth
         size="small"
         disableClearable
@@ -68,10 +78,8 @@ export const StatesSelector = () => {
           if (reason === "input") setInputValue(newInputValue);
         }}
         limitTags={2}
-        value={clientFilters.states.sort((a, b) => a.localeCompare(b))}
-        onChange={(_event, newValue: string[]) => {
-          updateClientFilters({ states: newValue });
-        }}
+        value={value.sort((a, b) => a.localeCompare(b))}
+        onChange={(_event, newValue: string[]) => onChange(newValue)}
         slots={{ paper: CustomPaper }}
         // what options look like in dropdown
         renderOption={(props, option, { selected }) => {
@@ -96,7 +104,7 @@ export const StatesSelector = () => {
           <TextField
             {...params}
             variant="standard"
-            placeholder="States"
+            placeholder={placeholder}
             onFocus={() => setIsFocused(true)}
             onBlur={() => {
               setIsFocused(false);
@@ -104,7 +112,7 @@ export const StatesSelector = () => {
             }}
           />
         )}
-        // a couple of selected states displayed
+        // a couple of selected options displayed
         renderValue={(value: readonly string[], getItemProps) => {
           if (!isFocused) {
             const numTags = value.length;
