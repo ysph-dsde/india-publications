@@ -7,7 +7,7 @@ import {
 } from "@mui/x-data-grid";
 import { useData } from "../../../context/PublicationDataContext";
 import { ToolbarSearch } from "./ToolbarSearch";
-import { ExportTopInstitutions } from "./TopInstitutions";
+import { ExportTopInstitutions } from "./ExportTopInstitutions";
 import Box from "@mui/material/Box";
 import Tooltip from "@mui/material/Tooltip";
 import Link from "@mui/material/Link";
