@@ -55,7 +55,6 @@ export const parseOpenAlexData = async (
       publication_year: item.publication_year,
       doi: item.doi,
       cited_by_count: item.cited_by_count,
-      grants: item.grants || [],
       type: item.type,
     };
 

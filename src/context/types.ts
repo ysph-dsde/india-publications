@@ -1,6 +1,5 @@
 import type {
   AuthorPositions,
-  GrantTypes,
   PublicationTopic,
 } from "../constants/FilterTypes";
 import type { PopulationGroup } from "../constants/States";
@@ -9,7 +8,6 @@ import type { PopulationGroup } from "../constants/States";
 export interface ClientFilters {
   authorPosition: AuthorPositions;
   minimumCitations: number;
-  grantInformation: GrantTypes;
   states: string[];
   populationGroups: PopulationGroup[];
   publicationTypes: string[];
@@ -63,7 +61,6 @@ export interface FlattenedPublication {
   publication_year: number;
   doi: string;
   cited_by_count: number;
-  grants: [];
   type: string;
   author_position: string;
   author_name: string;

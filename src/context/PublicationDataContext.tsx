@@ -40,7 +40,6 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const [clientFilters, setClientFilters] = useState<ClientFilters>({
     authorPosition: "First",
     minimumCitations: 0,
-    grantInformation: "Any",
     states: [...States],
     populationGroups: ["high", "medium", "low"],
     publicationTypes: [...PublicationTypes],
@@ -74,11 +73,6 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
       const matchesCitations =
         pub.cited_by_count >= clientFilters.minimumCitations;
 
-      const matchesGrant =
-        clientFilters.grantInformation === "Any" ||
-        (clientFilters.grantInformation === "Yes" && pub.grants.length > 0) ||
-        (clientFilters.grantInformation === "No" && pub.grants.length === 0);
-
       const matchesStates = clientFilters.states.includes(
         pub.institution_state,
       );
@@ -90,7 +84,6 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
       return (
         matchesAuthorPosition &&
         matchesCitations &&
-        matchesGrant &&
         matchesStates &&
         matchesPublicationTypes
       );

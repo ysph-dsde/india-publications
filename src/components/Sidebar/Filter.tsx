@@ -4,10 +4,8 @@ import ListItem from "@mui/material/ListItem";
 import Autocomplete from "@mui/material/Autocomplete";
 import {
   AuthorPositionsList,
-  GrantTypesList,
   PublicationTypes,
   type AuthorPositions,
-  type GrantTypes,
 } from "../../constants/FilterTypes";
 import TextField from "@mui/material/TextField";
 import { useData } from "../../context/PublicationDataContext";
@@ -180,29 +178,6 @@ export const Filter = () => {
               />
             }
             label="Low"
-          />
-        </ListItem>
-        <SelectionTitle
-          title="Grant information accessible?"
-          toolTipText="Filter publication by whether grant information is available."
-        />
-        <ListItem>
-          <Autocomplete
-            autoComplete
-            options={GrantTypesList}
-            fullWidth
-            value={clientFilters.grantInformation}
-            disableClearable
-            onChange={(_event, newValue: GrantTypes) => {
-              updateClientFilters({ grantInformation: newValue });
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="standard"
-                placeholder="Grant information"
-              />
-            )}
           />
         </ListItem>
       </List>

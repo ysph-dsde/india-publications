@@ -23,10 +23,6 @@ export const AuthorPositionsList: AuthorPositions[] = [
   "Any",
 ];
 
-export type GrantTypes = "Yes" | "No" | "Any";
-
-export const GrantTypesList: GrantTypes[] = ["Yes", "No", "Any"];
-
 export const PublicationTypes = [
   "article",
   "book-chapter",
