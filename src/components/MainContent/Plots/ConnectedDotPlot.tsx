@@ -173,11 +173,15 @@ export const ConnectedDotPlot = () => {
       },
       showgrid: true,
       range: findMinMax(),
+
+      tickfont: { size: 16 },
     },
     xaxis: {
       range: [-0.5, traces.length / 3 - 1 + 0.5],
       type: "category",
       dtick: 1,
+      
+      tickfont: { size: 16 },
     },
     margin: {
       r: 20,
@@ -197,6 +201,7 @@ export const ConnectedDotPlot = () => {
         <Typography
           color={theme.palette.secondary.main}
           fontWeight="bold"
+          fontSize={18}
         >
           State and Union Territory
         </Typography>

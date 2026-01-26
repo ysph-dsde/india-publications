@@ -10,6 +10,8 @@ import DevelopmentEconomicsIcon from "../../assets/images/topicIcons/development
 import ElectronicHealthRecordsIcon from "../../assets/images/topicIcons/electronicHealthrecords.svg?react";
 import EnvironmentalScienceIcon from "../../assets/images/topicIcons/environmentalScience.svg?react";
 import GenomeWideAssociationsIcon from "../../assets/images/topicIcons/genome-wideAssociation.svg?react";
+import AnyTopicsIcon from "../../assets/images/topicIcons/anyTopics.svg?react";
+
 
 export interface ExploreOption {
   label: PublicationTopic;
@@ -30,6 +32,7 @@ const exploreOptions: ExploreOption[] = [
   { label: "International Trade" },
   { label: "Macroeconomics" },
   { label: "Public Finance" },
+  { label: "Any Topics", icon: AnyTopicsIcon },
 ];
 
 export const LandingHero = () => {

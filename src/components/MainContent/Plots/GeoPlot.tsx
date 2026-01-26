@@ -127,7 +127,7 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
       <Title>
         {view === "totalPublications"
           ? "Number of Publications by State and Union Territory"
-          : "Number of Publications per Million People by State and Union Territory"}
+          : "Number of Publications per Million (Population) State and Union Territory"}
       </Title>
       <CustomPlot
         data={plotData}
@@ -148,7 +148,7 @@ export const GeoPlot = ({ view, setView }: GeoPlotProps) => {
         view1value="totalPublications"
         view2value="perMillion"
         view1text="Total publications"
-        view2text="Per million people"
+        view2text="Publication per million (population)"
       />
     </PlotWrapper>
   );

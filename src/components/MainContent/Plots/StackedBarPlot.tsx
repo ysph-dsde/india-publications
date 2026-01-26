@@ -254,6 +254,7 @@ export const StackedBarPlot = ({ view, setView }: StackedBarPlotProps) => {
           <Typography
             color={theme.palette.secondary.main}
             fontWeight="bold"
+            fontSize={18}
           >
             Year
           </Typography>

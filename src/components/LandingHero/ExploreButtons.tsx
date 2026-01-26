@@ -14,6 +14,12 @@ import MenuList from "@mui/material/MenuList";
 import Popper from "@mui/material/Popper";
 import Grow from "@mui/material/Grow";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from "@mui/material";
 
 interface CustomButtonProps extends ButtonProps {
   children: React.ReactNode;
@@ -54,9 +60,26 @@ export default function ExploreButtonsList({
 
   const visibleCount = Math.min(6, exploreOptions.length);
 
+  const [showAnyTopicsWarning, setShowAnyTopicsWarning] = useState(false);
+
   const handleOptionSelect = (selectedTopic: PublicationTopic) => {
+    if (selectedTopic === "Any Topics") {
+      // For Any Topics, show the warning dialog instead of immediately starting the search
+      setShowAnyTopicsWarning(true);
+      return;
+    }
+
+    // All other topics behave as before: immediately start the search
     updateServerFilters({
       topic: selectedTopic,
+    });
+  };
+
+  const handleConfirmAnyTopics = () => {
+    setShowAnyTopicsWarning(false);
+    // Now actually start the search for Any Topics
+    updateServerFilters({
+      topic: "Any Topics",
     });
   };
 
@@ -204,6 +227,36 @@ export default function ExploreButtonsList({
           </Grow>
         )}
       </Popper>
+
+      {/* Warning dialog for "Any Topics" clicks from Explore the Data */}
+      <Dialog
+        open={showAnyTopicsWarning}
+        onClose={() => setShowAnyTopicsWarning(false)}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle sx={{ textAlign: "center" }}>
+          Any Topics search
+        </DialogTitle>
+        <DialogContent>
+          <Typography align="center" sx={{ mt: 1 }}>
+            To explore trends of India publications for any topics, this search
+            may take a long time to load due to the large number of publications
+            available.
+          </Typography>
+          <Typography align="center" sx={{ mt: 2 }}>
+            Click <strong>Continue</strong> to proceed.
+          </Typography>
+        </DialogContent>
+        <DialogActions sx={{ justifyContent: "center", pb: 3 }}>
+          <Button
+            variant="contained"
+            onClick={handleConfirmAnyTopics}
+          >
+            Continue
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }

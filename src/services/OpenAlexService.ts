@@ -23,17 +23,26 @@ export async function* fetchOpenAlexData(
   const uniqueResults: any[] = [];
 
   const getTopic = (): string => {
-    return serverFilters.topic === "Custom Keyword Search"
-      ? serverFilters.customKeyword
-      : serverFilters.topic;
+    if (serverFilters.topic === "Custom Keyword Search") {
+      return serverFilters.customKeyword;
+    }
+    if (serverFilters.topic === "Any Topics") {
+      return "";
+    }
+    return serverFilters.topic;
   };
+
 
   for (const searchField of searchFields) {
     let cursor = "*";
     let hasMore = true;
 
     const filterParams = [...baseFilterParams];
-    filterParams.push(`${searchField}:${getTopic()}`);
+
+    const topic = getTopic();
+    if (topic) {
+      filterParams.push(`${searchField}:${topic}`);
+    }
 
     const baseQueryParams = new URLSearchParams();
     if (filterParams.length > 0) {

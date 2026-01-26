@@ -92,10 +92,14 @@ export const BubblePlot = () => {
         type: "scatter" as const,
         text: pubCounts.map((num) => num.toString()),
         hovertemplate:
-          "State: %{data.name}, Publications: %{text}<extra></extra>",
+          // y is the HDI value; x is the year; text is publications
+          "State: %{data.name}<br>" +
+          "Year: %{x}<br>" +
+          "HDI: %{y:.3f}<br>" +
+          "Publications: %{text}<extra></extra>",
       };
     });
-  }, [stateYearlyData, selectedStates, yearRange, globalMaxPublications]);
+  }, [stateYearlyData, selectedStates, yearRange, globalMaxPublications, hdiData]);
 
   const layout: Partial<Plotly.Layout> = {
     xaxis: {

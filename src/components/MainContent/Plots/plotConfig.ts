@@ -13,26 +13,26 @@ const baseLayout: Partial<Plotly.Layout> = {
     automargin: true,
     title: {
       font: {
-        size: 16,
+        size: 18,
         weight: "bold",
         color: theme.palette.secondary.main,
       },
     },
     tickfont: {
-      size: 16,
+      size: 18,
     },
   },
   yaxis: {
     showgrid: false,
     title: {
       font: {
-        size: 16,
+        size: 18,
         weight: "bold",
         color: theme.palette.secondary.main,
       },
     },
     tickfont: {
-      size: 16,
+      size: 18,
     },
     automargin: true,
   },

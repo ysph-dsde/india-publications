@@ -14,6 +14,13 @@ import Slider from "@mui/material/Slider";
 import Button from "@mui/material/Button";
 import { SectionTitle } from "./SectionTitle";
 import { Loading } from "./Loading";
+import {
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from "@mui/material";
 
 export const Search = () => {
   const { serverFilters, updateServerFilters } = useData();
@@ -24,10 +31,11 @@ export const Search = () => {
   const [localYearRange, setLocalYearRange] = useState<[number, number]>(
     serverFilters.yearRange,
   );
-
   const [localTopic, setLocalTopic] = useState<PublicationTopic>(
     serverFilters.topic,
   );
+
+  const [showAnyTopicsWarning, setShowAnyTopicsWarning] = useState(false);
 
   useEffect(() => {
     setLocalYearRange(serverFilters.yearRange);
@@ -41,15 +49,27 @@ export const Search = () => {
     setLocalTopic(serverFilters.topic);
   }, [serverFilters.topic]);
 
+  const performSearch = () => {
+    updateServerFilters({
+      yearRange: localYearRange,
+      customKeyword: localCustomKeyword,
+      topic: localTopic,
+    });
+  };
+
   const handleSearch = () => {
-    // custom keyword isn't blank
     if (
       localTopic === "Custom Keyword Search" &&
       localCustomKeyword.length === 0
-    )
+    ) {
       return;
+    }
 
-    // at least 1 local filter is different than current server filters
+    if (localTopic === "Any Topics") {
+      setShowAnyTopicsWarning(true);
+      return;
+    }
+
     if (
       localYearRange[0] === serverFilters.yearRange[0] &&
       localYearRange[1] === serverFilters.yearRange[1] &&
@@ -61,11 +81,12 @@ export const Search = () => {
       return;
     }
 
-    updateServerFilters({
-      yearRange: localYearRange,
-      customKeyword: localCustomKeyword,
-      topic: localTopic,
-    });
+    performSearch();
+  };
+
+  const handleConfirmAnyTopics = () => {
+    setShowAnyTopicsWarning(false);
+    performSearch();
   };
 
   return (
@@ -151,12 +172,42 @@ export const Search = () => {
         <Box textAlign="center">
           <Button
             variant="contained"
-            onClick={() => handleSearch()}
+            onClick={handleSearch}
           >
             Search
           </Button>
         </Box>
       </List>
+
+      {/* Warning dialog for "Any Topics" searches */}
+      <Dialog
+        open={showAnyTopicsWarning}
+        onClose={() => setShowAnyTopicsWarning(false)}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle sx={{ textAlign: "center" }}>
+          Any Topics search
+        </DialogTitle>
+        <DialogContent>
+          <Typography align="center" sx={{ mt: 1 }}>
+            To explore trends of India publications for any topics, this search
+            may take a long time to load due to the large number of publications
+            available.
+          </Typography>
+          <Typography align="center" sx={{ mt: 2 }}>
+            Click <strong>Continue</strong> to proceed.
+          </Typography>
+        </DialogContent>
+        <DialogActions sx={{ justifyContent: "center", pb: 3 }}>
+          <Button
+            variant="contained"
+            onClick={handleConfirmAnyTopics}
+          >
+            Continue
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };

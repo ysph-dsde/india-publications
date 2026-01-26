@@ -10,6 +10,7 @@ export const PublicationTopics = [
   "Macroeconomics",
   "Game Theory",
   "Environmental Science",
+  "Any Topics",
   "Custom Keyword Search",
 ] as const;
 export type PublicationTopic = (typeof PublicationTopics)[number];

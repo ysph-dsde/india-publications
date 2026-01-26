@@ -25,7 +25,7 @@ export const LegendChip = ({ state }: LegendChipProps) => {
       }}
     >
       <CircleIcon sx={{ fill: stateColorMapping[state] }} />
-      <Typography fontSize="1rem">{state}</Typography>
+      <Typography fontSize="1.11rem">{state}</Typography>
     </Box>
   );
 };

@@ -10,6 +10,10 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
 import { useState } from "react";
 import ysphLogo from "../../assets/images/ysphLogoWhite.svg";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -27,44 +31,54 @@ export const TopNav = ({ exploreOptions }: TopNavProps) => {
   // navItems can be used in future implementation, left empty for now.
   // Could consider ["Home", "About", "FAQ"];
   const navItems: string[] = [];
+
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
+  const [showAnyTopicsWarning, setShowAnyTopicsWarning] =
+    useState<boolean>(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
 
+  const handleConfirmAnyTopics = () => {
+    setShowAnyTopicsWarning(false);
+    updateServerFilters({ topic: "Any Topics" });
+  };
+
   const handleOptionSelect = (selectedTopic: PublicationTopic) => {
-    updateServerFilters({
-      topic: selectedTopic,
-    });
+    // Close the drawer for better mobile UX
+    setMobileOpen(false);
+
+    // Show warning dialog on mobile for "Any Topics"
+    if (selectedTopic === "Any Topics") {
+      setShowAnyTopicsWarning(true);
+      return;
+    }
+
+    updateServerFilters({ topic: selectedTopic });
   };
 
   const drawer = (
-    <Box
-      onClick={handleDrawerToggle}
-      sx={{ textAlign: "center" }}
-    >
+    <Box sx={{ textAlign: "center" }}>
       <List sx={{ textAlign: "left" }}>
         <ListItem>
           <Typography fontWeight="bold">Search by topic</Typography>
         </ListItem>
+
         <Divider />
+
         {navItems.map((item) => (
-          <ListItem
-            key={item}
-            disablePadding
-          >
+          <ListItem key={item} disablePadding>
             <ListItemButton>
               <ListItemText primary={item} />
             </ListItemButton>
           </ListItem>
         ))}
+
         {navItems.length > 0 && <Divider />}
+
         {exploreOptions.map((item, id) => (
-          <ListItem
-            key={id}
-            disablePadding
-          >
+          <ListItem key={id} disablePadding>
             <ListItemButton
               sx={{ textAlign: "left" }}
               onClick={() => handleOptionSelect(item.label)}
@@ -107,17 +121,12 @@ export const TopNav = ({ exploreOptions }: TopNavProps) => {
               gap: { xs: 1, sm: 2 },
             }}
           >
-            <Typography
-              variant="h5"
-              fontWeight="bold"
-            >
+            <Typography variant="h5" fontWeight="bold">
               Indiapub.org
             </Typography>
-            <Divider
-              orientation="vertical"
-              flexItem
-              sx={{ bgcolor: "white" }}
-            />
+
+            <Divider orientation="vertical" flexItem sx={{ bgcolor: "white" }} />
+
             <Box
               component="img"
               src={ysphLogo}
@@ -125,6 +134,7 @@ export const TopNav = ({ exploreOptions }: TopNavProps) => {
               width="50%"
             />
           </Box>
+
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -134,6 +144,7 @@ export const TopNav = ({ exploreOptions }: TopNavProps) => {
           >
             <MenuIcon />
           </IconButton>
+
           <Box sx={{ display: { xs: "none", md: "block" }, height: "100%" }}>
             {navItems.map((item) => (
               <Button
@@ -147,6 +158,7 @@ export const TopNav = ({ exploreOptions }: TopNavProps) => {
           </Box>
         </Toolbar>
       </AppBar>
+
       <nav>
         <Drawer
           variant="temporary"
@@ -171,6 +183,36 @@ export const TopNav = ({ exploreOptions }: TopNavProps) => {
           {drawer}
         </Drawer>
       </nav>
+
+      {/* Any Topics warning dialog (same sizing as sidebar version; no scrolling) */}
+      <Dialog
+        open={showAnyTopicsWarning}
+        onClose={() => setShowAnyTopicsWarning(false)}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle sx={{ textAlign: "center" }}>
+          Any Topics search
+        </DialogTitle>
+
+        <DialogContent>
+          <Typography align="center" sx={{ mt: 1 }}>
+            To explore trends of India publications for any topics, this search
+            may take a long time to load due to the large number of publications
+            available.
+          </Typography>
+
+          <Typography align="center" sx={{ mt: 2 }}>
+            Click <b>Continue</b> to proceed.
+          </Typography>
+        </DialogContent>
+
+        <DialogActions sx={{ justifyContent: "center", pb: 3 }}>
+          <Button variant="contained" onClick={handleConfirmAnyTopics}>
+            Continue
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };

@@ -14,7 +14,7 @@ export const PlotCaption = ({ children }: PlotCaptionProps) => {
     >
       <Typography
         variant="caption"
-        fontSize={14}
+        fontSize={18}
       >
         <b>Note:</b> {children}
       </Typography>
