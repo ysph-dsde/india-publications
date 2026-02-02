@@ -161,10 +161,10 @@ export const Search = () => {
               valueLabelDisplay="auto"
               disableSwap
               min={2014}
-              max={2024}
+              max={2025}
               marks={[
                 { value: 2014, label: "2014" },
-                { value: 2024, label: "2024" },
+                { value: 2024, label: "2025" },
               ]}
             />
           </Box>
