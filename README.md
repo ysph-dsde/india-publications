@@ -2,7 +2,7 @@
 
 ### Repository Note
 
-Code are updated in the GitHub repository except the “Any Topics.” If you are interested in the “Any Topics” code, please contact the Yiren Hou (yiren.hou@yale.edu) for the ZIP file. We intend to maintain the **Indiapub** web application and public access to it through at least December 2027, subject to continued server and institutional support.
+Code is updated in the GitHub repository except the “Any Topics.” If you are interested in the “Any Topics” code, please contact the Yiren Hou (yiren.hou@yale.edu) for the ZIP file. We intend to maintain the **Indiapub** web application and public access to it through at least December 2027, subject to continued server and institutional support.
 
 ### Tools
 
