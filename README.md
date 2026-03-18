@@ -2,7 +2,7 @@
 
 ### Repository Note
 
-This repository contains the codebase for **Indiapub** (accessed via https://indiapub.org or https://bharatresearch.org). Due to file size limitations, the most recent full version of the files associated with the “Any Topics” option is not currently hosted in this GitHub repository. Readers who would like access to the most recent version may contact the [Yiren Hou](mailto:yiren.hou@yale.edu) to request it directly.
+Code are updated in the GitHub repository except the “Any Topics.” If you are interested in the “Any Topics” code, please contact the Yiren Hou (yiren.hou@yale.edu) for the ZIP file. We intend to maintain the **Indiapub** web application and public access to it through at least December 2027, subject to continued server and institutional support.
 
 ### Tools
 
